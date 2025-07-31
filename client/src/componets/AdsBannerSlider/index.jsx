@@ -5,6 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import { Navigation } from 'swiper/modules';
+import BannerBox from '../BannerBox';
 
 const AdsBannerSlider = (props) => {
   return (
@@ -15,12 +16,26 @@ const AdsBannerSlider = (props) => {
                     spaceBetween={10}
                     navigation={true}
                     modules={[Navigation]}
-                    className="mySwiper"
+                    className="smlBtn"
                   >
                     <SwiperSlide>
-                        <div className='box'>
+                       <BannerBox img = {'/banner1.webp'} link = {'/'} /> 
+                    </SwiperSlide>
 
-                        </div>
+                    <SwiperSlide>
+                       <BannerBox img = {'/banner2.webp'} link = {'/'} /> 
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                       <BannerBox img = {'/banner3.webp'} link = {'/'} /> 
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                       <BannerBox img = {'/banner4.webp'} link = {'/'} /> 
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                       <BannerBox img = {'/banner1.webp'} link = {'/'} /> 
                     </SwiperSlide>
                   </Swiper>
         </div>
