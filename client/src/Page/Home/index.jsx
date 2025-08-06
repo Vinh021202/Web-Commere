@@ -5,8 +5,18 @@ import { LiaShippingFastSolid } from "react-icons/lia";
 import AdsBannerSlider from '../../componets/AdsBannerSlider';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import ProductsSlider from '../../componets/ProductsSlider';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+import { Navigation } from 'swiper/modules';
+import BlogItem from '../../componets/BlogItem';
+import Footer from '../../componets/Footer';
+import HomeBannerV2 from '../../componets/HomeSliderV2';
+import BannerBoxV2 from '../../componets/bannerBoxV2';
 
 const  Home = () => {
   const [value, setValue] = React.useState(0);
@@ -18,7 +28,22 @@ const  Home = () => {
   return (
     <>
       <HomeSlider />
+      
+
       <HomeCatSlider />
+
+        <section className='py-6'>
+      <div className='container flex items-center gap-5'>
+        <div className='part1 w-[70%]'>
+          <HomeBannerV2 />
+        </div>
+
+        <div className='part2 w-[30%] flex items-center gap-5 justify-between flex-col'>
+          <BannerBoxV2 info="left" image={'/bannerBox2.jpg'} />
+          <BannerBoxV2 info="right"  image={'/bannerBox1.jpg'}/>
+        </div>
+      </div>
+    </section>
 
       <section className='bg-white py-8'>
         <div className='container'>
@@ -59,7 +84,7 @@ const  Home = () => {
         </div>
       </section>
 
-      <section className='py-16 bg-white'>
+      <section className='py-4 pt-2 bg-white'>
         <div className='container'>
           <div className='freeShipping  w-[80%] m-auto py-4 p-4 border border-[#b92727] flex 
           items-center justify-between rounded-md mb-7'>
@@ -81,7 +106,67 @@ const  Home = () => {
         </div>
       </section>
 
-      <br/> <br/> <br/> <br/> <br/> <br/>
+
+      <section className='py-5 pt-0 bg-white'>
+        <div className='container'>
+           <h2 className='text-[20px] font-[600]'>
+                  Latest Products
+              </h2>
+          <ProductsSlider items={6} />
+
+          <AdsBannerSlider items={3} />
+        </div>
+      </section>
+
+
+      <section className='py-5 pt-0 bg-white'>
+        <div className='container'>
+           <h2 className='text-[20px] font-[600]'>
+                  Featured Products
+              </h2>
+          <ProductsSlider items={6} />
+
+          <AdsBannerSlider items={3} />
+        </div>
+      </section>
+
+
+       <section className='py-5 pb-8 pt-0 bg-white blogSection'>
+        <div className='container'>
+           <h2 className='text-[20px] font-[600] mb-4'>
+                  From The Blog
+              </h2>
+            <Swiper
+                  slidesPerView={4}
+                  spaceBetween={30}
+                  navigation={true}
+                  modules={[Navigation]}
+                  className="blogSlider"
+                >
+                  <SwiperSlide>
+                      <BlogItem />
+                  </SwiperSlide>
+
+                  <SwiperSlide>
+                      <BlogItem />
+                  </SwiperSlide>
+
+                  <SwiperSlide>
+                      <BlogItem />
+                  </SwiperSlide>
+
+                  <SwiperSlide>
+                      <BlogItem />
+                  </SwiperSlide>
+
+                  <SwiperSlide>
+                      <BlogItem />
+                  </SwiperSlide>
+                </Swiper>
+        </div>
+      </section>
+
+      <Footer />
     </>
     
   )

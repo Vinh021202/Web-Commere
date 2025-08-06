@@ -18,7 +18,8 @@ body {
 header .top-strip{border-top: 1px solid rgb(0, 0,0,0.1);border-bottom: 1px solid rgb(0,0,0,0.1); }
 .text-primary{color: #ff5252;}
 
-.bg-org{background: #ff5252;}
+.bg-org{background: #ff5252 !important; color: #fff !important; font-weight: 500; font-size: 16px;
+padding: 7px 20px !important;}
 .bg-primary{background-color: #ff5252;}
 
 .link:hover{color: #ff5252;}
@@ -60,3 +61,23 @@ min-width: 30px !important; top: 55% !important; }
 .MuiTab-textColorPrimary.Mui-selected{color: #ff5252 !important;}
 
 .productsSlider .swiper-wrapper{padding: 15px; margin-left: -15px; margin-right: -15px;}
+
+footer form input::placeholder{font-size: 14px;}
+
+.css-vuhw6e-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root.Mui-checked, 
+.css-vuhw6e-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate{color:#ff5252
+!important;}
+.MuiFormControlLabel-label{font-size: 13px !important; color: rgb(0,0,0,0.8);}
+
+.swiper-pagination-bullet-active{background: #ff5252 !important;}
+
+.HomeSliderV2  .swiper-slide-active .info{right: 0px !important; opacity: 1;}
+.HomeSliderV2  .swiper-slide-active .info h4{right: 0px !important; opacity: 1;}
+.HomeSliderV2  .swiper-slide-active .info h2{right: 0px !important; opacity: 1;}
+.HomeSliderV2  .swiper-slide-active .info h3{right: 0px !important; opacity: 1;}
+.HomeSliderV2  .swiper-slide-active .info .btn_{right: 0px !important; opacity: 1;}
+
+.HomeSliderV2  .info h4{transition-duration: 1.2s;}
+.HomeSliderV2  .info h2{transition-duration: 1.5s;}
+.HomeSliderV2  .info h3{transition-duration: 1.8s;}
+.HomeSliderV2  .info .btn_{transition-duration: 2.1s;}
