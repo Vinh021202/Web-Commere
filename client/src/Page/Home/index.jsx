@@ -3,6 +3,7 @@ import HomeSlider from '../../componets/HomeSlider'
 import HomeCatSlider from '../../componets/CatSlider'
 import { LiaShippingFastSolid } from "react-icons/lia";
 import AdsBannerSlider from '../../componets/AdsBannerSlider';
+import AdsBannerSliderV2 from '../../componets/AdsBannerSliderV2';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ProductsSlider from '../../componets/ProductsSlider';
@@ -14,7 +15,6 @@ import 'swiper/css/navigation';
 
 import { Navigation } from 'swiper/modules';
 import BlogItem from '../../componets/BlogItem';
-import Footer from '../../componets/Footer';
 import HomeBannerV2 from '../../componets/HomeSliderV2';
 import BannerBoxV2 from '../../componets/bannerBoxV2';
 
@@ -31,7 +31,7 @@ const  Home = () => {
       
 
       <HomeCatSlider />
-
+ 
         <section className='py-6'>
       <div className='container flex items-center gap-5'>
         <div className='part1 w-[70%]'>
@@ -102,7 +102,7 @@ const  Home = () => {
                 <p className='font-bold text-[25px]'> - Only $200*</p>
           </div>
 
-          <AdsBannerSlider items={4} />
+          <AdsBannerSliderV2 items={4} />
         </div>
       </section>
 
@@ -166,7 +166,6 @@ const  Home = () => {
         </div>
       </section>
 
-      <Footer />
     </>
     
   )

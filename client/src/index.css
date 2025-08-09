@@ -81,3 +81,9 @@ footer form input::placeholder{font-size: 14px;}
 .HomeSliderV2  .info h2{transition-duration: 1.5s;}
 .HomeSliderV2  .info h3{transition-duration: 1.8s;}
 .HomeSliderV2  .info .btn_{transition-duration: 2.1s;}
+
+.MuiCheckbox-root{padding: 6px !important;}
+
+.ReactCollapse--collapse {
+  transition: height 400ms;
+}
