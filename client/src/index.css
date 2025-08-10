@@ -20,6 +20,8 @@ header .top-strip{border-top: 1px solid rgb(0, 0,0,0.1);border-bottom: 1px solid
 
 .bg-org{background: #ff5252 !important; color: #fff !important; font-weight: 500; font-size: 16px;
 padding: 7px 20px !important;}
+.bg-org:hover{background: #171717 !important;}
+
 .bg-primary{background-color: #ff5252;}
 
 .link:hover{color: #ff5252;}
@@ -87,3 +89,6 @@ footer form input::placeholder{font-size: 14px;}
 .ReactCollapse--collapse {
   transition: height 400ms;
 }
+
+.itemViewActions button.active svg{color: #ff5252 !important; opacity: 1;}
+.Mui-selected.MuiPaginationItem-page{background: #ff5252 !important; color: #fff !important;}

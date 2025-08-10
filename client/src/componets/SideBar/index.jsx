@@ -6,6 +6,9 @@ import {Collapse} from 'react-collapse';
 import { FaAngleDown } from "react-icons/fa6";
 import Button from '@mui/material/Button';
 import { FaAngleUp } from "react-icons/fa6";
+import RangeSlider from 'react-range-slider-input';
+import 'react-range-slider-input/dist/style.css';
+import Rating from '@mui/material/Rating';
 
 const SideBar = () => {
 
@@ -77,6 +80,42 @@ const SideBar = () => {
 
           </div>
           </Collapse>
+      </div>
+
+
+      <div className='box mt-4'>
+        <h3 className='w-full mb-3 text-[16px] font-[600] flex items-center pr-5'>Filter By Price
+        </h3>
+
+         <RangeSlider />
+         <div className='flex pt-4 pb-2 priceRange'>
+            <span className='text-[13px]'>
+                From: <strong className='text-dark'>Rs: {100}</strong>
+            </span>
+            <span className='ml-auto text-[13px]'>
+                From: <strong className='text-dark'>Rs: {5000}</strong>
+            </span>
+         </div>
+      </div>
+
+       <div className='box mt-4'>
+        <h3 className='w-full mb-3 text-[16px] font-[600] flex items-center pr-5'>Filter By Rating
+        </h3>
+        <div className='w-full cursor-pointer'>
+          <Rating name="size-small" defaultValue={5} size="small" readOnly />
+        </div>
+          <div className='w-full'>
+          <Rating name="size-small" defaultValue={4} size="small" readOnly />
+        </div>
+          <div className='w-full'>
+          <Rating name="size-small" defaultValue={3} size="small" readOnly />
+        </div>
+          <div className='w-full'>
+          <Rating name="size-small" defaultValue={2} size="small" readOnly />
+        </div>
+          <div className='w-full'>
+          <Rating name="size-small" defaultValue={1} size="small" readOnly />
+        </div>
       </div>
     </aside>
     </>
