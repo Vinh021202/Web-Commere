@@ -45,7 +45,7 @@ const ProductsItem = () => {
     </div>
   </div>
   <div className='info p-3 py-5'>
-        <h6 className='text-[14px]'>
+        <h6 className='text-[13px] !font-[400]'>
             <Link to={"/"} className='link transition-all'>Flying Machine</Link>
         </h6>
         <h3 className='text-[13px] title mt-1 font-[500] mb-1 text-[#000]'>

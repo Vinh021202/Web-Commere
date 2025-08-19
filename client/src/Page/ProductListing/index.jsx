@@ -28,14 +28,14 @@ const ProductListing = () => {
       <section className='py-5 pb-0'>
         <div className='container'>
           <Breadcrumbs aria-label="breadcrumb">
-            <Link underline="hover" color="inherit" href="/" className='link transition'>
+            <Link underline="hover" color="inherit" href="/" className='link transition !text-[14px]'>
               Home
             </Link>
             <Link
               underline="hover"
               color="inherit"
               href="/"
-              className='link transition'
+              className='link transition !text-[14px]'
             >
               Fashion
             </Link>
