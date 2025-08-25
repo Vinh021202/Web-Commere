@@ -10,6 +10,7 @@ import RangeSlider from 'react-range-slider-input';
 import 'react-range-slider-input/dist/style.css';
 import Rating from '@mui/material/Rating';
 
+
 const SideBar = () => {
 
   const [isopenCategoryFilter, setIsopenCategoryFilter] = useState(true);

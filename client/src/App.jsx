@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Header from './componets/Header'
 import Footer from './componets/Footer'
@@ -14,10 +14,16 @@ import DialogContent from '@mui/material/DialogContent';
 import ProductZoom from './componets/ProductZoom'
 import { IoCloseSharp } from "react-icons/io5";
 import ProductDetailsComponent from './componets/ProductDetails'
+import Login from './Page/Login'
+import Register from './Page/Register'
+import Drawer from '@mui/material/Drawer';
+import CartPanel from './componets/CartPanel'
 
 const MyContext = createContext();
 
 function App() {
+
+  const [openCartPanel, setOpenCartPanel] = useState(false);
   
   const [openProductDetailsModal, setOpenProductDetailsModal] = useState(false);
   const [fullWidth, setFullWidth] = useState(true);
@@ -27,12 +33,19 @@ function App() {
   //   setOpenProductDetailsModal(true);
   // };
 
+   const toggleCartPanel = (newOpen) => () => {
+    setOpenCartPanel(newOpen);
+  };
+
   const handleCloseProductDetailsModal = () => {
     setOpenProductDetailsModal(false);
   };
 
   const values = {
-      setOpenProductDetailsModal
+      setOpenProductDetailsModal,
+      setOpenCartPanel,
+      openCartPanel,
+      toggleCartPanel
   }
 
   return (
@@ -44,6 +57,8 @@ function App() {
           <Route path= {"/"} exact={true} element = {<Home />} />
           <Route path= {"/ProductListing"} exact={true} element = {<ProductListing />} />
           <Route path= {"/Product/:id"} exact={true} element = {<ProductDetails/>} />
+           <Route path= {"/login"} exact={true} element = {<Login/>} />
+            <Route path= {"/Register"} exact={true} element = {<Register />} />
         </Routes>
           <Footer />
           </MyContext.Provider>
@@ -73,6 +88,19 @@ function App() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Cart Panel */}
+       {/* <Drawer open={openCartPanel} onClose={toggleCartPanel(false)}  anchor={"right"} 
+       className='cartPanel'>
+        <div className='flex items-center justify-between py-3 px-4 gap-3 border-b border-[rgba(0,0,0,0.1)] overflow-hidden'>
+          <h4>Shopping Cart (1)  </h4>
+          <IoCloseSharp className='text-[20px] cursor-pointer' onClick={toggleCartPanel(false)}/>
+        </div>
+
+        <CartPanel />
+       
+      </Drawer> */}
+
     </>
   )
 }

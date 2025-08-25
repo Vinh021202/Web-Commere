@@ -1,5 +1,5 @@
 // import Link from 'next/link'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import Search from '../Search/index'
 import { IoIosGitCompare } from "react-icons/io";
@@ -10,6 +10,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { styled } from '@mui/material/styles';
 import { FaRegHeart } from "react-icons/fa";
 import Navigation from './Navigation';
+import { MyContext } from '../../App';
 // import Nav from './nav';
 
 const CartBadge = styled(Badge)`
@@ -20,6 +21,9 @@ const CartBadge = styled(Badge)`
 `;
 
 const Header = () => {
+
+    const context = useContext(MyContext)
+
   return (
     <>
         <header className='bg-white'>
@@ -69,13 +73,15 @@ const Header = () => {
               <CartBadge badgeContent={5} color="primary" overlap="circular" />
            </IconButton>
 
-            <IconButton className='!min-w-[45px] !w-[45px] !h-[45px] !rounded-full !bg-gray-100 hover:!bg-gray-200'>
-              <AiOutlineShoppingCart size={20} className='text-gray-700' />
-              <CartBadge badgeContent={5} color="primary" overlap="circular" />
-           </IconButton>
 
            <IconButton className='!min-w-[45px] !w-[45px] !h-[45px] !rounded-full !bg-gray-100 hover:!bg-gray-200'>
               <FaRegHeart size={20} className='text-gray-700' />
+              <CartBadge badgeContent={5} color="primary" overlap="circular" />
+           </IconButton>
+
+              <IconButton className='!min-w-[45px] !w-[45px] !h-[45px] !rounded-full !bg-gray-100 hover:!bg-gray-200'
+              onClick={() => context.setOpenCartPanel(true)}>
+              <AiOutlineShoppingCart size={20} className='text-gray-700' />
               <CartBadge badgeContent={5} color="primary" overlap="circular" />
            </IconButton>
 

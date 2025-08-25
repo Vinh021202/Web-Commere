@@ -23,6 +23,7 @@ header .top-strip{border-top: 1px solid rgb(0, 0,0,0.1);border-bottom: 1px solid
 .bg-org{background: #ff5252 !important; color: #fff !important; font-weight: 500; font-size: 16px;
 padding: 7px 20px !important;}
 .bg-org:hover{background: #171717 !important;}
+.btn-lg{font-size: 16px; padding: 10px 20px !important;}
 
 .bg-primary{background-color: #ff5252;}
 
@@ -124,3 +125,5 @@ input[type=number]::-webkit-outer-spin-button {
 
 .productDetailsModal .MuiDialogContent-root{padding: 0px !important;}
 /* .productDetailsModal button{color: #000;} */
+
+.cartPanel .MuiPaper-root{width: 400px; overflow: hidden;}
