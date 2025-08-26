@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -11,46 +11,45 @@ import { Navigation } from 'swiper/modules';
 const ProductsSlider = (props) => {
   return (
     <>
-        <div className='productsSlider py-3'>
+      <div className="productsSlider py-3">
         <Swiper
-        slidesPerView={props.items}
-        spaceBetween={10}
-        navigation={true}
-        modules={[Navigation]}
-        className="mySwiper"
-      >
-        <SwiperSlide>
+          slidesPerView={props.items}
+          spaceBetween={10}
+          navigation={true}
+          modules={[Navigation]}
+          className="mySwiper"
+        >
+          <SwiperSlide>
             <ProductsItem />
-        </SwiperSlide>
+          </SwiperSlide>
 
-         <SwiperSlide>
+          <SwiperSlide>
             <ProductsItem />
-        </SwiperSlide>
+          </SwiperSlide>
 
-         <SwiperSlide>
+          <SwiperSlide>
             <ProductsItem />
-        </SwiperSlide>
+          </SwiperSlide>
 
-         <SwiperSlide>
+          <SwiperSlide>
             <ProductsItem />
-        </SwiperSlide>
+          </SwiperSlide>
 
-         <SwiperSlide>
+          <SwiperSlide>
             <ProductsItem />
-        </SwiperSlide>
+          </SwiperSlide>
 
-         <SwiperSlide>
+          <SwiperSlide>
             <ProductsItem />
-        </SwiperSlide>
+          </SwiperSlide>
 
-         <SwiperSlide>
+          <SwiperSlide>
             <ProductsItem />
-        </SwiperSlide>
-      </Swiper>
-           
-        </div>
+          </SwiperSlide>
+        </Swiper>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default ProductsSlider
+export default ProductsSlider;
