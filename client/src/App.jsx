@@ -16,6 +16,11 @@ import ProductDetailsComponent from './componets/ProductDetails';
 import Login from './Page/Login';
 import Register from './Page/Register';
 import CartPage from './Page/Cart';
+import Verify from './Page/Verify';
+import Checkout from './Page/Checkout';
+
+import toast, { Toaster } from 'react-hot-toast';
+import ForgotPassword from './Page/ForgotPassword';
 
 const MyContext = createContext();
 
@@ -34,6 +39,15 @@ function App() {
     setOpenCartPanel(newOpen);
   };
 
+  const openAlertBox = (status, msg) => {
+    if (status === 'success') {
+      toast.success(msg);
+    }
+    if (status === 'error') {
+      toast.error(msg);
+    }
+  };
+
   const handleCloseProductDetailsModal = () => {
     setOpenProductDetailsModal(false);
   };
@@ -43,6 +57,7 @@ function App() {
     setOpenCartPanel,
     openCartPanel,
     toggleCartPanel,
+    openAlertBox,
   };
 
   return (
@@ -57,10 +72,15 @@ function App() {
             <Route path={'/login'} exact={true} element={<Login />} />
             <Route path={'/Register'} exact={true} element={<Register />} />
             <Route path={'/cart'} exact={true} element={<CartPage />} />
+            <Route path={'/verify'} exact={true} element={<Verify />} />
+            <Route path={'/forgot-password'} exact={true} element={<ForgotPassword />} />
+            <Route path={'/checkout'} exact={true} element={<Checkout />} />
           </Routes>
           <Footer />
         </MyContext.Provider>
       </BrowserRouter>
+
+      <Toaster />
 
       <Dialog
         open={openProductDetailsModal}
