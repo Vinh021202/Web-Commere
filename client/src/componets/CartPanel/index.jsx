@@ -170,7 +170,7 @@ const CartPanel = () => {
             <Button className="bg-org btn-lg w-full">View Cart</Button>
           </Link>
           <Link to="/checkout" className="w-[50%] d-block">
-            <Button className="bg-org btn-lg w-full">Checkout</Button>
+            <Button className="bg-org btn-border btn-lg w-full">Checkout</Button>
           </Link>
         </div>
       </div>
