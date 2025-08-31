@@ -112,7 +112,7 @@ const ProductDetails = () => {
 
           {activeTab === 1 && (
             <>
-              <div class="relative overflow-x-auto">
+              <div class="relative overflow-x-auto mt-5">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                     <tr>
