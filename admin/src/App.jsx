@@ -2,7 +2,7 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard";
 import Header from "./Components/Header";
-import Sidebar from "./Components/Sidebar";
+import SideBar from "./Components/SideBar";
 
 function App() {
   const router = createBrowserRouter([
@@ -15,7 +15,10 @@ function App() {
             <Header />
             <div className="contentMain flex">
               <div className="sidebarWrapper w-[18%]">
-                <Sidebar />
+                <SideBar />
+              </div>
+              <div className="contentRight py-3 px-5 w-[82%]">
+                <Dashboard />
               </div>
             </div>
           </section>

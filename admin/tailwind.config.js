@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default  {
+export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,13 +8,11 @@ export default  {
   theme: {
     extend: {
       colors: {
-        primary : '#ff5252',
-        secondary: '#ccc',
+        primary: "#3872fa",
       },
       backgroundColor: {
-        primary: '#ff5252',
-        secondary: '#ccc',
-      }
+        primary: "#3872fa",
+      },
     },
   },
   plugins: [],
