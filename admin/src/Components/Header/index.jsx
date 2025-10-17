@@ -50,6 +50,7 @@ const Header = () => {
           </Button>
         </div>
 
+
         <div className="part2 w-[40%] flex items-center justify-end gap-5">
           <IconButton aria-label="cart">
             <StyledBadge badgeContent={4} color="secondary">
@@ -57,13 +58,15 @@ const Header = () => {
             </StyledBadge>
           </IconButton>
 
-          <div className="relative">
+          {
+              context.isLogin === true ? (   <div className="relative">
             <div
               className="rounded-full w-[35px] h-[35px] overflow-hidden cursor-pointer"
               onClick={handleClickMyAcc}
             >
               <img src="/user.jpg" className="w-full h-full object-cover" />
             </div>
+
 
             <Menu
               anchorEl={anchorElMyAcc}
@@ -140,7 +143,13 @@ const Header = () => {
                 <span className="text-[14px]">Sign Out</span>
               </MenuItem>
             </Menu>
-          </div>
+          </div>) : (
+            <Button className="btn-blue btn-sm !rounded-full">
+                Login
+            </Button>
+          )
+            }
+
         </div>
       </header>
     </>

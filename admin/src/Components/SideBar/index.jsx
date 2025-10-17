@@ -31,7 +31,7 @@ const SideBar = () => {
          border-[rgba(0,0,0,0.1)] py-2 px-4 w-[${context.isSiderOpen === true ? "18%" : "0px"}] `}>
         <div className="py-2 w-full">
           <Link to={"/"}>
-            <img src="/logo12.png" className="w-[130px] " />
+            <img src="/7_logo.jpg" className="w-[200px] " />
           </Link>
         </div>
 
