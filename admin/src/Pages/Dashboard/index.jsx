@@ -1,4 +1,4 @@
-import React, { useState, PureComponent } from "react";
+import React, { useState, PureComponent, useContext } from "react";
 import DashboardBoxes from "../../Components/DashboardBoxes";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa";
@@ -20,9 +20,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import { MyContext } from "../../App";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -56,8 +66,6 @@ function createData(name, code, population, size) {
   return { name, code, population, size, density };
 }
 
-
-
 const Dashboard = () => {
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
 
@@ -72,82 +80,83 @@ const Dashboard = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [categoryFilterVal, setCategoryFilterVal] = useState('');
-  const [chart1Data, setChart1Data]= useState([
-  {
-    name: 'JAN',
-    TotalUsers: 4000,
-    TotalSales: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'FEB',
-    TotalUsers: 3000,
-    TotalSales: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'MARCH',
-    TotalUsers: 2000,
-    TotalSales: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'APRIL',
-    TotalUsers: 2780,
-    TotalSales: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'MAY',
-    TotalUsers: 1890,
-    TotalSales: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'JUNE',
-    TotalUsers: 2390,
-    TotalSales: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'JULY',
-    TotalUsers: 3490,
-    TotalSales: 4300,
-    amt: 2100,
-  },
-   {
-    name: 'AUG',
-    TotalUsers: 3490,
-    TotalSales: 4300,
-    amt: 2100,
-  },
-   {
-    name: 'SEP',
-    TotalUsers: 3490,
-    TotalSales: 4300,
-    amt: 2100,
-  },
-   {
-    name: 'OCT',
-    TotalUsers: 3490,
-    TotalSales: 4300,
-    amt: 2100,
-  },
-   {
-    name: 'NOV',
-    TotalUsers: 3490,
-    TotalSales: 4300,
-    amt: 2100,
-  },
-   {
-    name: 'DEC',
-    TotalUsers: 3490,
-    TotalSales: 4300,
-    amt: 2100,
-  },
+  const [categoryFilterVal, setCategoryFilterVal] = useState("");
+  const [chart1Data, setChart1Data] = useState([
+    {
+      name: "JAN",
+      TotalUsers: 4000,
+      TotalSales: 2400,
+      amt: 2400,
+    },
+    {
+      name: "FEB",
+      TotalUsers: 3000,
+      TotalSales: 1398,
+      amt: 2210,
+    },
+    {
+      name: "MARCH",
+      TotalUsers: 2000,
+      TotalSales: 9800,
+      amt: 2290,
+    },
+    {
+      name: "APRIL",
+      TotalUsers: 2780,
+      TotalSales: 3908,
+      amt: 2000,
+    },
+    {
+      name: "MAY",
+      TotalUsers: 1890,
+      TotalSales: 4800,
+      amt: 2181,
+    },
+    {
+      name: "JUNE",
+      TotalUsers: 2390,
+      TotalSales: 3800,
+      amt: 2500,
+    },
+    {
+      name: "JULY",
+      TotalUsers: 3490,
+      TotalSales: 4300,
+      amt: 2100,
+    },
+    {
+      name: "AUG",
+      TotalUsers: 3490,
+      TotalSales: 4300,
+      amt: 2100,
+    },
+    {
+      name: "SEP",
+      TotalUsers: 3490,
+      TotalSales: 4300,
+      amt: 2100,
+    },
+    {
+      name: "OCT",
+      TotalUsers: 3490,
+      TotalSales: 4300,
+      amt: 2100,
+    },
+    {
+      name: "NOV",
+      TotalUsers: 3490,
+      TotalSales: 4300,
+      amt: 2100,
+    },
+    {
+      name: "DEC",
+      TotalUsers: 3490,
+      TotalSales: 4300,
+      amt: 2100,
+    },
+  ]);
 
-])
+  const context = useContext(MyContext);
 
   const handleChangeCatFilter = (event) => {
     setCategoryFilterVal(event.target.value);
@@ -179,7 +188,15 @@ const Dashboard = () => {
           </p>
           <br />
 
-          <Button className="btn-blue !capitalize">
+          <Button
+            className="btn-blue !capitalize"
+            onClick={() =>
+              context.setIsOpenFullScreenPanel({
+                open: true,
+                model: "Add Product",
+              })
+            }
+          >
             <FaPlus />
             Add Product
           </Button>
@@ -195,33 +212,44 @@ const Dashboard = () => {
             <span className="text-[14px] font-[400]">(Tailwind Css Table)</span>
           </h2>
         </div>
-           <div className="flex items-center w-full pl-5 justify-between pr-5">
-            <div className="col w-[20%]">
-              <h4 className="font-[600] text-[13px] mb-2">Category By</h4>
-              <Select
-          className="w-full"
-          size="small"
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={categoryFilterVal} 
-          onChange={handleChangeCatFilter}
-          label="Category"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Men</MenuItem>
-          <MenuItem value={20}>Women</MenuItem>
-          <MenuItem value={30}>Kids</MenuItem>
-        </Select>
-            </div>
-
-            <div className="col w-[25%] ml-auto flex items-center gap-3">
-                <Button className="btn !bg-green-600 !text-white btn-sm ">Export</Button>
-                <Button className="btn-blue  !text-white btn-sm">Add Product</Button>
-            </div>
+        <div className="flex items-center w-full pl-5 justify-between pr-5">
+          <div className="col w-[20%]">
+            <h4 className="font-[600] text-[13px] mb-2">Category By</h4>
+            <Select
+              className="w-full"
+              size="small"
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={categoryFilterVal}
+              onChange={handleChangeCatFilter}
+              label="Category"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Men</MenuItem>
+              <MenuItem value={20}>Women</MenuItem>
+              <MenuItem value={30}>Kids</MenuItem>
+            </Select>
           </div>
 
+          <div className="col w-[25%] ml-auto flex items-center gap-3">
+            <Button className="btn !bg-green-600 !text-white btn-sm ">
+              Export
+            </Button>
+            <Button
+              className="btn-blue  !text-white btn-sm"
+              onClick={() =>
+                context.setIsOpenFullScreenPanel({
+                  open: true,
+                  model: "Add Product",
+                })
+              }
+            >
+              Add Product
+            </Button>
+          </div>
+        </div>
 
         <div className="relative overflow-x-auto mt-5 pb-5">
           <table className=" w-full text-sm text-left rtl:text-right text-gray-500 ">
@@ -303,32 +331,29 @@ const Dashboard = () => {
                 </td>
                 <td className="px-6 py-2">
                   <div className="flex items-center gap-4">
-                    
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
-                      </Button>
-                
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    >
+                      <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
+                    </Button>
+
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                      </Button>
-  
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    >
+                      <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
+                    </Button>
+
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                      </Button>
+                    >
+                      <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
+                    </Button>
                   </div>
                 </td>
               </tr>
-
-           
             </tbody>
           </table>
         </div>
@@ -346,40 +371,44 @@ const Dashboard = () => {
           </h2>
         </div>
 
-             <div className="flex items-center w-full pl-5 justify-between pr-5">
-            <div className="col w-[20%]">
-              <h4 className="font-[600] text-[13px] mb-2">Category By</h4>
-              <Select
-          className="w-full"
-          size="small"
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={categoryFilterVal} 
-          onChange={handleChangeCatFilter}
-          label="Category"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Men</MenuItem>
-          <MenuItem value={20}>Women</MenuItem>
-          <MenuItem value={30}>Kids</MenuItem>
-        </Select>
-            </div>
-
-            <div className="col w-[25%] ml-auto flex items-center gap-3">
-                <Button className="btn !bg-green-600 !text-white btn-sm ">Export</Button>
-                <Button className="btn-blue  !text-white btn-sm">Add Product</Button>
-            </div>
+        <div className="flex items-center w-full pl-5 justify-between pr-5">
+          <div className="col w-[20%]">
+            <h4 className="font-[600] text-[13px] mb-2">Category By</h4>
+            <Select
+              className="w-full"
+              size="small"
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={categoryFilterVal}
+              onChange={handleChangeCatFilter}
+              label="Category"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Men</MenuItem>
+              <MenuItem value={20}>Women</MenuItem>
+              <MenuItem value={30}>Kids</MenuItem>
+            </Select>
           </div>
+
+          <div className="col w-[25%] ml-auto flex items-center gap-3">
+            <Button className="btn !bg-green-600 !text-white btn-sm ">
+              Export
+            </Button>
+            <Button className="btn-blue  !text-white btn-sm">
+              Add Product
+            </Button>
+          </div>
+        </div>
 
         <br />
 
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead >
+            <TableHead>
               <TableRow>
-                <TableCell >
+                <TableCell>
                   <Checkbox {...label} size="small" />
                 </TableCell>
                 {columns.map((column) => (
@@ -419,13 +448,13 @@ const Dashboard = () => {
                   </div>
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                Electronics
+                  Electronics
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   Women
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <div className="flex  gap-1 flex-col">
+                  <div className="flex  gap-1 flex-col">
                     <span className="oldPrice line-through  leading-3 text-[14px] font-[500]">
                       $58.00
                     </span>
@@ -435,39 +464,38 @@ const Dashboard = () => {
                   </div>
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <p className="text-[14px] w-[100px]">
+                  <p className="text-[14px] w-[100px]">
                     <span className="font-[600]">234</span> sale
                   </p>
                   <ProgressBar value={40} type="success" />
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <div className="flex items-center gap-4">
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                  <div className="flex items-center gap-4">
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
-                      </Button>
+                    >
+                      <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
+                    </Button>
 
-
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                      </Button>
+                    >
+                      <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
+                    </Button>
 
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      > 
-                        <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                      </Button>
+                    >
+                      <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
 
-               <TableRow>
+              <TableRow>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   <Checkbox {...label} size="small" />
                 </TableCell>
@@ -492,13 +520,13 @@ const Dashboard = () => {
                   </div>
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                Electronics
+                  Electronics
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   Women
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <div className="flex  gap-1 flex-col">
+                  <div className="flex  gap-1 flex-col">
                     <span className="oldPrice line-through  leading-3 text-[14px] font-[500]">
                       $58.00
                     </span>
@@ -508,39 +536,38 @@ const Dashboard = () => {
                   </div>
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <p className="text-[14px] w-[100px]">
+                  <p className="text-[14px] w-[100px]">
                     <span className="font-[600]">234</span> sale
                   </p>
                   <ProgressBar value={40} type="success" />
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <div className="flex items-center gap-4">
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                  <div className="flex items-center gap-4">
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
-                      </Button>
+                    >
+                      <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
+                    </Button>
 
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                      </Button>
+                    >
+                      <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
+                    </Button>
 
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      > 
-                        <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                      </Button>
+                    >
+                      <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
 
-
-               <TableRow>
+              <TableRow>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   <Checkbox {...label} size="small" />
                 </TableCell>
@@ -565,13 +592,13 @@ const Dashboard = () => {
                   </div>
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                Electronics
+                  Electronics
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   Women
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <div className="flex  gap-1 flex-col">
+                  <div className="flex  gap-1 flex-col">
                     <span className="oldPrice line-through  leading-3 text-[14px] font-[500]">
                       $58.00
                     </span>
@@ -581,40 +608,38 @@ const Dashboard = () => {
                   </div>
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <p className="text-[14px] w-[100px]">
+                  <p className="text-[14px] w-[100px]">
                     <span className="font-[600]">234</span> sale
                   </p>
                   <ProgressBar value={40} type="success" />
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <div className="flex items-center gap-4">
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                  <div className="flex items-center gap-4">
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
-                      </Button>
+                    >
+                      <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
+                    </Button>
 
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                      </Button>
-    
+                    >
+                      <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
+                    </Button>
 
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      > 
-                        <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                      </Button>
+                    >
+                      <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
 
-
-               <TableRow>
+              <TableRow>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   <Checkbox {...label} size="small" />
                 </TableCell>
@@ -639,13 +664,13 @@ const Dashboard = () => {
                   </div>
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                Electronics
+                  Electronics
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   Women
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <div className="flex  gap-1 flex-col">
+                  <div className="flex  gap-1 flex-col">
                     <span className="oldPrice line-through  leading-3 text-[14px] font-[500]">
                       $58.00
                     </span>
@@ -655,35 +680,33 @@ const Dashboard = () => {
                   </div>
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <p className="text-[14px] w-[100px]">
+                  <p className="text-[14px] w-[100px]">
                     <span className="font-[600]">234</span> sale
                   </p>
                   <ProgressBar value={40} type="success" />
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
-                 <div className="flex items-center gap-4">
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                  <div className="flex items-center gap-4">
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
-                      </Button>
-  
+                    >
+                      <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
+                    </Button>
 
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      >
-                        <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                      </Button>
-  
+                    >
+                      <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
+                    </Button>
 
-                      <Button
-                        className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
+                    <Button
+                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
                     !rounded-full hover:!bg-[#f1f1f1]"
-                      > 
-                        <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                      </Button>
+                    >
+                      <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
@@ -899,7 +922,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-        <div className="card my-4 shadow-sm sm:rounded-lg bg-white/70 backdrop-blur-md border border-gray-200">
+      <div className="card my-4 shadow-sm sm:rounded-lg bg-white/70 backdrop-blur-md border border-gray-200">
         <div className="flex items-center justify-between px-5 py-5 pb-0">
           <h2 className="text-[18px] font-[600]">Total Users & Total Sales</h2>
         </div>
@@ -907,34 +930,46 @@ const Dashboard = () => {
         <div className="flex items-center gap-5 px-5 py-5 pt-1">
           <span className="flex items-center gap-1 text-[15px]">
             <span className="block w-[8px] h-[8px] rounded-full bg-green-600"></span>
-          Total Users</span>
+            Total Users
+          </span>
 
           <span className="flex items-center gap-1 text-[15px]">
             <span className="block w-[8px] h-[8px] rounded-full bg-primary"></span>
-          Total Sales</span>
+            Total Sales
+          </span>
         </div>
 
         <LineChart
-        width={1000}
-        height={500}
-        data={chart1Data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" stroke="none" />
-        <XAxis dataKey="name" tick= {{fontSize: 12}}/>
-        <YAxis tick= {{fontSize: 12}} />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="TotalSales" stroke="#8884d8" strokeWidth={3} activeDot={{ r: 8 }} />
-        <Line type="monotone" dataKey="TotalUsers" stroke="#82ca9d" strokeWidth={3}/>
-        
-      </LineChart>
-        </div>
+          width={1000}
+          height={500}
+          data={chart1Data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke="none" />
+          <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+          <YAxis tick={{ fontSize: 12 }} />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="TotalSales"
+            stroke="#8884d8"
+            strokeWidth={3}
+            activeDot={{ r: 8 }}
+          />
+          <Line
+            type="monotone"
+            dataKey="TotalUsers"
+            stroke="#82ca9d"
+            strokeWidth={3}
+          />
+        </LineChart>
+      </div>
     </>
   );
 };
