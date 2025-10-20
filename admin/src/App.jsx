@@ -22,6 +22,14 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { IoMdClose } from "react-icons/io";
 import Slide from "@mui/material/Slide";
+import HomeSliderBanners from "./Pages/HomeSliderBanners";
+import AddHomeSlide from "./Pages/HomeSliderBanners/addHomeSlide";
+import Categegory from "./Pages/Categegory";
+import AddCategory from "./Pages/Categegory/addCategory";
+import SubCatList from "./Pages/Categegory/subCatList";
+import AddSubCategory from "./Pages/Categegory/addSubCategory";
+import Users from "./Pages/Users";
+import Orders from "./Pages/Orders";
 
 // ✅ Khai báo context ở ngoài hàm App
 const MyContext = createContext();
@@ -107,6 +115,136 @@ function App() {
         </>
       ),
     },
+    {
+      path: "/homeSlider/list",
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSiderOpen === true ? "w-[18%]" : "w-[0px] opacity-0"
+                } transition-all`}
+              >
+                <SideBar />
+              </div>
+              <div
+                className={`contentRight py-4 px-5  ${
+                  isSiderOpen === false ? "w-[100%]" : "w-[82%]"
+                } transition-all`}
+              >
+                <HomeSliderBanners />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
+    {
+      path: "/category/list",
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSiderOpen === true ? "w-[18%]" : "w-[0px] opacity-0"
+                } transition-all`}
+              >
+                <SideBar />
+              </div>
+              <div
+                className={`contentRight py-4 px-5  ${
+                  isSiderOpen === false ? "w-[100%]" : "w-[82%]"
+                } transition-all`}
+              >
+                <Categegory />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
+    {
+      path: "/subCategory/list",
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSiderOpen === true ? "w-[18%]" : "w-[0px] opacity-0"
+                } transition-all`}
+              >
+                <SideBar />
+              </div>
+              <div
+                className={`contentRight py-4 px-5  ${
+                  isSiderOpen === false ? "w-[100%]" : "w-[82%]"
+                } transition-all`}
+              >
+                <SubCatList />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
+    {
+      path: "/user",
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSiderOpen === true ? "w-[18%]" : "w-[0px] opacity-0"
+                } transition-all`}
+              >
+                <SideBar />
+              </div>
+              <div
+                className={`contentRight py-4 px-5  ${
+                  isSiderOpen === false ? "w-[100%]" : "w-[82%]"
+                } transition-all`}
+              >
+                <Users />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
+    {
+      path: "/orders",
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSiderOpen === true ? "w-[18%]" : "w-[0px] opacity-0"
+                } transition-all`}
+              >
+                <SideBar />
+              </div>
+              <div
+                className={`contentRight py-4 px-5  ${
+                  isSiderOpen === false ? "w-[100%]" : "w-[82%]"
+                } transition-all`}
+              >
+                <Orders />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
   ]);
 
   const values = {
@@ -156,6 +294,11 @@ function App() {
           </Toolbar>
         </AppBar>
         {isOpenFullScreenPanel?.model === "Add Product" && <AddProduct />}
+        {isOpenFullScreenPanel?.model === "Add Home Slide" && <AddHomeSlide />}
+        {isOpenFullScreenPanel?.model === "Add New Category" && <AddCategory />}
+        {isOpenFullScreenPanel?.model === "Add New Sub Category" && (
+          <AddSubCategory />
+        )}
       </Dialog>
     </MyContext.Provider>
   );
