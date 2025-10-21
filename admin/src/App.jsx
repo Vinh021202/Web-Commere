@@ -30,6 +30,9 @@ import SubCatList from "./Pages/Categegory/subCatList";
 import AddSubCategory from "./Pages/Categegory/addSubCategory";
 import Users from "./Pages/Users";
 import Orders from "./Pages/Orders";
+import ForgotPassword from "./Pages/ForgotPassword";
+import VerifyAccount from "./Pages/VerifyAccount";
+import ChangePassword from "./Pages/ChangePassword";
 
 // ✅ Khai báo context ở ngoài hàm App
 const MyContext = createContext();
@@ -40,7 +43,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 function App() {
   const [isSiderOpen, setIsSiderOpen] = useState(true);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [isOpenFullScreenPanel, setIsOpenFullScreenPanel] = useState({
     open: false,
     model: "",
@@ -74,7 +77,7 @@ function App() {
       ),
     },
     {
-      path: "/Login",
+      path: "/login",
       element: (
         <>
           <Login />
@@ -89,6 +92,31 @@ function App() {
         </>
       ),
     },
+    {
+      path: "/forgot-password",
+      element: (
+        <>
+          <ForgotPassword />
+        </>
+      ),
+    },
+    {
+      path: "/verify-account",
+      element: (
+        <>
+          <VerifyAccount />
+        </>
+      ),
+    },
+    {
+      path: "/change-password",
+      element: (
+        <>
+          <ChangePassword />
+        </>
+      ),
+    },
+
     {
       path: "/products",
       element: (

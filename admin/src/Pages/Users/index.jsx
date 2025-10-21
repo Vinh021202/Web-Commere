@@ -20,6 +20,7 @@ import SearchBox from "../../Components/SearchBox";
 import { MyContext } from "../../App";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 import { MdLocalPhone } from "react-icons/md";
+import { SlCalender } from "react-icons/sl";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -34,6 +35,11 @@ const columns = [
   {
     id: "userPh",
     label: "USER PHONE",
+    minWidth: 150,
+  },
+  {
+    id: "createdDate",
+    label: "CREATE",
     minWidth: 150,
   },
 ];
@@ -98,7 +104,7 @@ const Users = () => {
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   <div className="flex items-center gap-4 w-[70px]">
-                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
+                    <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
                       <Link to={"/product/45745"}>
                         <img
                           src="/user.jpg"
@@ -119,6 +125,155 @@ const Users = () => {
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   <span className="flex items-center gap-2">
                     <MdLocalPhone /> +84-946565316{" "}
+                  </span>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <SlCalender /> 20-10-2025{" "}
+                  </span>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <Checkbox {...label} size="small" />
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <div className="flex items-center gap-4 w-[70px]">
+                    <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
+                      <Link to={"/product/45745"}>
+                        <img
+                          src="/user.jpg"
+                          className="w-full group-hover:scale-105"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  Vinh Tran
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <MdOutlineMarkEmailRead /> quocvinhtran.0212@gmail.com{" "}
+                  </span>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <MdLocalPhone /> +84-946565316{" "}
+                  </span>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <SlCalender /> 20-10-2025{" "}
+                  </span>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <Checkbox {...label} size="small" />
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <div className="flex items-center gap-4 w-[70px]">
+                    <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
+                      <Link to={"/product/45745"}>
+                        <img
+                          src="/user.jpg"
+                          className="w-full group-hover:scale-105"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  Vinh Tran
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <MdOutlineMarkEmailRead /> quocvinhtran.0212@gmail.com{" "}
+                  </span>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <MdLocalPhone /> +84-946565316{" "}
+                  </span>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <SlCalender /> 20-10-2025{" "}
+                  </span>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <Checkbox {...label} size="small" />
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <div className="flex items-center gap-4 w-[70px]">
+                    <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
+                      <Link to={"/product/45745"}>
+                        <img
+                          src="/user.jpg"
+                          className="w-full group-hover:scale-105"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  Vinh Tran
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <MdOutlineMarkEmailRead /> quocvinhtran.0212@gmail.com{" "}
+                  </span>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <MdLocalPhone /> +84-946565316{" "}
+                  </span>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <SlCalender /> 20-10-2025{" "}
+                  </span>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <Checkbox {...label} size="small" />
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <div className="flex items-center gap-4 w-[70px]">
+                    <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
+                      <Link to={"/product/45745"}>
+                        <img
+                          src="/user.jpg"
+                          className="w-full group-hover:scale-105"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  Vinh Tran
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <MdOutlineMarkEmailRead /> quocvinhtran.0212@gmail.com{" "}
+                  </span>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <MdLocalPhone /> +84-946565316{" "}
+                  </span>
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <span className="flex items-center gap-2">
+                    <SlCalender /> 20-10-2025{" "}
                   </span>
                 </TableCell>
               </TableRow>

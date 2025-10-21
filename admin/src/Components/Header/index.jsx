@@ -11,6 +11,7 @@ import Divider from "@mui/material/Divider";
 import { FaRegUser } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import { MyContext } from "../../App";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [anchorElMyAcc, setAnchorElMyAcc] = useState(null);
@@ -60,7 +61,7 @@ const Header = () => {
             </StyledBadge>
           </IconButton>
 
-          {context.isLogin === true ? (
+          {context.isLogin === false ? (
             <div className="relative">
               <div
                 className="rounded-full w-[35px] h-[35px] overflow-hidden cursor-pointer"
@@ -146,7 +147,9 @@ const Header = () => {
               </Menu>
             </div>
           ) : (
-            <Button className="btn-blue btn-sm !rounded-full">Sign In</Button>
+            <Link to={"/login"}>
+              <Button className="btn-blue btn-sm !rounded-full">Sign In</Button>
+            </Link>
           )}
         </div>
       </header>
