@@ -1,69 +1,84 @@
-import { verify } from "jsonwebtoken";
+// import { verify } from "jsonwebtoken";
 import mongoose from "mongoose";
 
-const userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema(
+  {
     name: {
-        type: String,
-        requered: [true, "Provide name"],
+      type: String,
+      requered: [true, "Provide name"],
     },
     email: {
-        type: String,
-        requered: [true, "Provide email"],
-        unique: true,
+      type: String,
+      requered: [true, "Provide email"],
+      unique: true,
     },
     password: {
-        type: String,
-        requered: [true, "Provide password"],
+      type: String,
+      requered: [true, "Provide password"],
     },
     avatar: {
-        type: String,
-        default: "",
+      type: String,
+      default: "",
     },
     mobile: {
-        type: Number,
-        default: null,
+      type: Number,
+      default: null,
     },
     verify_email: {
-        type: Boolean,
-        default: false,
+      type: Boolean,
+      default: true,
+    },
+    access_token: {
+      type: String,
+      default: "",
+    },
+    refresh_token: {
+      type: String,
+      default: "",
     },
     last_login_date: {
-        type: Date,
-        default: "",
+      type: Date,
+      default: "",
     },
     status: {
-        type: String,
-        enum: ["Active", "Inactive", "Suspended"],
-        default: "Active",
+      type: String,
+      enum: ["Active", "Inactive", "Suspended"],
+      default: "Active",
     },
-    address_details: [{
+    address_details: [
+      {
         type: mongoose.Schema.ObjectId,
         ref: "address",
-    }, ],
-    shopping_cart: [{
+      },
+    ],
+    shopping_cart: [
+      {
         type: mongoose.Schema.ObjectId,
         ref: "cartProduct",
-    }, ],
-    shopping_cart: [{
+      },
+    ],
+    shopping_cart: [
+      {
         type: mongoose.Schema.ObjectId,
         ref: "order",
-    }, ],
-    forgot_password_otp: {
-        type: String,
-        default: null,
+      },
+    ],
+    otp: {
+      type: String,
     },
-    forgot_password_expiry: {
-        type: Date,
-        default: "",
+    otpExpires: {
+      type: Date,
     },
     role: {
-        type: String,
-        enum: ["ADMIN", "USER"],
-        default: "USER",
+      type: String,
+      enum: ["ADMIN", "USER"],
+      default: "USER",
     },
-}, {
+  },
+  {
     timestamps: true,
-});
+  }
+);
 
 const UserModel = mongoose.model("User", userSchema);
 
