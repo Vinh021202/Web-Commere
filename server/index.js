@@ -6,6 +6,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import connectDB from "./config/connectDB.js";
 import userRouter from "./route/user.route.js";
+import categoryRouter from "./route/category.route.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000; // 🔹 khai báo ở đây
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", userRouter);
+app.use("/api/category", categoryRouter);
 
 // Kết nối DB và khởi động server
 await connectDB();
