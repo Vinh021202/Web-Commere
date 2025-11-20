@@ -3,8 +3,13 @@ import auth from "../middleware/auth.js";
 import upload from "../middleware/multer.js";
 import {
   createCategory,
+  deleteCategory,
   getCategories,
+  getCategory,
   getCategoryCount,
+  getSubCategoryCount,
+  removeImageFromCloudinary,
+  updateCategory,
   uploadImages,
 } from "../controllers/category.controller.js";
 
@@ -16,7 +21,12 @@ categoryRouter.post(
   uploadImages
 );
 categoryRouter.post("/create", auth, upload.array("images"), createCategory);
-categoryRouter.get("/", auth, getCategories);
-categoryRouter.get("/get/count", auth, getCategoryCount);
+categoryRouter.get("/", getCategories);
+categoryRouter.get("/get/count", getCategoryCount);
+categoryRouter.get("/get/count/subCat", getSubCategoryCount);
+categoryRouter.get("/:id", getCategory);
+categoryRouter.delete("/deteleImage", auth, removeImageFromCloudinary);
+categoryRouter.delete("/:id", auth, deleteCategory);
+categoryRouter.put("/:id", auth, updateCategory);
 
 export default categoryRouter;
