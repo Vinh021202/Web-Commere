@@ -1,10 +1,8 @@
 import CategoryModel from "../models/category.model.js";
 
 import { v2 as cloudinary } from "cloudinary";
-import { error } from "console";
 import e from "express";
 import fs from "fs";
-import { console } from "inspector";
 import mongoose from "mongoose";
 
 // Configuration
