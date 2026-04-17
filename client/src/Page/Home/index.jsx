@@ -80,7 +80,13 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    fetchDataFromApi(`/api/product/getAllProductsByCatId/${context?.catData[0]?._id}`).then((res) => {
+    const firstCategoryId = context?.catData?.[0]?._id;
+
+    if (!firstCategoryId) {
+      return;
+    }
+
+    fetchDataFromApi(`/api/product/getAllProductsByCatId/${firstCategoryId}`).then((res) => {
       if (res?.error === false) {
         setPopularProducsData(res?.products);
       }
@@ -92,6 +98,10 @@ const Home = () => {
   };
 
   const filterByCatId = (id) => {
+    if (!id) {
+      return;
+    }
+
     setPopularProducsData([]);
     fetchDataFromApi(`/api/product/getAllProductsByCatId/${id}`).then((res) => {
       if (res?.error === false) {

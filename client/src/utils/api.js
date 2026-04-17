@@ -1,27 +1,46 @@
 import axios from 'axios';
-import { LoaderIcon } from 'react-hot-toast';
 
-const apiUrl = import.meta.env.VITE_API_URL;
+const rawApiUrl = import.meta.env.VITE_API_URL || '';
+const apiUrl = rawApiUrl.replace(/\/+$/, '');
+
+const buildUrl = (url = '') => {
+  if (!url) {
+    return apiUrl;
+  }
+
+  if (/^https?:\/\//i.test(url)) {
+    return url;
+  }
+
+  const normalizedPath = url.startsWith('/') ? url : `/${url}`;
+  return apiUrl ? `${apiUrl}${normalizedPath}` : normalizedPath;
+};
+
+const getAuthHeaders = (includeJsonContentType = false) => {
+  const token = localStorage.getItem('accesstoken');
+  const headers = {};
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  if (includeJsonContentType) {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  return headers;
+};
 
 export const postData = async (url, formData) => {
   try {
-
-    const response = await fetch(apiUrl + url, {
+    const response = await fetch(buildUrl(url), {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accesstoken')}`,
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(true),
       body: JSON.stringify(formData),
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      const errorData = await response.json();
-      return errorData;
-    }
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.log(error);
     return { success: false };
@@ -30,15 +49,11 @@ export const postData = async (url, formData) => {
 
 export const fetchDataFromApi = async (url) => {
   try {
+    const params = {
+      headers: getAuthHeaders(false),
+    };
 
-      const params = {
-      headers: {
-       Authorization: `Bearer ${localStorage.getItem('accesstoken')}`,
-        'Content-Type': 'application/json',
-      },
-    }
-    const { data } = await axios.get(apiUrl + url, params);
-
+    const { data } = await axios.get(buildUrl(url), params);
     return data;
   } catch (error) {
     console.log(error);
@@ -49,45 +64,39 @@ export const fetchDataFromApi = async (url) => {
 export const uploadImage = async (url, updatedData) => {
   const params = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('accesstoken')}`,
+      ...getAuthHeaders(false),
       'Content-Type': 'multipart/form-data',
     },
   };
 
   try {
-    const res = await axios.put(apiUrl + url, updatedData, params);
-    return res; // ✅ return đúng cách
+    const res = await axios.put(buildUrl(url), updatedData, params);
+    return res;
   } catch (error) {
-    console.error('editData error:', error?.response?.data); // ✅ xem lỗi backend rõ hơn
+    console.error('uploadImage error:', error?.response?.data);
     return error?.response;
   }
 };
 
 export const editData = async (url, updatedData) => {
   const params = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('accesstoken')}`,
-      'Content-Type': 'application/json',
-    },
+    headers: getAuthHeaders(true),
   };
 
   try {
-    const res = await axios.put(apiUrl + url, updatedData, params);
-    return res; // ✅ return đúng cách
+    const res = await axios.put(buildUrl(url), updatedData, params);
+    return res;
   } catch (error) {
-    console.error('editData error:', error?.response?.data); // ✅ xem lỗi backend rõ hơn
+    console.error('editData error:', error?.response?.data);
     return error?.response;
   }
 };
 
 export const deleteData = async (url) => {
   const params = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('accesstoken')}`,
-      'Content-Type': 'application/json',
-    },
+    headers: getAuthHeaders(false),
   };
 
-  const { res } = await axios.delete(apiUrl + url, params);
+  const { res } = await axios.delete(buildUrl(url), params);
   return res;
-}
+};
