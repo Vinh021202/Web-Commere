@@ -1,9 +1,42 @@
-import React, { useState } from 'react';
-import OtpBox from '../../componets/OtpBox';
+import React, { useContext, useMemo, useState } from 'react';
 import { Button } from '@mui/material';
+import { HiOutlineShieldCheck } from 'react-icons/hi2';
+import { FiMail, FiKey } from 'react-icons/fi';
+import OtpBox from '../../componets/OtpBox';
+import { postData } from '../../utils/api';
+import { useNavigate } from 'react-router-dom';
+import { MyContext } from '../../App';
 
 const Verify = () => {
   const [otp, setOtp] = useState('');
+  const history = useNavigate();
+  const context = useContext(MyContext);
+
+  const actionType = localStorage.getItem('actionType');
+  const userEmail = localStorage.getItem('userEmail');
+  const isForgotPasswordFlow = actionType === 'forgot-password';
+
+  const pageCopy = useMemo(() => {
+    if (isForgotPasswordFlow) {
+      return {
+        badge: 'Security verification',
+        title: 'Verify your reset code',
+        subtitle: 'Enter the OTP sent to your email address to continue with password recovery.',
+        button: 'Verify Code',
+        sideTitle: 'One quick step before you reset your password.',
+        sideText: 'The verification code helps us confirm that the password reset request belongs to you.',
+      };
+    }
+
+    return {
+      badge: 'Email confirmation',
+      title: 'Verify your account',
+      subtitle: 'Enter the OTP sent to your email address to complete registration and activate your account.',
+      button: 'Verify OTP',
+      sideTitle: 'Your account is almost ready.',
+      sideText: 'Use the verification code from your inbox to finish setup and unlock your account.',
+    };
+  }, [isForgotPasswordFlow]);
 
   const handleOtpChange = (value) => {
     setOtp(value);
@@ -11,37 +44,111 @@ const Verify = () => {
 
   const verityOTP = (e) => {
     e.preventDefault();
-    alert(otp);
+
+    if (!isForgotPasswordFlow) {
+      postData('/api/user/verifyEmail', {
+        email: userEmail,
+        otp: otp,
+      }).then((res) => {
+        if (res?.error === false) {
+          context.alertBox('success', res?.message);
+          localStorage.removeItem('userEmail');
+          history('/login');
+        } else {
+          context.alertBox('error', res?.message);
+        }
+      });
+    } else {
+      postData('/api/user/verify-forgot-password-otp', {
+        email: userEmail,
+        otp: otp,
+      }).then((res) => {
+        if (res?.error === false) {
+          context.alertBox('success', res?.message);
+          history('/forgot-password');
+        } else {
+          context.alertBox('error', res?.message);
+        }
+      });
+    }
   };
 
   return (
-    <>
-      <section className="section py-10">
-        <div className="container">
-          <div className="card shadow-md w-[400px] m-auto rounded-md bg-white p-5 px-10">
-            <div className="text-center flex items-center justify-center">
-              <img src="/verify.png" width={100} />
-            </div>
-            <h3 className="text-center text-[18px] text-black mt-4 mb-1">Verify OTP</h3>
+    <section className="pb-10 pt-[220px] md:pb-12 md:pt-[245px] xl:pt-[265px]">
+      <div className="container">
+        <div className="mx-auto grid max-w-[980px] overflow-hidden rounded-[28px] border border-[rgba(255,82,82,0.12)] bg-white shadow-[0_20px_48px_rgba(15,23,42,0.12)] lg:grid-cols-[0.88fr_1.12fr]">
+          <div className="relative overflow-hidden bg-[linear-gradient(135deg,#1f2937_0%,#111827_40%,#ff5252_100%)] px-5 py-7 text-white md:px-8 md:py-8">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.12),transparent_24%)]" />
+            <div className="relative z-10">
+              <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-[700] uppercase tracking-[0.14em] text-white/90">
+                {pageCopy.badge}
+              </span>
+              <h1 className="mt-4 max-w-[390px] text-[28px] font-[800] leading-tight md:text-[36px]">
+                {pageCopy.sideTitle}
+              </h1>
+              <p className="mt-3 max-w-[410px] text-[14px] leading-6 text-white/80">
+                {pageCopy.sideText}
+              </p>
 
-            <p className="text-center mt-0 mb-4">
-              OTP send to{' '}
-              <span className="text-primary font-bold">quocvinhtran.0212@gmail.com</span>
-            </p>
-
-            <form onSubmit={verityOTP}>
-              <OtpBox length={6} onChange={handleOtpChange} />
-
-              <div className="flex items-center justify-center mt-5 px-3">
-                <Button type="submit" className="w-full bg-org btn-lg">
-                  Verify OTP
-                </Button>
+              <div className="mt-6 grid gap-3">
+                <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
+                  <FiMail className="text-[24px]" />
+                  <h3 className="mt-3 text-[14px] font-[700]">Check your inbox</h3>
+                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
+                    We sent a six-digit code to the email linked to this flow.
+                  </p>
+                </div>
+                <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
+                  <HiOutlineShieldCheck className="text-[24px]" />
+                  <h3 className="mt-3 text-[14px] font-[700]">Fast verification</h3>
+                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
+                    Enter the code once to continue securely to the next step.
+                  </p>
+                </div>
               </div>
-            </form>
+            </div>
+          </div>
+
+          <div className="bg-[linear-gradient(180deg,#fff_0%,#fff8f5_100%)] px-5 py-7 sm:px-7 md:px-8 md:py-8">
+            <div className="mx-auto max-w-[460px]">
+              <div className="mb-7">
+                <p className="mb-2 text-[12px] font-[700] uppercase tracking-[0.16em] text-[#ff5252]">
+                  OTP confirmation
+                </p>
+                <h2 className="text-[28px] font-[800] leading-tight text-[#1f2937] md:text-[30px]">
+                  {pageCopy.title}
+                </h2>
+                <p className="mb-0 mt-3 text-[13px] leading-6 text-[#6b7280]">
+                  {pageCopy.subtitle}
+                </p>
+              </div>
+
+              <div className="mb-6 rounded-[22px] border border-[rgba(255,82,82,0.12)] bg-white p-4 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:p-5">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#fff1f1] text-[#ff5252]">
+                    <FiKey className="text-[22px]" />
+                  </div>
+                  <div>
+                    <h3 className="text-[15px] font-[700] text-[#1f2937]">Code destination</h3>
+                    <p className="mb-0 mt-1 text-[13px] text-[#6b7280]">{userEmail || 'No email found'}</p>
+                  </div>
+                </div>
+
+                <form onSubmit={verityOTP}>
+                  <OtpBox length={6} onChange={handleOtpChange} />
+
+                  <div className="mt-6 flex items-center justify-center">
+                    <Button type="submit" disabled={otp.length !== 6} className="w-full bg-org !text-[16px]">
+                      {pageCopy.button}
+                    </Button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

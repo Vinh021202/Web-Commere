@@ -1,13 +1,85 @@
 .categoryPanel button{text-transform: capitalize !important;}
 
-.nav li .submenu{visibility: hidden; z-index: 1000;}
-.nav li .submenu button{font-weight: 400 !important; color: rgba(0, 0, 0, 0.80) !important;}
-.nav li:hover .submenu{opacity: 1 !important; visibility: inherit; top: 100%;}
-.nav li .submenu li:hover button{color: #ff5252 !important;}
+.categoryPanel .MuiDrawer-paper {
+  background: linear-gradient(180deg, #fff 0%, #fff8f5 100%);
+}
 
+.nav {
+  scrollbar-width: thin;
+}
 
-.nav li .submenu li .submenu{ top: 0px !important; left: 120% !important; opacity: 0 !important; }
-.nav li .submenu li:hover .submenu{left: 100% !important; opacity: 1 !important;}
+.nav li {
+  position: relative;
+}
 
-.nav li .submenu li .submenu button{color: rgba(0, 0, 0, 0.80) !important;}
-.nav li .submenu li .submenu button:hover{color: #ff5252 !important;}
+.navPill {
+  min-height: 38px !important;
+  text-transform: none !important;
+}
+
+.nav li .submenu {
+  visibility: hidden;
+  z-index: 1000;
+}
+
+.nav li .submenu button {
+  font-weight: 400 !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+  text-transform: none !important;
+}
+
+.nav li:hover .submenu {
+  opacity: 1 !important;
+  visibility: inherit;
+  top: 100%;
+}
+
+.nav li .submenu li:hover button {
+  color: #ff5252 !important;
+  background: #fff4ef !important;
+}
+
+.nav li .submenu li .submenu {
+  top: 0px !important;
+  left: 120% !important;
+  opacity: 0 !important;
+}
+
+.nav li .submenu li:hover .submenu {
+  left: 100% !important;
+  opacity: 1 !important;
+}
+
+.nav li .submenu li .submenu button {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.nav li .submenu li .submenu button:hover {
+  color: #ff5252 !important;
+}
+
+.nav::-webkit-scrollbar {
+  height: 4px;
+}
+
+.nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 82, 82, 0.35);
+  border-radius: 999px;
+}
+
+@media (max-width: 1023px) {
+  .nav li .submenu {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav {
+    scrollbar-width: none;
+    overflow: visible !important;
+  }
+
+  .nav::-webkit-scrollbar {
+    height: 0;
+  }
+}

@@ -1,84 +1,209 @@
-import React, { useState } from 'react';
-import SideBar from '../../componets/SideBar';
-import Typography from '@mui/material/Typography';
+import React, { useMemo, useState } from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
-import ProductsItem from '../../componets/ProductsItem';
-import ProductsItemListView from '../../componets/ProductsItemListView';
 import { Button } from '@mui/material';
-import { IoGridSharp } from 'react-icons/io5';
-import { LuMenu } from 'react-icons/lu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Pagination from '@mui/material/Pagination';
+import TablePagination from '@mui/material/TablePagination';
+import { IoGridSharp } from 'react-icons/io5';
+import { LuMenu } from 'react-icons/lu';
+import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
+import SideBar from '../../componets/SideBar';
+import ProductsItem from '../../componets/ProductsItem';
+import ProductsItemListView from '../../componets/ProductsItemListView';
+import ProductLoading from '../../componets/ProductLoading';
+import { useSearchParams } from 'react-router-dom';
 
 const ProductListing = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isItemView, setIsItemView] = useState('gird');
+  const [isItemView, setIsItemView] = useState('grid');
+  const [productsData, setProductsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(12);
+  const [selectedSortVal, setSelectedSortVal] = useState('Sales, highest to lowest');
+
+  const [searchParams] = useSearchParams();
+  const catName =
+    searchParams.get('cat') ||
+    searchParams.get('subCat') ||
+    searchParams.get('thirdsubCat') ||
+    'Products';
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  const handleSortBy = (name, order, label) => {
+    setSelectedSortVal(label);
+
+    const sorted = [...(productsData?.products || [])].sort((a, b) => {
+      if (name === 'name') {
+        return order === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+      }
+      if (name === 'price') {
+        return order === 'asc' ? a.price - b.price : b.price - a.price;
+      }
+      if (name === 'sale') {
+        return order === 'asc' ? a.sale - b.sale : b.sale - a.sale;
+      }
+      return 0;
+    });
+
+    setProductsData((prev) => ({ ...prev, products: sorted }));
+    setAnchorEl(null);
+  };
+
+  const sortOptions = [
+    { label: 'Sales, highest to lowest', name: 'sale', order: 'desc' },
+    { label: 'Sales, lowest to highest', name: 'sale', order: 'asc' },
+    { label: 'Name, A to Z', name: 'name', order: 'asc' },
+    { label: 'Name, Z to A', name: 'name', order: 'desc' },
+    { label: 'Price, low to high', name: 'price', order: 'asc' },
+    { label: 'Price, high to low', name: 'price', order: 'desc' },
+  ];
+
+  const productCount = productsData?.total || productsData?.products?.length || 0;
+  const effectiveTotalPages = totalPages || Math.ceil(productCount / 12);
+  const fromProduct = productCount === 0 ? 0 : (page - 1) * rowsPerPage + 1;
+  const toProduct = Math.min(page * rowsPerPage, productCount);
+
+  const listingSummary = useMemo(() => {
+    if (productCount === 0) {
+      return 'Chua co san pham phu hop voi bo loc hien tai.';
+    }
+
+    return `Dang hien thi ${productCount} san pham voi bo cuc ro rang, de so sanh va chon nhanh hon.`;
+  }, [productCount]);
+
+  const emptyState = (
+    <div className="listing-empty col-span-full overflow-hidden rounded-[28px] border border-dashed border-[rgba(255,82,82,0.18)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-6 text-center sm:p-10">
+      <div className="mx-auto flex h-[68px] w-[68px] items-center justify-center rounded-full bg-[#fff1eb] text-[#a65434] shadow-[0_10px_24px_rgba(255,82,82,0.10)]">
+        <HiOutlineAdjustmentsHorizontal className="text-[30px]" />
+      </div>
+      <h3 className="mt-5 text-[22px] font-[800] text-[#1f2937]">Khong tim thay san pham</h3>
+      <p className="mx-auto mb-0 mt-3 max-w-[520px] text-[14px] leading-7">
+        Thu noi rong khoang gia, bo chon mot vai bo loc, hoac chuyen danh muc de xem them ket
+        qua phu hop.
+      </p>
+    </div>
+  );
+
+  const handlePageChange = (event, value) => {
+    setPage(value + 1);
+  };
+
+  const handleRowsPerPageChange = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
   return (
-    <>
-      <section className="py-5 pb-0">
-        <div className="container">
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link
-              underline="hover"
-              color="inherit"
-              href="/"
-              className="link transition !text-[14px]"
-            >
-              Home
-            </Link>
-            <Link
-              underline="hover"
-              color="inherit"
-              href="/"
-              className="link transition !text-[14px]"
-            >
-              Fashion
-            </Link>
-          </Breadcrumbs>
-        </div>
-        <div className="bg-white p-3 mt-4">
-          <div className="container flex gap-3">
-            <div className="sidebarWrapper w-[20%] h-full bg-white">
-              <SideBar />
+    <section className="pb-8 pt-4 md:pt-5 xl:pt-6">
+      <div className="container">
+        <div className="section-shell listing-hero overflow-hidden px-4 py-5 md:px-7 md:py-6 xl:px-8 xl:py-7">
+          <div className="absolute inset-y-0 right-0 hidden w-[34%] bg-[radial-gradient(circle_at_top_right,rgba(255,82,82,0.14),transparent_58%)] lg:block" />
+
+          <div className="relative flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+            <div className="max-w-[700px] xl:max-w-[760px]">
+              <Breadcrumbs aria-label="breadcrumb" className="listing-breadcrumbs">
+                <Link underline="hover" color="inherit" href="/" className="link !text-[14px]">
+                  Home
+                </Link>
+                <span className="text-[14px] font-[600] text-[rgba(31,41,55,0.72)]">{catName}</span>
+              </Breadcrumbs>
+
+              <span className="eyebrow mt-4">Collection view</span>
+              <h1 className="section-heading mt-3 max-w-[680px] xl:max-w-[720px]">
+                Kham pha {catName} voi bo loc gon hon va nhip trinh bay ro hon.
+              </h1>
+              <p className="muted-copy mt-3 max-w-[600px] text-[14px] leading-7 xl:max-w-[640px] xl:text-[15px]">
+                {listingSummary}
+              </p>
+
+              <div className="mt-5 flex flex-wrap items-center gap-2.5">
+                <span className="listing-chip">Bo loc theo danh muc</span>
+                <span className="listing-chip">Sap xep linh hoat</span>
+                <span className="listing-chip">Grid va list view</span>
+              </div>
             </div>
 
-            <div className="rightContainer w-[80%] py-3">
-              <div className="bg-[#f1f1f1f1] p-2 w-full mb-4 rounded-md flex items-center justify-between">
-                <div className="col1 flex items-center gap-3 itemViewActions">
-                  <Button
-                    className={`!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#000] 
-                  ${isItemView === 'list' && 'active'}`}
-                    onClick={() => setIsItemView('list')}
-                  >
-                    <LuMenu className="text-[rgba(0,0,0,0.7)]" />
-                  </Button>
+            <div className="grid gap-3 sm:grid-cols-3 xl:min-w-[390px]">
+              <div className="soft-card p-3.5 xl:p-4">
+                <span className="listing-stat__label">Tong san pham</span>
+                <strong className="listing-stat__value">{productCount}</strong>
+              </div>
+              <div className="soft-card p-3.5 xl:p-4">
+                <span className="listing-stat__label">Che do xem</span>
+                <strong className="listing-stat__value capitalize">{isItemView}</strong>
+              </div>
+              <div className="soft-card p-3.5 xl:p-4">
+                <span className="listing-stat__label">Sap xep</span>
+                <strong className="listing-stat__value !text-[15px]">{selectedSortVal}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                  <Button
-                    className={`!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#000]
-                   ${isItemView === 'grid' && 'active'}`}
-                    onClick={() => setIsItemView('grid')}
-                  >
-                    <IoGridSharp className="text-[rgba(0,0,0,0.7)]" />
-                  </Button>
+        <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(220px,26%)_minmax(0,74%)]">
+          <div className="sidebarWrapper">
+            <SideBar
+              productsData={productsData}
+              setProductsData={setProductsData}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              setTotalPages={setTotalPages}
+            />
+          </div>
 
-                  <span className="text-[14px] font-[500] pl-3 text-[rgba(0,0,0,0.7)]">
-                    There are 27 products
-                  </span>
+          <div className="rightContainer">
+            <div className="section-shell px-4 py-4 md:px-5 md:py-5 xl:px-6 xl:py-6">
+              <div className="listing-toolbar mb-4 flex flex-col gap-4 rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-4 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex flex-col gap-4 xl:flex-row xl:items-center">
+                  <div className="flex flex-wrap items-center gap-3 itemViewActions">
+                    <span className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[#fff1eb] text-[#a65434]">
+                      <HiOutlineAdjustmentsHorizontal className="text-[20px]" />
+                    </span>
+
+                    <div className="listing-toggle-group">
+                      <Button
+                        className={`listing-view-btn ${isItemView === 'list' ? 'active' : ''}`}
+                        onClick={() => setIsItemView('list')}
+                      >
+                        <LuMenu className="text-[18px] text-[rgba(0,0,0,0.7)]" />
+                      </Button>
+
+                      <Button
+                        className={`listing-view-btn ${isItemView === 'grid' ? 'active' : ''}`}
+                        onClick={() => setIsItemView('grid')}
+                      >
+                        <IoGridSharp className="text-[18px] text-[rgba(0,0,0,0.7)]" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="listing-toolbar__meta pl-0 xl:pl-2">
+                    <span className="block text-[13px] font-[700] uppercase tracking-[0.08em] text-[#a65434]">
+                      Trang thai danh muc
+                    </span>
+                    <span className="text-[14px] font-[600] text-[rgba(31,41,55,0.72)]">
+                      Co {productCount} san pham trong che do hien tai.
+                    </span>
+                  </div>
                 </div>
 
-                <div className="col2 ml-auto flex items-center justify-end gap-3 pr-4">
-                  <span className="text-[14px] font-[500] pl-3 text-[rgba(0,0,0,0.7)]">
-                    Sort By
+                <div className="listing-toolbar__actions ml-auto flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+                  <span className="text-[13px] font-[700] uppercase tracking-[0.08em] text-[#a65434]">
+                    Sort by
                   </span>
                   <Button
                     id="basic-button"
@@ -86,9 +211,9 @@ const ProductListing = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
-                    className="!bg-white !text-[12px] !text-[#000] !capitalize !border-1 !border-[#d3c5c5]"
+                    className="!justify-between !rounded-full !border !border-[rgba(255,82,82,0.16)] !bg-white !px-4 !py-2 !text-[13px] !font-[700] !capitalize !text-[#1f2937] sm:!min-w-[240px]"
                   >
-                    Sales, highest to lowest
+                    {selectedSortVal}
                   </Button>
 
                   <Menu
@@ -96,84 +221,70 @@ const ProductListing = () => {
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
-                    slotProps={{
-                      list: {
-                        'aria-labelledby': 'basic-button',
-                      },
-                    }}
+                    slotProps={{ list: { 'aria-labelledby': 'basic-button' } }}
                   >
-                    <MenuItem
-                      onClick={handleClose}
-                      className=" !text-[13px] !text-[#000] !capitalize "
-                    >
-                      Sales, highest to lowest
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleClose}
-                      className=" !text-[13px] !text-[#000] !capitalize "
-                    >
-                      Relevance
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleClose}
-                      className=" !text-[13px] !text-[#000] !capitalize "
-                    >
-                      Name, A to Z
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleClose}
-                      className=" !text-[13px] !text-[#000] !capitalize "
-                    >
-                      Name, Z to A
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleClose}
-                      className=" !text-[13px] !text-[#000] !capitalize "
-                    >
-                      Price, low to high
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleClose}
-                      className=" !text-[13px] !text-[#000] !capitalize "
-                    >
-                      Price, high to low
-                    </MenuItem>
+                    {sortOptions.map((opt) => (
+                      <MenuItem
+                        key={opt.label}
+                        onClick={() => handleSortBy(opt.name, opt.order, opt.label)}
+                        className="!text-[13px] !text-[#000] !capitalize"
+                      >
+                        {opt.label}
+                      </MenuItem>
+                    ))}
                   </Menu>
                 </div>
               </div>
+
               <div
-                className={`grid ${
+                className={
                   isItemView === 'grid'
-                    ? 'grid-cols-4 md:grid-cols-4'
-                    : 'grid-cols-1 md:grid-cols-1'
-                } gap-4 `}
+                    ? 'listing-products-grid grid grid-cols-2 gap-3 lg:grid-cols-4 xl:grid-cols-5'
+                    : 'grid grid-cols-1 gap-4'
+                }
               >
-                {isItemView === 'grid' ? (
-                  <>
-                    <ProductsItem />
-                    <ProductsItem />
-                    <ProductsItem />
-                    <ProductsItem />
-                    <ProductsItem />
-                    <ProductsItem />
-                    <ProductsItem />
-                    <ProductsItem />
-                  </>
+                {isLoading ? (
+                  <ProductLoading view={isItemView} />
+                ) : isItemView === 'grid' ? (
+                  productsData?.products?.length > 0 ? (
+                    productsData.products.map((item, index) => (
+                      <ProductsItem key={item?._id || index} item={item} />
+                    ))
+                  ) : (
+                    emptyState
+                  )
+                ) : productsData?.products?.length > 0 ? (
+                  productsData.products.map((item, index) => (
+                    <ProductsItemListView key={item?._id || index} item={item} />
+                  ))
                 ) : (
-                  <>
-                    <ProductsItemListView />
-                    <ProductsItemListView />
-                  </>
+                  emptyState
                 )}
               </div>
-              <div className="flex items-center justify-center mt-10">
-                <Pagination count={10} showFirstButton showLastButton />
-              </div>
+
+              {productCount > 0 && (
+                <div className="mt-8 border-t border-[rgba(255,82,82,0.1)] pt-4">
+                  <div className="listing-pagination-shell">
+                    <span className="listing-pagination-label">Rows per page:</span>
+                    <TablePagination
+                      component="div"
+                      count={productCount}
+                      page={page - 1}
+                      onPageChange={handlePageChange}
+                      rowsPerPage={rowsPerPage}
+                      onRowsPerPageChange={handleRowsPerPageChange}
+                      rowsPerPageOptions={[12, 24, 36]}
+                      labelRowsPerPage=""
+                      labelDisplayedRows={() => `${fromProduct}-${toProduct} of ${productCount}`}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

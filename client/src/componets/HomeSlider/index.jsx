@@ -7,10 +7,10 @@ import 'swiper/css/navigation';
 // import required modules
 import { Autoplay, Navigation } from 'swiper/modules';
 
-const HomeSlider = () => {
+const HomeSlider = (props) => {
   return (
     <>
-      <div className="homeSlider py-4">
+      <div className="homeSlider py-3 md:py-4">
         <div className="container">
           <Swiper
             spaceBetween={10}
@@ -22,42 +22,21 @@ const HomeSlider = () => {
             }}
             className="sliderHome"
           >
-            <SwiperSlide>
-              <div className="item rounded-[20px] overflow-hidden">
-                <img
-                  src="https://serviceapi.spicezgold.com/download/1748955932914_NewProject(1).jpg"
-                  alt="Banner slide"
-                  className="w-full"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="item rounded-[20px] overflow-hidden">
-                <img
-                  src="https://serviceapi.spicezgold.com/download/1751685144346_NewProject(11).jpg"
-                  alt="Banner slide"
-                  className="w-full"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="item rounded-[20px] overflow-hidden">
-                <img
-                  src="https://serviceapi.spicezgold.com/download/1751685130717_NewProject(8).jpg"
-                  alt="Banner slide"
-                  className="w-full"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="item rounded-[20px] overflow-hidden">
-                <img
-                  src="https://serviceapi.spicezgold.com/download/1748955908049_NewProject(13).jpg"
-                  alt="Banner slide"
-                  className="w-full"
-                />
-              </div>
-            </SwiperSlide>
+            {
+              props?.data?.length !== 0 && props?.data?.map((item, index) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <div className="sliderHome__item overflow-hidden rounded-[16px] md:rounded-[20px]">
+                      <img
+                        src={item?.images[0]}
+                        alt="Banner slide"
+                        className="sliderHome__image block h-full w-full object-cover"
+                      />
+                    </div>
+                  </SwiperSlide>
+                );
+              })
+            }
           </Swiper>
         </div>
       </div>

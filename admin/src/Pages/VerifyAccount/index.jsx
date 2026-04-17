@@ -1,91 +1,196 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { FcGoogle } from "react-icons/fc";
+import CircularProgress from "@mui/material/CircularProgress";
 import { CgLogIn } from "react-icons/cg";
-import { FaRegUser } from "react-icons/fa6";
-import { BsFacebook } from "react-icons/bs";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { FaRegEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { HiOutlineShieldCheck, HiOutlineSparkles } from "react-icons/hi2";
 import OtpBox from "../../Components/OtpBox";
+import { MyContext } from "../../App";
+import { postData } from "../../utils/api";
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const context = useContext(MyContext);
+  const userEmail = localStorage.getItem("userEmail");
+  const actionType = localStorage.getItem("actionType");
+  const isForgotPasswordFlow = actionType === "forgot-password";
 
   const handleOtpChange = (value) => {
     setOtp(value);
   };
 
+  const verifyOTP = (e) => {
+    e.preventDefault();
+
+    if (otp === "") {
+      context.alertBox("error", "Please enter OTP");
+      return;
+    }
+
+    if (!userEmail) {
+      context.alertBox("error", "Session expired, please try again");
+      navigate("/login");
+      return;
+    }
+
+    setIsLoading(true);
+
+    const endpoint = isForgotPasswordFlow
+      ? "/api/user/verify-forgot-password-otp"
+      : "/api/user/verifyEmail";
+
+    postData(endpoint, {
+      email: userEmail,
+      otp,
+    }).then((res) => {
+      if (res?.error === false) {
+        context.alertBox("success", res?.message);
+
+        if (isForgotPasswordFlow) {
+          setIsLoading(false);
+          navigate("/change-password");
+        } else {
+          localStorage.removeItem("userEmail");
+          localStorage.removeItem("actionType");
+          setIsLoading(false);
+          navigate("/login");
+        }
+      } else {
+        context.alertBox("error", res?.message || "Something went wrong");
+        setIsLoading(false);
+      }
+    });
+  };
+
   return (
-    <>
-      <section className="bg-white w-full h-[100vh]">
-        {/* =========== Header =========== */}
-        <header className="w-full fixed top-0 left-0 px-4 py-2 flex items-center justify-between z-50 bg-white/80 backdrop-blur-sm">
-          <Link to={"/"}>
-            <img src="/7_logo.jpg" alt="logo" className="w-[200px]" />
-          </Link>
+    <section className="relative min-h-screen overflow-hidden bg-[#f7f5ef]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.9),_transparent_38%),radial-gradient(circle_at_bottom_right,_rgba(56,114,250,0.18),_transparent_34%),linear-gradient(135deg,_#f7f5ef_0%,_#efe7d5_45%,_#dce7ff_100%)]" />
+      <div className="absolute left-[-120px] top-[120px] h-[320px] w-[320px] rounded-full bg-[#1f4fd1]/10 blur-3xl" />
+      <div className="absolute bottom-[-80px] right-[8%] h-[280px] w-[280px] rounded-full bg-[#f59e0b]/15 blur-3xl" />
 
-          <div className="flex items-center gap-0">
-            {" "}
-            <NavLink to="/Login" exact="true" activeClassName="isActive">
-              {" "}
-              <Button className="!rounded-full !text-[rgba(0,0,0,0.9)] !px-5 flex gap-1">
-                {" "}
-                <CgLogIn className="text-[18px]" /> Login{" "}
-              </Button>{" "}
-            </NavLink>{" "}
-            <NavLink to="/sign-up" exact="true" activeClassName="isActive">
-              <Button className="!rounded-full !text-[rgba(0,0,0,0.9)] !px-5 flex gap-1">
-                {" "}
-                <FaRegUser className="text-[14px]" /> Sign Up{" "}
-              </Button>
-            </NavLink>
-          </div>
-        </header>
+      <header className="relative z-20 mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3 sm:px-5 lg:px-6">
+        <Link
+          to="/"
+          className="flex items-center gap-3 rounded-full bg-white/70 px-3 py-2 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur"
+        >
+          <img src="/7_logo.jpg" alt="logo" className="h-10 w-auto sm:h-12" />
+        </Link>
 
-        {/* =========== Background =========== */}
-        <img
-          src="/login.png"
-          alt="background"
-          className="w-full fixed top-0 left-0 opacity-5"
-        />
+        <div className="flex items-center gap-2 rounded-full border border-white/60 bg-white/65 p-1 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur">
+          <NavLink to="/login">
+            <Button className="!rounded-full !px-4 !py-2 !text-[13px] !font-[700] !text-[rgba(0,0,0,0.75)] sm:!px-5">
+              <CgLogIn className="mr-2 text-[17px]" />
+              Login
+            </Button>
+          </NavLink>
+          <NavLink to="/sign-up">
+            <Button className="!rounded-full !px-4 !py-2 !text-[13px] !font-[700] !text-[rgba(0,0,0,0.75)] sm:!px-5">
+              Sign Up
+            </Button>
+          </NavLink>
+        </div>
+      </header>
 
-        {/* =========== Login Box =========== */}
-        <div className="loginBox card w-[600px] h-[auto] pb-20 mx-auto pt-20 bg-white rounded-xl shadow-lg relative z-10 p-8">
-          <div className="text-center">
-            <img src="/verify.png" alt="" className="w-[120px] m-auto" />
-          </div>
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-80px)] w-full max-w-5xl grid-cols-1 gap-5 px-4 pb-5 pt-1 sm:px-5 lg:grid-cols-[0.95fr_0.72fr] lg:px-6">
+        <div className="hidden rounded-[26px] border border-white/50 bg-[#14213d] p-6 text-white shadow-[0_20px_56px_rgba(20,33,61,0.22)] lg:flex lg:flex-col lg:justify-between">
+          <div>
+            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[10px] font-[700] uppercase tracking-[0.2em] text-white/90">
+              <HiOutlineSparkles className="text-[16px]" />
+              Verification
+            </div>
 
-          <h1 className="text-center text-[28px] font-[800] mt-4 leading-tight">
-            Welcome Back! <br />
-            Please Verify Your Email
-          </h1>
+            <h1 className="max-w-[360px] font-[800] leading-[1.08] text-[30px]">
+              Nhập OTP để hoàn tất bước xác thực của bạn.
+            </h1>
 
-          <br />
-
-          <p className="text-center text-[15px]">
-            OTP send to &nbsp;
-            <span className="text-primary font-bold">
-              quocvinhtran.0212@gmail.com
-            </span>
-          </p>
-
-          <br />
-
-          <div className="text-center flex items-center justify-center flex-col">
-            <OtpBox length={6} onChange={handleOtpChange} />
+            <p className="mt-4 max-w-[360px] text-[14px] leading-6 text-white/72">
+              Mã xác thực đã được gửi tới email của bạn. Sau bước này, bạn sẽ
+              tiếp tục đăng nhập hoặc đổi mật khẩu tùy theo flow hiện tại.
+            </p>
           </div>
 
-          <br />
-
-          <div className="w-[300px] m-auto">
-            <Button className="btn-blue w-full">Verify OTP</Button>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="rounded-[20px] border border-white/12 bg-white/8 p-3.5 backdrop-blur-sm">
+              <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-white/55">
+                Current Flow
+              </p>
+              <p className="mt-2 text-[18px] font-[800]">
+                {isForgotPasswordFlow ? "Recovery" : "Register"}
+              </p>
+              <p className="mt-2 text-[12px] leading-5 text-white/68">
+                Hệ thống sẽ xử lý OTP theo đúng hành động bạn vừa thực hiện.
+              </p>
+            </div>
+            <div className="rounded-[20px] border border-white/12 bg-[#f59e0b] p-3.5 text-[#1f2937]">
+              <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-[#1f2937]/70">
+                Destination
+              </p>
+              <p className="mt-2 text-[18px] font-[800]">
+                {isForgotPasswordFlow ? "Change Pass" : "Login"}
+              </p>
+              <p className="mt-2 text-[12px] leading-5 text-[#1f2937]/80">
+                Xác thực thành công sẽ tự chuyển bạn sang bước tiếp theo.
+              </p>
+            </div>
           </div>
         </div>
-      </section>
-    </>
+
+        <div className="flex items-center justify-center">
+          <div className="w-full max-w-[390px] rounded-[24px] border border-white/70 bg-white/80 p-4 shadow-[0_20px_48px_rgba(20,33,61,0.14)] backdrop-blur-xl sm:p-5 lg:p-6">
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[16px] bg-[linear-gradient(135deg,_#14213d,_#3872fa)] text-white shadow-[0_16px_30px_rgba(56,114,250,0.28)]">
+                  <HiOutlineShieldCheck className="text-[17px]" />
+                </div>
+                <h2 className="text-[22px] font-[800] leading-tight text-[#14213d]">
+                  Verify OTP
+                </h2>
+                <p className="mt-1.5 text-[13px] leading-5 text-slate-500">
+                  Nhập 6 chữ số đã gửi tới email của bạn.
+                </p>
+              </div>
+
+              <div className="hidden rounded-[18px] bg-[#f6f8ff] px-3 py-2 text-right sm:block">
+                <p className="text-[11px] font-[700] uppercase tracking-[0.12em] text-slate-400">
+                  Sent To
+                </p>
+                <p className="mt-1 max-w-[120px] truncate text-[12px] font-[700] text-[#3872fa]">
+                  {userEmail || "No email"}
+                </p>
+              </div>
+            </div>
+
+            <p className="mb-5 text-[12px] leading-5 text-slate-500">
+              OTP sent to{" "}
+              <span className="font-[700] text-[#14213d]">
+                {userEmail || "your email"}
+              </span>
+            </p>
+
+            <form onSubmit={verifyOTP}>
+              <div className="flex items-center justify-center">
+                <OtpBox length={6} onChange={handleOtpChange} />
+              </div>
+
+              <Button
+                type="submit"
+                disabled={!otp || isLoading}
+                className="!mt-6 !flex !h-[50px] !w-full !items-center !justify-center !gap-2 !rounded-[18px] !bg-[linear-gradient(135deg,_#14213d,_#3872fa)] !text-[13px] !font-[800] !capitalize !text-white shadow-[0_18px_35px_rgba(56,114,250,0.28)] hover:!opacity-95 disabled:!bg-slate-300 disabled:!shadow-none"
+              >
+                {isLoading ? (
+                  <CircularProgress color="inherit" size={22} />
+                ) : (
+                  "Verify OTP"
+                )}
+              </Button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

@@ -1,49 +1,75 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { IoCloseSharp } from 'react-icons/io5';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { GoTriangleDown } from 'react-icons/go';
 import { Rating } from '@mui/material';
-import Button from '@mui/material/Button';
+import { MyContext } from '../../App';
+import { deleteData } from '../../utils/api';
 
-const MyListtems = () => {
+const MyListtems = (props) => {
+  const context = useContext(MyContext);
+
+  const removeItem = (id) => {
+    deleteData(`/api/myList/${id}`).then(() => {
+      context.alertBox('success', 'Product removed from My List');
+      context.getMyListData();
+    });
+  };
+
   return (
-    <>
-      <div className="cartItem w-full p-3 flex items-center gap-4 pb-5 border-b border-[rgba(0,0,0,0.1)]">
-        <div className="img w-[15%] rounded-md overflow-hidden">
-          <Link to="/product/7845" className="group">
-            <img
-              src="/product1.jpg"
-              alt=""
-              className="w-full group-hover:scale-105 transition-all"
-            />
-          </Link>
+    <div className="group relative flex w-full flex-col gap-4 rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-4 shadow-[0_12px_26px_rgba(15,23,42,0.06)] md:flex-row md:items-center">
+      <div className="img h-[150px] w-full overflow-hidden rounded-[20px] bg-white md:w-[150px] md:min-w-[150px]">
+        <Link to={`/product/${props?.item?.productId}`} className="group block h-full w-full">
+          <img
+            src={props?.item?.image}
+            alt={props?.item?.name || 'Product image'}
+            className="h-full w-full object-cover transition-all duration-300 group-hover:scale-[1.05]"
+          />
+        </Link>
+      </div>
+
+      <div className="info min-w-0 flex-1 pr-0 md:pr-10">
+        <div className="mb-2 flex flex-wrap items-center gap-3">
+          <span className="inline-flex rounded-full bg-[#fff1eb] px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
+            {props?.item?.brand || 'Collection'}
+          </span>
+          <span className="inline-flex rounded-full bg-white px-3 py-1 text-[11px] font-[700] text-[#7c553d]">
+            Saved item
+          </span>
         </div>
 
-        <div className="info w-[85%] relative">
-          <IoCloseSharp className="cursor-pointer absolute top-[0px] right-[0px] text-[22px] link transition-all" />
-          <span className="text-[13px]">Flying Machine</span>
-          <h3 className="text-[16px]">
-            <Link to="/" className="link">
-              Women Wide Leg High-Rise Light Fade Stretchable Jeans
-            </Link>
-          </h3>
+        <h3 className="text-[17px] font-[800] leading-7 text-[#1f2937]">
+          <Link to={`/product/${props?.item?.productId}`} className="link transition-all hover:text-primary">
+            {props?.item?.name?.length > 70 ? `${props?.item?.name.slice(0, 70)}...` : props?.item?.name}
+          </Link>
+        </h3>
 
-          <Rating name="size-small" defaultValue={4} size="small" readOnly />
+        <div className="mt-3 flex items-center gap-2">
+          <Rating name={`wishlist-rating-${props?.item?._id}`} value={props?.item?.rating || 0} size="small" readOnly />
+          <span className="text-[12px] font-[700] text-[#6b7280]">({props?.item?.rating || 0})</span>
+        </div>
 
-          <div className="flex items-center gap-4 mt-2 mb-2">
-            <span className="price text-[14px] font-[600]">$58.00</span>
-            <span className="oldPrice line-through text-gray-500 text-[14px] font-[500]">
-              $58.00
-            </span>
-            <span className="price text-primary text-[14px] font-[600]">55% OFF</span>
-          </div>
-
-          <Button className="bg-org btn-sm">Add to Cart</Button>
+        <div className="mt-4 flex flex-wrap items-center gap-4">
+          <span className="price text-[16px] font-[800] text-[#1f2937]">
+            &#8363; {props?.item?.price}
+          </span>
+          <span className="oldPrice text-[14px] font-[500] text-gray-400 line-through">
+            &#8363; {props?.item?.oldPrice}
+          </span>
+          <span className="rounded-full border border-[rgba(255,82,82,0.16)] bg-white px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.06em] text-[#ff5252]">
+            {props?.item?.discount}% OFF
+          </span>
         </div>
       </div>
-    </>
+
+      <button
+        type="button"
+        className="absolute right-[14px] top-[14px] flex h-[36px] w-[36px] items-center justify-center rounded-full border border-[rgba(255,82,82,0.14)] bg-white text-[18px] text-[#6b7280] transition hover:border-[#ff5252] hover:text-[#ff5252]"
+        onClick={() => removeItem(props?.item?._id)}
+        aria-label="Remove item"
+      >
+        <IoCloseSharp />
+      </button>
+    </div>
   );
 };
 

@@ -1,111 +1,100 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import '../ProductsItem/style.css';
 import { Link } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
-import { FaRegHeart } from 'react-icons/fa';
-import { IoIosGitCompare } from 'react-icons/io';
-import { MdOutlineZoomOutMap } from 'react-icons/md';
 import { MdOutlineShoppingCart } from 'react-icons/md';
-import { MyContext } from '../../App';
 
-const ProductsItem = () => {
-  const context = useContext(MyContext);
+const ProductsItemListView = (props) => {
+  const primaryImage = props.item?.images?.[0] || '/bannerBox1.jpg';
+  const hoverImage = props.item?.images?.[1] || primaryImage;
+  const brandName = props.item?.brand || 'Collection';
+  const productName = props.item?.name || 'San pham noi bat';
+  const isInStock = (props.item?.countInStock || 0) > 0;
+  const description =
+    props.item?.description || 'Bo cuc da duoc rut gon de theo doi nhieu san pham nhanh hon trong che do danh sach.';
+
   return (
-    <>
-      <div className="productsItem shadow-lg rounded-md overflow-hidden border-1 border-[rgba(0,0,0,0.1)] flex items-center">
-        <div className="group imgWrapper w-[25%]  overflow-hidden rounded-md relative">
-          <Link to={'/'}>
-            <div className="img h-[220px] overflow-hidden">
-              <img
-                src="https://serviceapi.spicezgold.com/download/1753722939206_125c18d6-592d-4082-84e5-49707ae9a4fd1749366193911-Flying-Machine-Women-Wide-Leg-High-Rise-Light-Fade-Stretchab-1.jpg"
-                alt="wrapper"
-                className="w-full"
-              />
-              <img
-                src="https://serviceapi.spicezgold.com/download/1753722939207_5107b7b1-ba6d-473c-9195-8576a6a0a9611749366193848-Flying-Machine-Women-Wide-Leg-High-Rise-Light-Fade-Stretchab-3.jpg"
-                alt="wrapper"
-                className="w-full transition-all duration-700 absolute top-0 left-0 opacity-0 group-hover:opacity-100 group-hover:scale-150"
-              />
-            </div>
+    <div className="productsItem list-product-card overflow-hidden rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[rgba(255,255,255,0.94)] shadow-[0_14px_30px_rgba(15,23,42,0.10)]">
+      <div className="flex flex-col xl:flex-row">
+        <div className="group imgWrapper relative h-[180px] overflow-hidden xl:h-auto xl:w-[220px] xl:min-w-[220px]">
+          <Link to={`/product/${props.item?._id}`}>
+            <img
+              src={primaryImage}
+              alt={productName}
+              className="h-full w-full object-cover transition-all duration-700 group-hover:scale-[1.04]"
+            />
+            <img
+              src={hoverImage}
+              alt={`${productName} hover`}
+              className="absolute left-0 top-0 h-full w-full object-cover opacity-0 transition-all duration-700 group-hover:scale-[1.08] group-hover:opacity-100"
+            />
           </Link>
-          <span
-            className="discount flex items-center absolute top-[10px] left-[10px] z-50 
-    bg-primary text-white rounded-lg p-1 text-[12px] font-[500]"
-          >
-            10%
-          </span>
 
-          <div
-            className="actions absolute top-[-200px] right-[5px] z-50 flex 
-    items-center gap-2 flex-col w-[50px] duration-300 group-hover:top-[15px] opacity-0 group-hover:opacity-100"
-          >
-            <Button
-              className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full !bg-white
-         text-black hover:!bg-[#ff5252] hover:text-white group"
-              onClick={() => context.setOpenProductDetailsModal(true)}
-            >
-              <MdOutlineZoomOutMap
-                className="text-[18px]
-          !text-black group-hover:text-white hover:!text-white"
-              />
-            </Button>
-            <Button
-              className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full !bg-white
-         text-black hover:!bg-[#ff5252] hover:text-white group"
-            >
-              <IoIosGitCompare
-                className="text-[18px]
-          !text-black group-hover:text-white hover:!text-white"
-              />
-            </Button>
-
-            <Button
-              className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full !bg-white
-         text-black hover:!bg-[#ff5252] hover:text-white group"
-            >
-              <FaRegHeart
-                className="text-[18px]
-          !text-black group-hover:text-white hover:!text-white"
-              />
-            </Button>
-          </div>
+          {props.item?.discount > 0 && (
+            <span className="absolute left-[12px] top-[12px] z-50 rounded-full bg-[#1f2937] px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.06em] text-white">
+              -{props.item?.discount}
+            </span>
+          )}
         </div>
-        <div className="info p-3 py-5 px-8 w-[75%]">
-          <h6 className="text-[15px] !font-[400]">
-            <Link to={'/'} className="link transition-all">
-              Flying Machine
-            </Link>
-          </h6>
-          <h3 className="text-[18px] title mt-3 font-[500] mb-3 text-[#000]">
-            <Link to={'/'} className="link transition-all">
-              Women Wide Leg High-Rise Light Fade Stretchable Jeans
+
+        <div className="flex flex-1 flex-col p-4 md:p-5">
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <span className="rounded-full bg-[#fff1eb] px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
+              {brandName}
+            </span>
+            <span
+              className={`rounded-full px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.08em] ${
+                isInStock ? 'bg-[#eefbf3] text-[#1f8f52]' : 'bg-[#fff1f1] text-[#d14343]'
+              }`}
+            >
+              {isInStock ? 'Con hang' : 'Het hang'}
+            </span>
+          </div>
+
+          <h3 className="mt-3 text-[18px] font-[800] leading-[1.3] text-[#1f2937]">
+            <Link to={`/product/${props.item?._id}`} className="link product-card__title transition-all">
+              {productName}
             </Link>
           </h3>
-          <p className="text-[14px] mb-3">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-          </p>
-          <Rating name="size-small" defaultValue={4} size="small" readOnly />
 
-          <div className="flex items-center gap-4">
-            <span className="oldPrice line-through text-gray-500 text-[15px] font-[500]">
-              $58.00
-            </span>
-            <span className="price text-primary text-[15px] font-[600]">$49.00</span>
+          <p className="mb-0 mt-2 max-w-[760px] text-[13px] leading-6 text-[#6b7280]">
+            {description.length > 130 ? `${description.slice(0, 130)}...` : description}
+          </p>
+
+          <div className="mt-3 flex items-center gap-2">
+            <Rating name={`rating-${props.item?._id}`} value={props.item?.rating || 0} size="small" readOnly />
+            <span className="text-[11px] font-[700] text-[#6b7280]">({props.item?.rating || 0})</span>
           </div>
 
-          <div className="mt-3">
-            <Button className="bg-org flex gap-2">
-              <MdOutlineShoppingCart className="text-[20px]" /> Add to Cart
+          <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div className="product-card__meta rounded-[18px] p-3">
+              {props.item?.oldPrice > 0 && (
+                <span className="block text-[11px] font-[600] text-gray-400 line-through">
+                  {props.item?.oldPrice?.toLocaleString('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                    minimumFractionDigits: 0,
+                  })}
+                </span>
+              )}
+              <span className="mt-1 block text-[18px] font-[800] leading-5 text-[#ff5252]">
+                {props.item?.price?.toLocaleString('vi-VN', {
+                  style: 'currency',
+                  currency: 'VND',
+                  minimumFractionDigits: 0,
+                })}
+              </span>
+            </div>
+
+            <Button className="bg-org product-card__cta product-card__cta--primary flex gap-2 !px-5">
+              <MdOutlineShoppingCart className="text-[16px]" /> Add to Cart
             </Button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default ProductsItem;
+export default ProductsItemListView;

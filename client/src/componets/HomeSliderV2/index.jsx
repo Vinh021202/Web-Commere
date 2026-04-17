@@ -10,7 +10,16 @@ import 'swiper/css/pagination';
 import { EffectFade, Navigation, Pagination, Autoplay } from 'swiper/modules';
 import Button from '@mui/material/Button';
 
-const HomeBannerV2 = () => {
+const HomeBannerV2 = (props) => {
+  const spotlightItems =
+    props?.data?.filter((item) => item?.isDisplayOnHomeBanner && (item?.bannerimages?.[0] || item?.images?.[0])) ||
+    [];
+
+  const fallbackItems =
+    props?.data?.filter((item) => item?.bannerimages?.[0] || item?.images?.[0]).slice(0, 4) || [];
+
+  const slides = spotlightItems.length !== 0 ? spotlightItems : fallbackItems;
+
   return (
     <>
       <Swiper
@@ -28,78 +37,41 @@ const HomeBannerV2 = () => {
         modules={[EffectFade, Navigation, Pagination, Autoplay]}
         className="HomeSliderV2"
       >
-        <SwiperSlide>
-          <div className="item w-full rounded-md overflow-hidden relative">
-            <img src="/bannerV2.jpg" />
+        {slides.map((item, index) => {
+          const image = item?.bannerimages?.[0] || item?.images?.[0];
 
-            <div
-              className="info absolute top-0 -right-[100%] opacity-0 w-[50%] h-[100%] z-50 p-8 flex 
-            items-center flex-col justify-center transition-all duration-700"
-            >
-              <h4
-                className="text-[18px] font-[500] w-full text-left mb-3 relative
-                 -right-[100%] opacity-0"
-              >
-                Big Saving Days Sale
-              </h4>
-              <h2
-                className="text-[35px] font-[700] w-full relative
-                 -right-[100%] opacity-0"
-              >
-                Apple iPhone 13 128GB Pink
-              </h2>
-              <h3
-                className="flex items-center gap-3 text-[18px] 
-                font-[500] w-full text-left mt-3 mb-3 relative
-                 -right-[100%] opacity-0"
-              >
-                Staring At Only <span className="text-primary text-[30px] font-[700]">$60.00</span>
-              </h3>
-              <div
-                className="w-full relative
-                 -right-[100%] opacity-0 btn_"
-              >
-                <Button className="bg-org ">SHOP NOW</Button>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="item w-full rounded-md overflow-hidden">
-            <img src="/bannerV2_2.jpg" />
+          return (
+            <SwiperSlide key={item?._id || index}>
+              <div className="item relative min-h-[260px] w-full overflow-hidden rounded-[20px] bg-[#f7f1ed] sm:min-h-[340px] lg:min-h-[420px]">
+                <img
+                  src={image}
+                  alt={item?.name || 'Spotlight product'}
+                  className="block h-full min-h-[260px] w-full object-cover sm:min-h-[340px] lg:min-h-[420px]"
+                />
 
-            <div
-              className="info absolute top-0 -right-[100%] opacity-0 w-[50%] h-[100%] z-50 p-8 flex 
-            items-center flex-col justify-center transition-all duration-700"
-            >
-              <h4
-                className="text-[18px] font-[500] w-full text-left mb-3 relative
-                 -right-[100%] opacity-0"
-              >
-                Big Saving Days Sale
-              </h4>
-              <h2
-                className="text-[35px] font-[700] w-full relative
-                 -right-[100%] opacity-0"
-              >
-                Women Solid Round Green T-Shirt
-              </h2>
-              <h3
-                className="flex items-center gap-3 text-[18px] 
-                font-[500] w-full text-left mt-3 mb-3 relative
-                 -right-[100%] opacity-0"
-              >
-                Staring At Only <span className="text-primary text-[30px] font-[700]">$59.00</span>
-              </h3>
-              <div
-                className="w-full relative
-                 -right-[100%] opacity-0 btn_"
-              >
-                <Button className="bg-org ">SHOP NOW</Button>
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(17,24,39,0.12)_0%,rgba(17,24,39,0.04)_38%,rgba(255,255,255,0)_100%)]" />
+
+                <div className="info absolute top-0 right-0 z-50 flex h-full w-full flex-col items-start justify-end p-5 opacity-0 transition-all duration-700 sm:w-[68%] sm:p-8 md:w-[58%] lg:p-10">
+                  <h4 className="relative mb-2 w-full text-left text-[13px] font-[600] uppercase tracking-[0.08em] text-[#7c553d] opacity-0 sm:mb-3 sm:text-[14px]">
+                    {item?.bannerTitleName || 'Spotlight'}
+                  </h4>
+                  <h2 className="relative w-full text-[24px] font-[800] leading-tight text-[#1f2937] opacity-0 sm:text-[30px] md:text-[38px]">
+                    {item?.name}
+                  </h2>
+                  <h3 className="relative mt-2 mb-4 flex w-full flex-wrap items-center gap-2 text-left text-[14px] font-[500] text-[#4b5563] opacity-0 sm:mt-3 sm:text-[16px] md:text-[18px]">
+                    Starting at only
+                    <span className="text-primary text-[22px] font-[800] sm:text-[26px] md:text-[30px]">
+                      &#8363; {item?.price}
+                    </span>
+                  </h3>
+                  <div className="btn_ relative w-full opacity-0">
+                    <Button className="bg-org">SHOP NOW</Button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </SwiperSlide>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </>
   );

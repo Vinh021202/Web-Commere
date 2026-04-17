@@ -1,91 +1,181 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { FcGoogle } from "react-icons/fc";
+import CircularProgress from "@mui/material/CircularProgress";
 import { CgLogIn } from "react-icons/cg";
-import { FaRegUser } from "react-icons/fa6";
-import { BsFacebook } from "react-icons/bs";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { FaRegEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { HiOutlineKey, HiOutlineSparkles } from "react-icons/hi2";
+import { MyContext } from "../../App";
+import { postData } from "../../utils/api";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const context = useContext(MyContext);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!email) {
+      context.alertBox("error", "Please enter email id");
+      return;
+    }
+
+    setIsLoading(true);
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("actionType", "forgot-password");
+
+    postData("/api/user/forgot-password", { email }).then((res) => {
+      setIsLoading(false);
+      if (res?.error === false) {
+        context.alertBox("success", res?.message);
+        navigate("/verify-account");
+      } else {
+        context.alertBox("error", res?.message || "Something went wrong");
+      }
+    });
+  };
 
   return (
-    <>
-      <section className="bg-white w-full h-[100vh] ">
-        {/* =========== Header =========== */}
-        <header className="w-full fixed top-0 left-0 px-4 py-2 flex items-center justify-between z-50 bg-white/80 backdrop-blur-sm">
-          <Link to={"/"}>
-            <img src="/7_logo.jpg" alt="logo" className="w-[200px]" />
-          </Link>
+    <section className="relative min-h-screen overflow-hidden bg-[#f7f5ef]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.9),_transparent_38%),radial-gradient(circle_at_bottom_right,_rgba(56,114,250,0.18),_transparent_34%),linear-gradient(135deg,_#f7f5ef_0%,_#efe7d5_45%,_#dce7ff_100%)]" />
+      <div className="absolute left-[-120px] top-[120px] h-[320px] w-[320px] rounded-full bg-[#1f4fd1]/10 blur-3xl" />
+      <div className="absolute bottom-[-80px] right-[8%] h-[280px] w-[280px] rounded-full bg-[#f59e0b]/15 blur-3xl" />
 
-          <div className="flex items-center gap-0">
-            {" "}
-            <NavLink to="/Login" exact="true" activeClassName="isActive">
-              {" "}
-              <Button className="!rounded-full !text-[rgba(0,0,0,0.9)] !px-5 flex gap-1">
-                {" "}
-                <CgLogIn className="text-[18px]" /> Login{" "}
-              </Button>{" "}
-            </NavLink>{" "}
-            <NavLink to="/sign-up" exact="true" activeClassName="isActive">
-              <Button className="!rounded-full !text-[rgba(0,0,0,0.9)] !px-5 flex gap-1">
-                {" "}
-                <FaRegUser className="text-[14px]" /> Sign Up{" "}
-              </Button>
-            </NavLink>
-          </div>
-        </header>
+      <header className="relative z-20 mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3 sm:px-5 lg:px-6">
+        <Link
+          to="/"
+          className="flex items-center gap-3 rounded-full bg-white/70 px-3 py-2 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur"
+        >
+          <img src="/7_logo.jpg" alt="logo" className="h-10 w-auto sm:h-12" />
+        </Link>
 
-        {/* =========== Background =========== */}
-        <img
-          src="/login.png"
-          alt="background"
-          className="w-full fixed top-0 left-0 opacity-5"
-        />
+        <div className="flex items-center gap-2 rounded-full border border-white/60 bg-white/65 p-1 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur">
+          <NavLink to="/login">
+            <Button className="!rounded-full !px-4 !py-2 !text-[13px] !font-[700] !text-[rgba(0,0,0,0.75)] sm:!px-5">
+              <CgLogIn className="mr-2 text-[17px]" />
+              Login
+            </Button>
+          </NavLink>
+          <NavLink to="/sign-up">
+            <Button className="!rounded-full !px-4 !py-2 !text-[13px] !font-[700] !text-[rgba(0,0,0,0.75)] sm:!px-5">
+              Sign Up
+            </Button>
+          </NavLink>
+        </div>
+      </header>
 
-        {/* =========== Login Box =========== */}
-        <div className="loginBox card w-[600px] h-[auto] pb-20 mx-auto pt-20 bg-white rounded-xl shadow-lg relative z-10 p-8">
-          <div className="text-center">
-            <img src="/icon.svg" alt="icon" className="m-auto w-[60px]" />
-          </div>
-
-          <h1 className="text-center text-[28px] font-[800] mt-4 leading-tight">
-            Having trouble to sign in? <br />
-            Reset your password
-          </h1>
-          <br />
-          {/* =========== Email Form =========== */}
-          <form className="w-full px-4 mt-5">
-            <div className="form-group mb-4 w-full">
-              <h4 className="text-[14px] font-[500] mb-1">Email</h4>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full h-[50px] border border-[rgba(0,0,0,0.1)] rounded-md 
-                           focus:border-[rgba(0,0,0,0.7)] focus:outline-none px-3"
-                placeholder="Nhập email của bạn"
-              />
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-80px)] w-full max-w-5xl grid-cols-1 gap-5 px-4 pb-5 pt-1 sm:px-5 lg:grid-cols-[0.95fr_0.72fr] lg:px-6">
+        <div className="hidden rounded-[26px] border border-white/50 bg-[#14213d] p-6 text-white shadow-[0_20px_56px_rgba(20,33,61,0.22)] lg:flex lg:flex-col lg:justify-between">
+          <div>
+            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[10px] font-[700] uppercase tracking-[0.2em] text-white/90">
+              <HiOutlineSparkles className="text-[16px]" />
+              Recovery Flow
             </div>
-            <Button className="btn-blue btn-lg w-full">Resest Password</Button>
-            <br /> <br />
-            <div className="text-center flex items-center justify-center gap-4">
-              <span>Don't want to reset?</span>
-              <Link
-                to={"/forgot-password"}
-                className="text-[#3872fa] font-[700] text-[15px] hover:underline hover:text-gray-700"
+
+            <h1 className="max-w-[360px] font-[800] leading-[1.08] text-[30px]">
+              Khôi phục mật khẩu chỉ với email của bạn.
+            </h1>
+
+            <p className="mt-4 max-w-[360px] text-[14px] leading-6 text-white/72">
+              Nhập email đã đăng ký để nhận mã OTP, sau đó tiếp tục đổi mật
+              khẩu trong bước xác thực.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="rounded-[20px] border border-white/12 bg-white/8 p-3.5 backdrop-blur-sm">
+              <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-white/55">
+                Step 1
+              </p>
+              <p className="mt-2 text-[18px] font-[800]">Send OTP</p>
+              <p className="mt-2 text-[12px] leading-5 text-white/68">
+                Gửi mã xác thực đến email của bạn để bắt đầu reset password.
+              </p>
+            </div>
+            <div className="rounded-[20px] border border-white/12 bg-[#f59e0b] p-3.5 text-[#1f2937]">
+              <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-[#1f2937]/70">
+                Step 2
+              </p>
+              <p className="mt-2 text-[18px] font-[800]">Verify</p>
+              <p className="mt-2 text-[12px] leading-5 text-[#1f2937]/80">
+                Xác nhận OTP và chuyển sang màn hình đổi mật khẩu mới.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <div className="w-full max-w-[390px] rounded-[24px] border border-white/70 bg-white/80 p-4 shadow-[0_20px_48px_rgba(20,33,61,0.14)] backdrop-blur-xl sm:p-5 lg:p-6">
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[16px] bg-[linear-gradient(135deg,_#14213d,_#3872fa)] text-white shadow-[0_16px_30px_rgba(56,114,250,0.28)]">
+                  <HiOutlineKey className="text-[17px]" />
+                </div>
+                <h2 className="text-[22px] font-[800] leading-tight text-[#14213d]">
+                  Reset password
+                </h2>
+                <p className="mt-1.5 text-[13px] leading-5 text-slate-500">
+                  Nhập email để nhận mã xác thực.
+                </p>
+              </div>
+
+              <div className="hidden rounded-[18px] bg-[#f6f8ff] px-3 py-2 text-right sm:block">
+                <p className="text-[11px] font-[700] uppercase tracking-[0.12em] text-slate-400">
+                  Email
+                </p>
+                <p className="mt-1 text-[12px] font-[700] text-[#3872fa]">
+                  Recovery
+                </p>
+              </div>
+            </div>
+
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div>
+                <label className="mb-1.5 block text-[13px] font-[700] text-slate-700">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  disabled={isLoading}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@company.com"
+                  className="h-[48px] w-full rounded-[18px] border border-slate-200 bg-[#fcfcfd] px-4 text-[13px] text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-[#3872fa] focus:bg-white focus:shadow-[0_0_0_4px_rgba(56,114,250,0.12)]"
+                />
+              </div>
+
+              <Button
+                type="submit"
+                disabled={!email || isLoading}
+                className="!mt-1 !flex !h-[50px] !w-full !items-center !justify-center !gap-2 !rounded-[18px] !bg-[linear-gradient(135deg,_#14213d,_#3872fa)] !text-[13px] !font-[800] !capitalize !text-white shadow-[0_18px_35px_rgba(56,114,250,0.28)] hover:!opacity-95 disabled:!bg-slate-300 disabled:!shadow-none"
               >
-                Sign In?
+                {isLoading ? (
+                  <CircularProgress color="inherit" size={22} />
+                ) : (
+                  <>
+                    Send recovery code
+                    <FaArrowRightLong className="text-[16px]" />
+                  </>
+                )}
+              </Button>
+            </form>
+
+            <div className="mt-5 rounded-[18px] bg-[#f8f9fd] p-3.5 text-[12px] leading-5 text-slate-500">
+              Không muốn reset nữa?
+              <Link
+                to="/login"
+                className="ml-2 font-[700] text-[#3872fa] hover:text-[#14213d]"
+              >
+                Quay lại đăng nhập
               </Link>
             </div>
-          </form>
+          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

@@ -73,6 +73,10 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    sale: {
+      type: Number,
+      default: 0,
+    },
     productRam: [
       {
         type: String,
@@ -91,14 +95,24 @@ const productSchema = new mongoose.Schema(
         default: null,
       },
     ],
-    dateCreated: {
-      type: Date,
-      default: Date.now,
+    bannerimages: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    bannerTitleName: {
+      type: String,
+      required: true,
+    },
+    isDisplayOnHomeBanner: {
+      type: Boolean,
+      default: false,
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const ProductModel = mongoose.model("Product", productSchema);

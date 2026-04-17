@@ -13,31 +13,46 @@ const AdsBannerSlider = (props) => {
     <>
       <div className="py-5 w-full">
         <Swiper
-          slidesPerView={props.items}
-          spaceBetween={10}
+          slidesPerView={1.15}
+          spaceBetween={12}
+          breakpoints={{
+            480: {
+              slidesPerView: 1.4,
+              spaceBetween: 12,
+            },
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 14,
+            },
+            768: {
+              slidesPerView: 2.4,
+              spaceBetween: 14,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 14,
+            },
+            1280: {
+              slidesPerView: props.items,
+              spaceBetween: 10,
+            },
+          }}
           navigation={true}
           modules={[Navigation]}
           className="smlBtn"
         >
-          <SwiperSlide>
-            <BannerBoxV2 info="left" image={'/bannerBox2.jpg'} link={'/'} />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <BannerBoxV2 info="left" image={'/bannerBox2.jpg'} link={'/'} />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <BannerBoxV2 info="left" image={'/bannerBox2.jpg'} link={'/'} />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <BannerBoxV2 info="right" image={'/bannerBox1.jpg'} link={'/'} />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <BannerBoxV2 info="right" image={'/bannerBox1.jpg'} link={'/'} />
-          </SwiperSlide>
+          {props?.data?.map((item, index) => {
+            return (
+              <SwiperSlide key={item?._id || index}>
+                <BannerBoxV2
+                  info={item?.alignInfo}
+                  item={item}
+                  image={item?.images[0]}
+                  link={'/'}
+                />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </>

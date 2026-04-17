@@ -1,8 +1,8 @@
 import Button from "@mui/material/Button";
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useMemo, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
-import { FaRegImage } from "react-icons/fa";
+import { FaRegImage, FaBlog } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 import { RiProductHuntLine } from "react-icons/ri";
 import { TbCategory } from "react-icons/tb";
@@ -11,243 +11,312 @@ import { IoMdLogOut } from "react-icons/io";
 import { FaAngleDown } from "react-icons/fa6";
 import { Collapse } from "react-collapse";
 import { MyContext } from "../../App";
+import { fetchDataFromApi } from "../../utils/api";
 
 const SideBar = () => {
   const [submenuIndex, setSubMenuIndex] = useState(null);
+  const context = useContext(MyContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const isOpenSubMenu = (index) => {
-    if (submenuIndex === index) {
-      setSubMenuIndex(null);
-    } else {
-      setSubMenuIndex(index);
-    }
+  const Logout = () => {
+    fetchDataFromApi(
+      `/api/user/logout?token=${localStorage.getItem("accesstoken")}`,
+      {
+        withCredentials: true,
+      },
+    ).then((res) => {
+      if (res?.error === false) {
+        context.setIsLogin(false);
+        localStorage.removeItem("accesstoken", res?.accesstoken);
+        localStorage.removeItem("refreshToken", res?.refreshToken);
+        navigate("/login");
+      }
+    });
   };
 
-  const context = useContext(MyContext);
+  const isOpenSubMenu = (index) => {
+    setSubMenuIndex((prev) => (prev === index ? null : index));
+  };
+
+  const menuItems = useMemo(
+    () => [
+      {
+        type: "link",
+        label: "Dashboard",
+        icon: <RxDashboard className="text-[18px]" />,
+        to: "/",
+      },
+      {
+        type: "group",
+        index: 1,
+        label: "Home Sliders",
+        icon: <FaRegImage className="text-[18px]" />,
+        children: [
+          { label: "Home Banner List", to: "/homeSlider/list" },
+          {
+            label: "Add Home Banner Slide",
+            action: () =>
+              context.setIsOpenFullScreenPanel({
+                open: true,
+                model: "Add HomeSlide",
+              }),
+          },
+        ],
+      },
+      {
+        type: "link",
+        label: "Users",
+        icon: <FiUsers className="text-[18px]" />,
+        to: "/user",
+      },
+      {
+        type: "group",
+        index: 3,
+        label: "Products",
+        icon: <RiProductHuntLine className="text-[20px]" />,
+        children: [
+          { label: "Products List", to: "/products" },
+          {
+            label: "Products Upload",
+            action: () =>
+              context.setIsOpenFullScreenPanel({
+                open: true,
+                model: "Add Product",
+              }),
+          },
+          { label: "Add Products Rams", to: "/product/addRams" },
+          { label: "Add Products Weight", to: "/product/addWeight" },
+          { label: "Add Products Size", to: "/product/addSize" },
+        ],
+      },
+      {
+        type: "group",
+        index: 4,
+        label: "Category",
+        icon: <TbCategory className="text-[20px]" />,
+        children: [
+          { label: "Category List", to: "/category/list" },
+          {
+            label: "Add New Category",
+            action: () =>
+              context.setIsOpenFullScreenPanel({
+                open: true,
+                model: "Add New Category",
+              }),
+          },
+          { label: "Sub Category List", to: "/subCategory/list" },
+          {
+            label: "Add New Sub Category",
+            action: () =>
+              context.setIsOpenFullScreenPanel({
+                open: true,
+                model: "Add New Sub Category",
+              }),
+          },
+        ],
+      },
+      {
+        type: "link",
+        label: "Orders",
+        icon: <IoBagCheckOutline className="text-[20px]" />,
+        to: "/orders",
+      },
+      {
+        type: "group",
+        index: 5,
+        label: "Banners",
+        icon: <TbCategory className="text-[20px]" />,
+        children: [
+          { label: "Banner V1 List", to: "/bannerV1/list" },
+          {
+            label: "Add Banner V1",
+            action: () =>
+              context.setIsOpenFullScreenPanel({
+                open: true,
+                model: "Add BannerV1",
+              }),
+          },
+        ],
+      },
+      {
+        type: "group",
+        index: 6,
+        label: "Blog",
+        icon: <FaBlog className="text-[18px]" />,
+        children: [
+          { label: "Blog List", to: "/blog/list" },
+          {
+            label: "Add Blog",
+            action: () =>
+              context.setIsOpenFullScreenPanel({
+                open: true,
+                model: "Add Blog",
+              }),
+          },
+        ],
+      },
+      {
+        type: "button",
+        label: "Logout",
+        icon: <IoMdLogOut className="text-[20px]" />,
+        action: Logout,
+      },
+    ],
+    [context, navigate],
+  );
+
+  const isActiveLink = (to) => {
+    if (to === "/") return location.pathname === "/";
+    return location.pathname.startsWith(to);
+  };
+
+  const isActiveGroup = (children = []) =>
+    children.some((child) => child.to && isActiveLink(child.to));
 
   return (
-    <>
-      <div
-        className={`sidebar fixed top-0 left-0  bg-[#fff] h-full border-r
-         border-[rgba(0,0,0,0.1)] py-2 px-4 w-[${
-           context.isSiderOpen === true ? "18%" : "0px"
-         }] `}
-      >
-        <div className="py-2 w-full">
-          <Link to={"/"}>
-            <img src="/7_logo.jpg" className="w-[200px] " />
-          </Link>
-        </div>
-
-        <ul className="mt-4">
-          <li>
-            <Link to={"/"}>
-              <Button
-                className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)]
-             !font-[600] items-center !py-2 hover:!bg-[#f1f1f1]"
-              >
-                <RxDashboard className="text-[18px]" /> <span>Dashboard</span>
-              </Button>
-            </Link>
-          </li>
-          <li>
-            <Button
-              className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] 
-            !font-[600] items-center !py-2 hover:!bg-[#f1f1f1]"
-              onClick={() => isOpenSubMenu(1)}
-            >
-              <FaRegImage className="text-[18px]" /> <span>Home Sliders</span>
-              <span className="ml-auto w-[30px] h-[30px] flex items-center justify-center">
-                <FaAngleDown
-                  className={`transition-all ${
-                    submenuIndex === 1 ? "rotate-180 " : ""
-                  }`}
-                />
-              </span>
-            </Button>
-
-            <Collapse isOpened={submenuIndex === 1 ? true : false}>
-              <ul className="w-full">
-                <li className="w-full">
-                  <Button
-                    className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start
-                   !w-full !text-[13px] !font-[400] !pl-9 flex gap-3"
-                  >
-                    <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                    Add Home Banner List
-                  </Button>
-                </li>
-                <li className="w-full">
-                  <Button
-                    className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start 
-                  !w-full !text-[13px] !font-[400] !pl-9 flex gap-3"
-                  >
-                    <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                    Add Home Banner Slide
-                  </Button>
-                </li>
-              </ul>
-            </Collapse>
-          </li>
-
-          <li>
-            <Link to={"/user"}>
-              <Button
-                className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] 
-            !font-[600] items-center !py-2 hover:!bg-[#f1f1f1]"
-              >
-                <FiUsers className="text-[18px]" /> <span>Users</span>
-              </Button>
-            </Link>
-          </li>
-
-          <li>
-            <Button
-              className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] 
-            !font-[600] items-center !py-2 hover:!bg-[#f1f1f1]"
-              onClick={() => isOpenSubMenu(3)}
-            >
-              <RiProductHuntLine className="text-[20px]" />{" "}
-              <span>Products</span>
-              <span className="ml-auto w-[30px] h-[30px] flex items-center justify-center">
-                <FaAngleDown
-                  className={`transition-all ${
-                    submenuIndex === 3 ? "rotate-180 " : ""
-                  }`}
-                />
-              </span>
-            </Button>
-
-            <Collapse isOpened={submenuIndex === 3 ? true : false}>
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link to={"/products"}>
-                    <Button
-                      className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start
-                   !w-full !text-[13px] !font-[400] !pl-9 flex gap-3"
-                    >
-                      <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                      Products List
-                    </Button>
-                  </Link>
-                </li>
-                <li className="w-full">
-                  <Button
-                    className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start 
-                  !w-full !text-[13px] !font-[400] !pl-9 flex gap-3"
-                    onClick={() =>
-                      context.setIsOpenFullScreenPanel({
-                        open: true,
-                        model: "Add Product",
-                      })
-                    }
-                  >
-                    <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                    Products Upload
-                  </Button>
-                </li>
-              </ul>
-            </Collapse>
-          </li>
-
-          <li>
-            <Button
-              className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] 
-            !font-[600] items-center !py-2 hover:!bg-[#f1f1f1]"
-              onClick={() => isOpenSubMenu(4)}
-            >
-              <TbCategory className="text-[20px]" /> <span>Category</span>
-              <span className="ml-auto w-[30px] h-[30px] flex items-center justify-center">
-                <FaAngleDown
-                  className={`transition-all ${
-                    submenuIndex === 4 ? "rotate-180 " : ""
-                  }`}
-                />
-              </span>
-            </Button>
-
-            <Collapse isOpened={submenuIndex === 4 ? true : false}>
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link to={"/category/list"}>
-                    <Button
-                      className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start
-                   !w-full !text-[13px] !font-[400] !pl-9 flex gap-3"
-                    >
-                      <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                      Category List
-                    </Button>
-                  </Link>
-                </li>
-                <li className="w-full">
-                  <Button
-                    className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start 
-                  !w-full !text-[13px] !font-[400] !pl-9 flex gap-3"
-                    onClick={() =>
-                      context.setIsOpenFullScreenPanel({
-                        open: true,
-                        model: "Add New Category",
-                      })
-                    }
-                  >
-                    <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                    Add a Category
-                  </Button>
-                </li>
-
-                <li className="w-full">
-                  <Link to={"/subCategory/list"}>
-                    <Button
-                      className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start 
-                  !w-full !text-[13px] !font-[400] !pl-9 flex gap-3"
-                    >
-                      <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                      Sub Category List
-                    </Button>
-                  </Link>
-                </li>
-                <li className="w-full">
-                  <Button
-                    className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start 
-                  !w-full !text-[13px] !font-[400] !pl-9 flex gap-3"
-                    onClick={() =>
-                      context.setIsOpenFullScreenPanel({
-                        open: true,
-                        model: "Add New Sub Category",
-                      })
-                    }
-                  >
-                    <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                    Add a Sub Category
-                  </Button>
-                </li>
-              </ul>
-            </Collapse>
-          </li>
-
-          <li>
-            <Link to={"/orders"}>
-              <Button
-                className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] 
-            !font-[600] items-center !py-2 hover:!bg-[#f1f1f1]"
-              >
-                <IoBagCheckOutline className="text-[20px]" />{" "}
-                <span>Orders</span>
-              </Button>
-            </Link>
-          </li>
-
-          <li>
-            <Button
-              className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] 
-            !font-[600] items-center !py-2 hover:!bg-[#f1f1f1]"
-            >
-              <IoMdLogOut className="text-[20px]" /> <span>Logout</span>
-            </Button>
-          </li>
-        </ul>
+    <div
+      className={`sidebar fixed left-0 top-[72px] z-40 h-[calc(100vh-72px)] w-[280px] max-w-[86vw] overflow-y-auto border-r border-[#ebe5d9] bg-[linear-gradient(180deg,_#f8f6f1_0%,_#f4efe5_100%)] px-3 py-4 shadow-[0_18px_50px_rgba(15,23,42,0.14)] transition-transform duration-300 xl:w-[250px] xl:max-w-[250px] ${
+        context.isSiderOpen === true
+          ? "translate-x-0"
+          : "-translate-x-full xl:-translate-x-full"
+      }`}
+    >
+      <div className="rounded-[20px] border border-white/75 bg-white/72 p-3.5 shadow-[0_12px_26px_rgba(15,23,42,0.05)] backdrop-blur">
+        <p className="text-[11px] font-[700] uppercase tracking-[0.22em] text-slate-400">
+          Navigation
+        </p>
+        <h3 className="mt-1.5 text-[16px] font-[800] leading-5 text-[#14213d]">
+          Manage your workspace
+        </h3>
       </div>
-    </>
+
+      <ul className="mt-4 space-y-1.5">
+        {menuItems.map((item) => {
+          if (item.type === "link") {
+            const active = isActiveLink(item.to);
+
+            return (
+              <li key={item.label}>
+                <Link to={item.to}>
+                  <Button
+                    className={`!flex !w-full !items-center !justify-start !gap-2.5 !rounded-[16px] !px-3 !py-2.5 !text-[13px] !font-[800] !capitalize !transition-all ${
+                      active
+                        ? "!bg-[linear-gradient(135deg,_#14213d,_#3872fa)] !text-white shadow-[0_14px_30px_rgba(56,114,250,0.22)]"
+                        : "!bg-white/70 !text-[#24324d] hover:!bg-white"
+                    }`}
+                  >
+                    <span
+                      className={`flex h-8 w-8 items-center justify-center rounded-[12px] ${
+                        active
+                          ? "bg-white/14 text-white"
+                          : "bg-[#eef3ff] text-[#3872fa]"
+                      }`}
+                    >
+                      {item.icon}
+                    </span>
+                    <span>{item.label}</span>
+                  </Button>
+                </Link>
+              </li>
+            );
+          }
+
+          if (item.type === "group") {
+            const active = isActiveGroup(item.children);
+            const opened = submenuIndex === item.index;
+
+            return (
+              <li key={item.label}>
+                <Button
+                  className={`!flex !w-full !items-center !justify-start !gap-2.5 !rounded-[16px] !px-3 !py-2.5 !text-[13px] !font-[800] !capitalize !transition-all ${
+                    active || opened
+                      ? "!bg-white !text-[#14213d] shadow-[0_12px_28px_rgba(15,23,42,0.06)]"
+                      : "!bg-transparent !text-[#24324d] hover:!bg-white/80"
+                  }`}
+                  onClick={() => isOpenSubMenu(item.index)}
+                >
+                  <span
+                    className={`flex h-8 w-8 items-center justify-center rounded-[12px] ${
+                      active || opened
+                        ? "bg-[#eef3ff] text-[#3872fa]"
+                        : "bg-white/70 text-[#4b5563]"
+                    }`}
+                  >
+                    {item.icon}
+                  </span>
+                  <span className="truncate">{item.label}</span>
+                  <span className="ml-auto flex h-7 w-7 items-center justify-center rounded-[10px] bg-[#f6f8ff]">
+                    <FaAngleDown
+                      className={`text-[13px] text-[#3872fa] transition-all ${
+                        opened ? "rotate-180" : ""
+                      }`}
+                    />
+                  </span>
+                </Button>
+
+                <Collapse isOpened={opened}>
+                  <ul className="mt-1.5 space-y-1 pl-2.5">
+                    {item.children.map((child) => {
+                      const activeChild = child.to ? isActiveLink(child.to) : false;
+
+                      if (child.to) {
+                        return (
+                          <li key={child.label}>
+                            <Link to={child.to}>
+                              <Button
+                                className={`!flex !w-full !items-center !justify-start !gap-2.5 !rounded-[14px] !px-3 !py-2 !text-[12px] !font-[700] !capitalize ${
+                                  activeChild
+                                    ? "!bg-[#e9f0ff] !text-[#1d4ed8]"
+                                    : "!bg-transparent !text-slate-500 hover:!bg-white/70"
+                                }`}
+                              >
+                                <span
+                                  className={`block h-[6px] w-[6px] rounded-full ${
+                                    activeChild ? "bg-[#3872fa]" : "bg-slate-300"
+                                  }`}
+                                />
+                                {child.label}
+                              </Button>
+                            </Link>
+                          </li>
+                        );
+                      }
+
+                      return (
+                        <li key={child.label}>
+                          <Button
+                            className="!flex !w-full !items-center !justify-start !gap-2.5 !rounded-[14px] !px-3 !py-2 !text-[12px] !font-[700] !capitalize !text-slate-500 hover:!bg-white/70"
+                            onClick={child.action}
+                          >
+                            <span className="block h-[6px] w-[6px] rounded-full bg-slate-300" />
+                            {child.label}
+                          </Button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </Collapse>
+              </li>
+            );
+          }
+
+          return (
+            <li key={item.label} className="pt-1.5">
+              <Button
+                onClick={item.action}
+                className="!flex !w-full !items-center !justify-start !gap-2.5 !rounded-[16px] !border !border-[#ffd9d9] !bg-[#fff5f5] !px-3 !py-2.5 !text-[13px] !font-[800] !capitalize !text-[#dc2626] hover:!bg-[#ffe9e9]"
+              >
+                <span className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-white text-[#ef4444]">
+                  {item.icon}
+                </span>
+                <span>{item.label}</span>
+              </Button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 };
 

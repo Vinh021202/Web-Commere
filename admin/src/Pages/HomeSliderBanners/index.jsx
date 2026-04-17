@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import { IoMdAdd } from "react-icons/io";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,16 +7,18 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import Checkbox from "@mui/material/Checkbox";
-import { Link } from "react-router-dom";
-import ProgressBar from "../../Components/ProgressBar";
 import { AiOutlineEdit } from "react-icons/ai";
-import { FaRegEye } from "react-icons/fa6";
 import { GoTrash } from "react-icons/go";
-import SearchBox from "../../Components/SearchBox";
+import { FaImages } from "react-icons/fa6";
+import { IoMdAdd } from "react-icons/io";
 import { MyContext } from "../../App";
+import {
+  deleteData,
+  deleteMultipleData,
+  fetchDataFromApi,
+} from "../../utils/api";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -27,14 +28,81 @@ const columns = [
 ];
 
 const HomeSliderBanners = () => {
-  const [categoryFilterVal, setCategoryFilterVal] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
+  const [slidesData, setSlidesData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [sortedIds, setSortedIds] = useState([]);
 
   const context = useContext(MyContext);
 
-  const handleChangeCatFilter = (event) => {
-    setCategoryFilterVal(event.target.value);
+  useEffect(() => {
+    getData();
+  }, [context?.isOpenFullScreenPanel]);
+
+  const getData = () => {
+    setIsLoading(true);
+    fetchDataFromApi(`/api/homeSlider`).then((res) => {
+      const arr = [];
+      if (res?.error === false) {
+        for (let i = 0; i < res?.data?.length; i++) {
+          arr[i] = res?.data[i];
+          arr[i].checked = false;
+        }
+      }
+
+      setTimeout(() => {
+        setSlidesData(arr);
+        setIsLoading(false);
+      }, 300);
+    });
+  };
+
+  const handleSelectAll = (e) => {
+    const isChecked = e.target.checked;
+
+    const updateItems = slidesData.map((item) => ({
+      ...item,
+      checked: isChecked,
+    }));
+    setSlidesData(updateItems);
+
+    if (isChecked) {
+      const ids = updateItems.map((item) => item._id).sort((a, b) => a - b);
+      setSortedIds(ids);
+    } else {
+      setSortedIds([]);
+    }
+  };
+
+  const handleCheckboxChange = (e, id) => {
+    const updateItems = slidesData.map((item) =>
+      item._id === id ? { ...item, checked: !item.checked } : item,
+    );
+
+    setSlidesData(updateItems);
+
+    const selectedIds = updateItems
+      .filter((item) => item.checked)
+      .map((item) => item._id)
+      .sort((a, b) => a - b);
+    setSortedIds(selectedIds);
+  };
+
+  const deleteMultipleProduct = () => {
+    if (sortedIds.length === 0) {
+      context.alertBox("error", "please select items to delete");
+      return;
+    }
+
+    try {
+      deleteMultipleData(`/api/homeSlider/deleteMultiple`, sortedIds).then(() => {
+        getData();
+        context.alertBox("success", "Slides deleted");
+      });
+    } catch (error) {
+      context.alertBox("error", "Error deleting item");
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -46,20 +114,61 @@ const HomeSliderBanners = () => {
     setPage(0);
   };
 
+  const deleteSlide = (id) => {
+    deleteData(`/api/homeSlider/${id}`).then(() => {
+      context.alertBox("success", "Slide deleted");
+      getData();
+    });
+  };
+
+  const paginatedSlides = slidesData?.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage,
+  );
+
   return (
     <>
-      <div className="flex items-center justify-between px-2 py-0 mt-3">
-        <h2 className="text-[18px] font-[700]">
-          Home Slider Banners{" "}
-          <span className="text-[14px] font-[400]">(Materia Ui Table )</span>
-        </h2>
+      <div className="mb-6 flex items-center justify-between gap-6 rounded-[28px] border border-white/70 bg-[linear-gradient(135deg,_rgba(255,255,255,0.92),_rgba(245,247,255,0.96))] p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+        <div className="flex items-center gap-4">
+          <div className="flex h-14 w-14 items-center justify-center rounded-[18px] bg-[linear-gradient(135deg,_#14213d,_#3872fa)] text-white shadow-[0_16px_35px_rgba(56,114,250,0.20)]">
+            <FaImages className="text-[24px]" />
+          </div>
+          <div>
+            <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
+              Media Manager
+            </p>
+            <h2 className="mt-2 text-[28px] font-[900] leading-none text-[#14213d]">
+              Home Slider Banners
+            </h2>
+            <p className="mt-2 text-[14px] text-slate-500">
+              Manage hero slides shown on the storefront homepage.
+            </p>
+          </div>
+        </div>
 
-        <div className="col w-[25%] ml-auto flex items-center justify-end gap-3">
-          <Button className="btn !bg-green-600 !text-white btn-sm ">
-            Export
-          </Button>
+        <div className="flex items-center gap-3">
+          <div className="rounded-[18px] border border-[#e6edfb] bg-white/80 px-4 py-3 text-right shadow-[0_10px_25px_rgba(15,23,42,0.04)]">
+            <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
+              Total Slides
+            </p>
+            <p className="mt-1 text-[22px] font-[900] text-[#3872fa]">
+              {slidesData?.length || 0}
+            </p>
+          </div>
+
+          {sortedIds?.length !== 0 && (
+            <Button
+              variant="contained"
+              color="error"
+              onClick={deleteMultipleProduct}
+              className="!rounded-[16px] !px-4 !py-3 !text-[13px] !font-[800] !capitalize"
+            >
+              Delete Selected
+            </Button>
+          )}
+
           <Button
-            className="btn-blue  !text-white btn-sm"
+            className="!rounded-[16px] !bg-[linear-gradient(135deg,_#14213d,_#3872fa)] !px-4 !py-3 !text-[13px] !font-[800] !capitalize !text-white shadow-[0_16px_35px_rgba(56,114,250,0.22)]"
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -67,78 +176,180 @@ const HomeSliderBanners = () => {
               })
             }
           >
+            <IoMdAdd className="mr-1 text-[18px]" />
             Add Home Slide
           </Button>
         </div>
       </div>
-      <div className="card my-4 pt-5 shadow-md sm:rounded-lg bg-white">
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
+
+      <div className="card my-6 overflow-hidden rounded-[28px] border border-white/70 bg-white/90 pt-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+        <div className="flex items-center justify-between border-b border-[#eef2f7] px-6 pb-5">
+          <div>
+            <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
+              Slider Assets
+            </p>
+            <h3 className="mt-2 text-[22px] font-[900] text-[#14213d]">
+              Active Home Slides
+            </h3>
+          </div>
+          <div className="rounded-[16px] border border-[#e6edfb] bg-[#f8faff] px-4 py-3 text-right">
+            <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
+              Selected
+            </p>
+            <p className="mt-1 text-[18px] font-[900] text-[#3872fa]">
+              {sortedIds?.length || 0}
+            </p>
+          </div>
+        </div>
+
+        <div className="px-6 pb-4 pt-5">
+          <div className="overflow-hidden rounded-[24px] border border-[#edf2f8] bg-[#fcfdff] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
+            <TableContainer sx={{ maxHeight: 560 }}>
+              <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell width={60}>
-                  <Checkbox {...label} size="small" />
+                <TableCell
+                  width={60}
+                  sx={{
+                    backgroundColor: "#f8fbff",
+                    borderBottom: "1px solid #e8eef7",
+                    py: 1.8,
+                  }}
+                >
+                  <Checkbox
+                    {...label}
+                    size="small"
+                    onChange={handleSelectAll}
+                    checked={
+                      slidesData?.length > 0
+                        ? slidesData.every((item) => item.checked)
+                        : false
+                    }
+                  />
                 </TableCell>
                 {columns.map((column) => (
                   <TableCell
                     width={column.width}
                     key={column.id}
                     align={column.align}
+                    sx={{
+                      backgroundColor: "#f8fbff",
+                      borderBottom: "1px solid #e8eef7",
+                      py: 1.8,
+                      color: "#64748b",
+                      fontSize: "11px",
+                      fontWeight: 800,
+                      letterSpacing: "0.14em",
+                    }}
                   >
                     {column.label}
                   </TableCell>
                 ))}
               </TableRow>
             </TableHead>
+
             <TableBody>
-              <TableRow>
-                <TableCell width={200}>
-                  <Checkbox {...label} size="small" />
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-4 w-[300px]">
-                    <div className="img w-full rounded-md overflow-hidden group">
-                      <Link to={"/product/45745"}>
-                        <img
-                          src="/bannersort.png"
-                          className="w-full group-hover:scale-105 transition-all"
-                        />
-                      </Link>
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={3}>
+                    <div className="flex min-h-[320px] w-full items-center justify-center">
+                      <div className="flex items-center gap-3 rounded-full bg-white px-5 py-3 shadow-[0_10px_25px_rgba(15,23,42,0.06)]">
+                        <CircularProgress size={22} color="inherit" />
+                        <span className="text-[13px] font-[700] text-slate-600">
+                          Loading slides...
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </TableCell>
-                <TableCell width={300}>
-                  <div className="flex items-center gap-1">
-                    <Button
-                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
-                    !rounded-full hover:!bg-[#f1f1f1]"
-                    >
-                      <AiOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[20px]" />
-                    </Button>
+                  </TableCell>
+                </TableRow>
+              ) : paginatedSlides?.length !== 0 ? (
+                paginatedSlides?.map((item, index) => (
+                  <TableRow
+                    key={index}
+                    hover
+                    sx={{
+                      "& td": {
+                        borderBottom: "1px solid #eef3f9",
+                        py: 2,
+                        verticalAlign: "middle",
+                      },
+                      "&:last-child td": {
+                        borderBottom: "none",
+                      },
+                    }}
+                  >
+                      <TableCell width={80}>
+                        <Checkbox
+                          {...label}
+                          size="small"
+                          checked={item.checked === true}
+                          onChange={(e) => handleCheckboxChange(e, item._id)}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <div className="w-[380px] overflow-hidden rounded-[20px] border border-[#e8eef7] bg-white p-2 shadow-[0_12px_28px_rgba(15,23,42,0.05)]">
+                          <div className="overflow-hidden rounded-[16px]">
+                            <img
+                              src={item?.images?.[0]}
+                              className="h-[150px] w-full object-cover transition-all duration-300 hover:scale-[1.03]"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between px-1 pb-1 pt-3">
+                            <span className="text-[12px] font-[800] text-[#14213d]">
+                              Home Banner
+                            </span>
+                            <span className="rounded-full bg-[#f4f8ff] px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.12em] text-[#3872fa]">
+                              ID: {item?._id?.slice(-6)}
+                            </span>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell width={220}>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            className="!h-[40px] !min-w-[40px] !rounded-[14px] !border !border-[#e7ebf3] !bg-white !text-slate-600"
+                          >
+                            <AiOutlineEdit className="text-[19px]" />
+                          </Button>
 
-                    <Button
-                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
-                    !rounded-full hover:!bg-[#f1f1f1]"
-                    >
-                      <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                    </Button>
-
-                    <Button
-                      className="!w-[35px] !h-[35px]  bg-[#f1f1f1] !min-w-[35px] !border !border-[rgba(0,0,0,0.1)] 
-                    !rounded-full hover:!bg-[#f1f1f1]"
-                    >
-                      <GoTrash className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
+                          <Button
+                            className="!h-[40px] !min-w-[40px] !rounded-[14px] !border !border-[#ffe0e0] !bg-[#fff5f5] !text-[#ef4444]"
+                            onClick={() => deleteSlide(item?._id)}
+                          >
+                            <GoTrash className="text-[18px]" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={3}>
+                    <div className="flex min-h-[320px] flex-col items-center justify-center text-center">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-[20px] bg-[#f4f7ff] text-[#3872fa] shadow-[0_12px_30px_rgba(56,114,250,0.08)]">
+                        <FaImages className="text-[28px]" />
+                      </div>
+                      <h4 className="mt-5 text-[18px] font-[900] text-[#14213d]">
+                        No home slides yet
+                      </h4>
+                      <p className="mt-2 max-w-[320px] text-[13px] leading-6 text-slate-500">
+                        Add your first banner to start displaying hero images on
+                        the storefront homepage.
+                      </p>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
-        </TableContainer>
+            </TableContainer>
+          </div>
+        </div>
+
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={10}
+          count={slidesData?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

@@ -13,39 +13,39 @@ const ProductsSlider = (props) => {
     <>
       <div className="productsSlider py-3">
         <Swiper
-          slidesPerView={props.items}
-          spaceBetween={10}
+          slidesPerView={1.15}
+          spaceBetween={14}
+          breakpoints={{
+            480: {
+              slidesPerView: 1.6,
+              spaceBetween: 14,
+            },
+            640: {
+              slidesPerView: 2.2,
+              spaceBetween: 16,
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 18,
+            },
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 20,
+            },
+            1280: {
+              slidesPerView: props.items,
+              spaceBetween: 20,
+            },
+          }}
           navigation={true}
           modules={[Navigation]}
-          className="mySwiper"
+          className="mySwiper productsSliderShell"
         >
-          <SwiperSlide>
-            <ProductsItem />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <ProductsItem />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <ProductsItem />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <ProductsItem />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <ProductsItem />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <ProductsItem />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <ProductsItem />
-          </SwiperSlide>
+          {props?.data?.map((item, index) => (
+            <SwiperSlide key={item?._id || index} className="productsSlider__slide">
+              <ProductsItem item={item} />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </>
