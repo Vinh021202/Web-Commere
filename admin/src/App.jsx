@@ -25,7 +25,7 @@ import AddWeight from "./Pages/Products/addWeight";
 import AddSize from "./Pages/Products/addSize";
 import BannersV1List from "./Pages/Banners";
 import BlogList from "./Pages/Blog";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 // ✅ Khai báo context ở ngoài hàm App
 const MyContext = createContext();
