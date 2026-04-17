@@ -18,10 +18,14 @@ import stripeRouter from "./route/stripe.route.js";
 import orderRouter from "./route/order.route.js";
 
 const app = express();
-const PORT = process.env.PORT || 8000; // 🔹 khai báo ở đây
+const PORT = process.env.PORT || 8000;
 
-// Middlewares
-app.use(cors());
+const corsOptions = {
+  origin: true,
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
@@ -31,9 +35,12 @@ app.use(
   })
 );
 
-// Routes
 app.get("/", (req, res) => {
   res.json({ message: `Server is running on port ${PORT}` });
+});
+
+app.get("/api/health", (req, res) => {
+  res.json({ ok: true, message: "API is healthy" });
 });
 
 app.use("/api/user", userRouter);
@@ -42,15 +49,18 @@ app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/myList", myListRouter);
 app.use("/api/address", addressRouter);
-app.use("/api/homeSlider",homeSliderRouter);
+app.use("/api/homeSlider", homeSliderRouter);
 app.use("/api/bannerV1", bannerV1Router);
 app.use("/api/blog", blogRouter);
-app.use('/api/stripe', stripeRouter);
-app.use('/api/order', orderRouter);
+app.use("/api/stripe", stripeRouter);
+app.use("/api/order", orderRouter);
 
-// Kết nối DB và khởi động server
 await connectDB();
 
-app.listen(PORT, () => {
-  console.log(`✅ Server is running on port ${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+
+export default app;
