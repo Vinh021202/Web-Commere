@@ -26,7 +26,7 @@ const OtpBox = ({ length, onChange }) => {
   };
 
   return (
-    <div style={{ display: 'flex', gap: '5px', justifyContent: 'center' }} className="otpBox">
+    <div className="otpBox flex flex-wrap justify-center gap-2 sm:gap-[5px]">
       {otp.map((data, index) => (
         <input
           key={index}
@@ -36,7 +36,7 @@ const OtpBox = ({ length, onChange }) => {
           value={otp[index]}
           onChange={(e) => handleChange(e.target, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
-          className="w-[45px] h-[45px] text-center text-[17px]"
+          className="h-[44px] w-[40px] rounded-[12px] text-center text-[17px] sm:h-[45px] sm:w-[45px]"
         />
       ))}
     </div>

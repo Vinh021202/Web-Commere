@@ -91,9 +91,9 @@ const SearchPage = () => {
         </div>
 
         <div className="mt-4 bg-white p-3">
-          <div className="container flex gap-3">
+          <div className="container flex min-w-0 flex-col gap-3 lg:flex-row">
             {/* Sidebar */}
-            <div className="sidebarWrapper w-[20%] bg-white">
+            <div className="sidebarWrapper min-w-0 w-full bg-white lg:w-[20%]">
               <SideBar
                 productsData={productsData}
                 setProductsData={setProductsData}
@@ -105,12 +105,12 @@ const SearchPage = () => {
             </div>
 
             {/* Right Content */}
-            <div className="rightContainer w-[80%] py-3">
+            <div className="rightContainer min-w-0 w-full py-3 lg:w-[80%]">
               {/* Toolbar */}
               <div
-                className="sticky top-[130px] z-[99] mb-4 flex w-full items-center justify-between rounded-md bg-[#f1f1f1] p-2"
+                className="sticky top-[130px] z-[99] mb-4 flex w-full min-w-0 flex-col gap-3 rounded-md bg-[#f1f1f1] p-2 md:flex-row md:items-center md:justify-between"
               >
-                <div className="col1 itemViewActions flex items-center gap-3">
+                  <div className="col1 itemViewActions flex min-w-0 flex-wrap items-center gap-3">
                   {/* List view button */}
                   <Button
                     className={`!h-[40px] !w-[40px] !min-w-[40px] !rounded-full !text-[#000] ${
@@ -137,7 +137,7 @@ const SearchPage = () => {
                 </div>
 
                 {/* Sort */}
-                <div className="col2 ml-auto flex items-center justify-end gap-3 pr-4">
+                <div className="col2 flex min-w-0 flex-wrap items-center justify-start gap-3 pr-0 md:ml-auto md:justify-end md:pr-4">
                   <span className="text-[14px] font-[500] text-[rgba(0,0,0,0.7)]">
                     Sắp xếp theo
                   </span>
@@ -147,7 +147,7 @@ const SearchPage = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
-                    className="!border !border-[#d3c5c5] !bg-white !text-[12px] !capitalize !text-[#000]"
+                    className="!max-w-full !border !border-[#d3c5c5] !bg-white !text-[12px] !capitalize !text-[#000]"
                   >
                     {selectedSortVal}
                   </Button>

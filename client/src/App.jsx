@@ -53,11 +53,18 @@ function App() {
   const [addressId, setAddressId] = useState('');
   const [searchData, setSearchData] = useState([]);
   const [language, setLanguage] = useState(() => localStorage.getItem('language') || 'vi');
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
   useEffect(() => {
     localStorage.setItem('language', language);
     document.documentElement.lang = language;
   }, [language]);
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    document.body.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  }, [theme]);
 
   const t = (key, replacements) => translate(language, key, replacements);
   const formatCurrency = (value) =>
@@ -245,6 +252,8 @@ function App() {
     setSearchData,
     language,
     setLanguage,
+    theme,
+    setTheme,
     t,
     formatCurrency,
   };

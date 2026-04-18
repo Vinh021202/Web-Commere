@@ -16,6 +16,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { fetchDataFromApi } from '../../utils/api';
 import { FiChevronDown } from 'react-icons/fi';
+import { FiMoon, FiSun } from 'react-icons/fi';
 
 const CartBadge = styled(Badge)`
   & .${badgeClasses.badge} {
@@ -29,7 +30,7 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const history = useNavigate();
-  const { language, setLanguage, t } = context;
+  const { language, setLanguage, theme, setTheme, t } = context;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -111,6 +112,19 @@ const Header = () => {
                   EN
                 </button>
               </div>
+
+              <button
+                type="button"
+                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                className="theme-toggle flex items-center gap-2 rounded-full border border-[rgba(255,82,82,0.14)] bg-white px-3 py-1.5 text-[11px] font-[800] text-[#1f2937] shadow-[0_8px_18px_rgba(15,23,42,0.06)] transition hover:border-[rgba(255,82,82,0.28)]"
+                aria-label={theme === 'light' ? t('darkMode') : t('lightMode')}
+                title={`${t('theme')}: ${theme === 'light' ? t('darkMode') : t('lightMode')}`}
+              >
+                <span className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#fff4ef] text-[#ff5252]">
+                  {theme === 'light' ? <FiMoon size={13} /> : <FiSun size={13} />}
+                </span>
+                <span>{theme === 'light' ? t('darkMode') : t('lightMode')}</span>
+              </button>
             </div>
           </div>
         </div>

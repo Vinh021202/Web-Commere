@@ -255,7 +255,7 @@ const Footer = () => {
         className="productDetailsModal"
       >
         <DialogContent>
-          <div className="productDetailsModalContainer relative flex w-full items-center">
+          <div className="productDetailsModalContainer relative flex w-full min-w-0 items-center">
             <Button className="!absolute right-[15px] top-[15px] !h-[40px] !min-w-[40px] !w-[40px] !rounded-full !bg-[#f1f1f1] !text-[#000]">
               <IoCloseSharp className="text-[20px]" onClick={context?.handleCloseProductDetailsModal} />
             </Button>

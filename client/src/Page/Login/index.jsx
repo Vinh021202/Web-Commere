@@ -144,10 +144,10 @@ const Login = () => {
   };
 
   return (
-    <section className="pb-10 pt-[220px] md:pb-12 md:pt-[245px] xl:pt-[265px]">
+    <section className="min-h-screen pb-10 pt-[150px] md:pb-12 md:pt-[168px] xl:pt-[178px]">
       <div className="container">
-        <div className="mx-auto grid max-w-[1040px] overflow-hidden rounded-[28px] border border-[rgba(255,82,82,0.12)] bg-white shadow-[0_20px_48px_rgba(15,23,42,0.12)] lg:grid-cols-[0.92fr_1.08fr]">
-          <div className="relative overflow-hidden bg-[linear-gradient(135deg,#1f2937_0%,#111827_48%,#ff5252_100%)] px-5 py-7 text-white md:px-8 md:py-8">
+        <div className="mx-auto flex w-full min-w-0 flex-col overflow-hidden rounded-[28px] border border-[rgba(255,82,82,0.12)] bg-white shadow-[0_20px_48px_rgba(15,23,42,0.12)] lg:grid lg:max-w-[1040px] lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="relative min-w-0 overflow-hidden bg-[linear-gradient(135deg,#1f2937_0%,#111827_48%,#ff5252_100%)] px-5 py-7 text-white md:px-8 md:py-8">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.14),transparent_24%)]" />
             <div className="relative z-10">
               <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-[700] uppercase tracking-[0.14em] text-white/90">
@@ -180,8 +180,8 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="bg-[linear-gradient(180deg,#fff_0%,#fff8f5_100%)] px-5 py-7 sm:px-7 md:px-8 md:py-8">
-            <div className="mx-auto max-w-[460px]">
+          <div className="min-w-0 bg-[linear-gradient(180deg,#fff_0%,#fff8f5_100%)] px-5 py-7 sm:px-7 md:px-8 md:py-8">
+            <div className="mx-auto flex min-w-0 max-w-[460px] flex-col">
               <div className="mb-7">
                 <p className="mb-2 text-[12px] font-[700] uppercase tracking-[0.16em] text-[#ff5252]">
                   {context.t('loginAccountEyebrow')}

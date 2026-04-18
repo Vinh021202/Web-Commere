@@ -25,16 +25,25 @@ const ProductZoom = (props) => {
 
   return (
     <>
-      <div className="flex gap-3">
-        <div className="slider w-[15%] ">
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="slider w-full sm:w-[15%] ">
           <Swiper
             onSwiper={setSmallSwiper}
             direction={'vertical'}
-            slidesPerView={4}
+            breakpoints={{
+              0: {
+                direction: 'horizontal',
+                slidesPerView: 4,
+              },
+              640: {
+                direction: 'vertical',
+                slidesPerView: 4,
+              },
+            }}
             spaceBetween={0}
             navigation={true}
             modules={[Navigation]}
-            className={`zoomProductSliderThumbs h-[400px] overflow-hidden ${props?.images?.length > 5 && 'space'}`}
+            className={`zoomProductSliderThumbs h-[92px] sm:h-[400px] overflow-hidden ${props?.images?.length > 5 && 'space'}`}
           >
             {props?.images?.map((item, index) => {
               return (
@@ -51,7 +60,7 @@ const ProductZoom = (props) => {
             })}
           </Swiper>
         </div>
-        <div className="zoomContainer w-[85%] h-[500px] overflow-hidden rounded-md">
+        <div className="zoomContainer h-[320px] w-full overflow-hidden rounded-md sm:h-[500px] sm:w-[85%]">
           <Swiper
             onSwiper={setBigSwiper}
             slidesPerView={1}
