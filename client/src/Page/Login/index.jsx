@@ -10,11 +10,7 @@ import { FiTruck, FiHeadphones } from 'react-icons/fi';
 import { MyContext } from '../../App';
 import { postData } from '../../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { firebaseApp } from '../../firebase';
-
-const auth = getAuth(firebaseApp);
-const googleProvider = new GoogleAuthProvider();
+import { getMessageFromFirebaseError, signInWithGoogle } from '../../utils/googleAuth';
 
 const inputSx = {
   '& .MuiOutlinedInput-root': {
@@ -120,38 +116,29 @@ const Login = () => {
   };
 
   const authWithGoogle = () => {
-    const auth = getAuth();
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
-        const fields = {
-          name: user.providerData[0].displayName,
-          email: user.providerData[0].email,
-          password: null,
-          avatar: user.providerData[0].photoURL,
-          mobile: user.providerData[0].phoneNumber,
-          role: 'USER',
-        };
+    setIsLoading(true);
 
-        postData('/api/user/authWithGoogle', fields).then((res) => {
-          if (res?.error !== true) {
-            setIsLoading(false);
-            context.alertBox('success', res?.message);
-            localStorage.setItem('userEmail', fields.email);
-            localStorage.setItem('accesstoken', res?.data.accesstoken);
-            localStorage.setItem('refreshToken', res?.data.refreshToken);
-            context.setIsLogin(true);
-            histoty('/');
-          } else {
-            context.alertBox('error', res?.message || 'Something went wrong');
-            setIsLoading(false);
-          }
-        });
+    signInWithGoogle()
+      .then((fields) => {
+        return postData('/api/user/authWithGoogle', fields).then((res) => ({ fields, res }));
       })
-      .catch(() => {
-        context.alertBox('error', 'Google login failed');
+      .then(({ fields, res }) => {
+        if (res?.error !== true) {
+          setIsLoading(false);
+          context.alertBox('success', res?.message);
+          localStorage.setItem('userEmail', fields.email);
+          localStorage.setItem('accesstoken', res?.data.accesstoken);
+          localStorage.setItem('refreshToken', res?.data.refreshToken);
+          context.setIsLogin(true);
+          histoty('/');
+        } else {
+          context.alertBox('error', res?.message || 'Something went wrong');
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error('Google login failed:', error);
+        context.alertBox('error', getMessageFromFirebaseError(error));
         setIsLoading(false);
       });
   };
@@ -294,6 +281,8 @@ const Login = () => {
                 </div>
 
                 <Button
+                  type="button"
+                  disabled={isLoading}
                   className="!flex !w-full !gap-3 !rounded-[18px] !border !border-[rgba(255,82,82,0.14)] !bg-white !py-[12px] !text-[15px] !font-[700] !text-black shadow-[0_12px_28px_rgba(15,23,42,0.06)]"
                   onClick={authWithGoogle}
                 >

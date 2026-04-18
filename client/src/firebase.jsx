@@ -8,7 +8,8 @@ const VITE_FIREBASE_APP_APP_ID = import.meta.env.VITE_FIREBASE_APP_APP_ID;
 const VITE_FIREBASE_APP_MEASUREMENT_ID = import.meta.env.VITE_FIREBASE_APP_MEASUREMENT_ID;
 
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+import { getAnalytics, isSupported } from 'firebase/analytics';
+import { browserLocalPersistence, getAuth, GoogleAuthProvider, setPersistence } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,4 +27,27 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const firebaseApp = initializeApp(firebaseConfig);
-export const analytics = getAnalytics(firebaseApp);
+export const auth = getAuth(firebaseApp);
+export const googleProvider = new GoogleAuthProvider();
+
+googleProvider.setCustomParameters({
+  prompt: 'select_account',
+});
+
+setPersistence(auth, browserLocalPersistence).catch((error) => {
+  console.error('Firebase auth persistence setup failed:', error);
+});
+
+export let analytics = null;
+
+if (typeof window !== 'undefined') {
+  isSupported()
+    .then((supported) => {
+      if (supported) {
+        analytics = getAnalytics(firebaseApp);
+      }
+    })
+    .catch((error) => {
+      console.error('Firebase analytics init failed:', error);
+    });
+}
