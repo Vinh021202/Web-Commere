@@ -1220,6 +1220,18 @@ body[data-theme='dark'] .categoryPanel__close {
   color: var(--text) !important;
 }
 
+body[data-theme='dark'] .navCategoryTrigger,
+body[data-theme='dark'] .header-search,
+body[data-theme='dark'] .col_2 > div,
+body[data-theme='dark'] .col_3 > div,
+body[data-theme='dark'] .col3 > div,
+body[data-theme='dark'] .col3 .MuiIconButton-root,
+body[data-theme='dark'] .col3 .myAccountWrap {
+  background: #111827 !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
 body[data-theme='dark'] .navCategoryTrigger__icon,
 body[data-theme='dark'] .navCategoryTrigger__arrow {
   color: #ffb3aa !important;
@@ -1231,6 +1243,19 @@ body[data-theme='dark'] .navCategoryTrigger__icon {
 
 body[data-theme='dark'] .navCategoryTrigger__label {
   color: var(--text) !important;
+}
+
+body[data-theme='dark'] .col_3 > div span:last-child,
+body[data-theme='dark'] .col3 .MuiIconButton-root svg,
+body[data-theme='dark'] .header-search input,
+body[data-theme='dark'] .header-search input::placeholder,
+body[data-theme='dark'] .col_2 .navPill,
+body[data-theme='dark'] .col_2 .navPill span {
+  color: var(--text) !important;
+}
+
+body[data-theme='dark'] .col_2 .navPill:hover {
+  color: #ffb3aa !important;
 }
 
 body[data-theme='dark'] .myAccountWrap,

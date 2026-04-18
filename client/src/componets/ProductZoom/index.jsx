@@ -4,8 +4,6 @@ import 'react-inner-image-zoom/lib/styles.min.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
-import { Navigation } from 'swiper/modules';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import './style.css';
 
@@ -14,7 +12,6 @@ const ProductZoom = (props) => {
   const galleryImages = images.length ? images : ['/bannerBox1.jpg'];
   const [sliderIndex, setSliderIndex] = useState(0);
   const [bigSwiper, setBigSwiper] = useState(null);
-  const [smallSwiper, setSmallSwiper] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -29,9 +26,6 @@ const ProductZoom = (props) => {
     setSliderIndex(index);
     if (bigSwiper) {
       bigSwiper.slideTo(index);
-    }
-    if (smallSwiper) {
-      smallSwiper.slideTo(index);
     }
   };
 
@@ -61,40 +55,22 @@ const ProductZoom = (props) => {
       <div className="productZoomBlock">
         <div className="productZoomLayout">
           <div className="productZoomThumbRail">
-            <Swiper
-            onSwiper={setSmallSwiper}
-            direction={'vertical'}
-            breakpoints={{
-              0: {
-                direction: 'horizontal',
-                slidesPerView: 4,
-                spaceBetween: 10,
-              },
-              640: {
-                direction: 'vertical',
-                slidesPerView: 4,
-                spaceBetween: 12,
-              },
-            }}
-            spaceBetween={12}
-            navigation={true}
-            modules={[Navigation]}
-            className={`zoomProductSliderThumbs ${galleryImages?.length > 5 ? 'space' : ''}`}
-          >
             {galleryImages?.map((item, index) => {
               return (
-                <SwiperSlide key={index} className="zoomThumb">
-                  <div
-                    className={`zoomThumbCard group ${sliderIndex === index ? 'is-active' : ''}`}
-                    onClick={() => goto(index)}
-                  >
+                <button
+                  type="button"
+                  key={index}
+                  className={`zoomThumbCard group ${sliderIndex === index ? 'is-active' : ''}`}
+                  onClick={() => goto(index)}
+                  aria-label={`Xem anh ${index + 1}`}
+                >
+                  <div className="zoomThumb">
                     <img src={item} alt={`Preview ${index + 1}`} className="zoomThumbImage" />
                   </div>
-                </SwiperSlide>
+                </button>
               );
             })}
-          </Swiper>
-        </div>
+          </div>
 
         <div className="productZoomStage">
           <div className="productZoomStageHeader">

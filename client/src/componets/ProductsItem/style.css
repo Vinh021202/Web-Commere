@@ -16,11 +16,18 @@
   align-items: center;
   justify-content: center;
   padding: 12px;
+  background: linear-gradient(180deg, #fff8f5 0%, #fff2eb 100%);
 }
 
 .product-card__mediaImage{
+  display: block;
+  width: auto !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  margin: 0 auto;
   padding: 8px;
-  object-position: center;
+  object-fit: contain !important;
+  object-position: center center !important;
 }
 
 .product-card__image-badge{
@@ -95,6 +102,10 @@
 
 .product-card__qty{
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+body[data-theme='dark'] .product-card__media{
+  background: linear-gradient(180deg, #172033 0%, #111827 100%);
 }
 
 @media (max-width: 640px){

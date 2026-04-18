@@ -12,8 +12,7 @@ import './style.css';
 const ProductsSlider = (props) => {
   return (
     <>
-      <div className="productsSlider productsSlider--showcase py-3">
-        <div className="productsSlider__backdrop" />
+      <div className="productsSlider productsSlider--compact py-2">
         <Swiper
           slidesPerView={1.15}
           spaceBetween={14}
