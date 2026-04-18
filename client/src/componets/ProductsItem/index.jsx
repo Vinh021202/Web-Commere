@@ -232,7 +232,7 @@ const ProductsItem = (props) => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.28),transparent_36%)]" />
             <div className="absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(17,24,39,0.26)_100%)]" />
             <div className="product-card__image-badge absolute bottom-[12px] left-[12px] z-40 rounded-full px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.08em] text-white">
-              {isInStock ? 'Săn sàng giao' : 'Het hang'}
+              {isInStock ? 'Săn sàng giao' : 'Hết hàng'}
             </div>
           </div>
         </Link>
@@ -270,7 +270,7 @@ const ProductsItem = (props) => {
           )}
           {hasVariantOptions && (
             <span className="rounded-full bg-white/88 px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.06em] text-[#7c553d] shadow-[0_10px_20px_rgba(255,255,255,0.24)]">
-              Tuy chon
+              Tùy chọn
             </span>
           )}
         </div>
@@ -308,7 +308,7 @@ const ProductsItem = (props) => {
               isInStock ? 'bg-[#eefbf3] text-[#1f8f52]' : 'bg-[#fff1f1] text-[#d14343]'
             }`}
           >
-            {isInStock ? 'Con hang' : 'Het hang'}
+            {isInStock ? 'Còn hàng' : 'Hết hàng'}
           </span>
         </div>
 
@@ -351,7 +351,9 @@ const ProductsItem = (props) => {
               </span>
             </div>
 
-            {props?.item?.discount}
+            <span className="discount rounded-full bg-[#ff5252] px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.06em] text-white shadow-[0_10px_25px_rgba(17,24,39,0.18)]">
+              {props?.item?.discount}%
+            </span>
           </div>
 
           <div className="mt-2 flex items-center justify-between gap-2 text-[10px] font-[700] text-[#6b7280]">
