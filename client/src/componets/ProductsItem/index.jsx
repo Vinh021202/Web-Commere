@@ -56,7 +56,10 @@ const ProductsItem = (props) => {
 
   const addToCart = (product, userId, quantity) => {
     if (!userId) {
-      context?.alertBox('error', context?.t ? context.t('alertLoginRequired') : 'Vui long dang nhap');
+      context?.alertBox(
+        'error',
+        context?.t ? context.t('alertLoginRequired') : 'Vui long dang nhap'
+      );
       setIsShowTabs(false);
       setIsAdded(false);
       setActiveTab(null);
@@ -261,8 +264,8 @@ const ProductsItem = (props) => {
 
         <div className="absolute left-[12px] top-[12px] z-50 flex flex-wrap items-center gap-1.5">
           {props?.item?.discount && (
-            <span className="discount rounded-full bg-[#1f2937] px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.06em] text-white shadow-[0_10px_25px_rgba(17,24,39,0.18)]">
-              -{props?.item?.discount}
+            <span className="discount rounded-full bg-[#ff5252] px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.06em] text-white shadow-[0_10px_25px_rgba(17,24,39,0.18)]">
+              {props?.item?.discount}%
             </span>
           )}
           {hasVariantOptions && (
@@ -329,7 +332,6 @@ const ProductsItem = (props) => {
             />
             <span className="text-[11px] font-[700] text-[#6b7280]">({ratingValue})</span>
           </div>
-          <span className="text-[10px] font-[700] text-[#8b5e3c]">Noi bat</span>
         </div>
 
         <div className="product-card__meta product-card__priceBlock mt-3 rounded-[18px] p-3">
@@ -349,16 +351,12 @@ const ProductsItem = (props) => {
               </span>
             </div>
 
-            {props?.item?.discount && (
-              <span className="rounded-full border border-[rgba(255,82,82,0.16)] bg-white px-2 py-1 text-[9px] font-[800] uppercase tracking-[0.06em] text-[#ff5252]">
-                Ưu đãi hot
-              </span>
-            )}
+            {props?.item?.discount}
           </div>
 
           <div className="mt-2 flex items-center justify-between gap-2 text-[10px] font-[700] text-[#6b7280]">
             <span>Giao nhanh</span>
-            <span>Chinh hang</span>
+            <span>Chính hãng</span>
           </div>
         </div>
 
