@@ -1015,6 +1015,63 @@ body[data-theme='dark'] .myAccountWrap:hover {
   background: #172033 !important;
 }
 
+body[data-theme='dark'] [class*='bg-white'],
+body[data-theme='dark'] [class*='bg-[#fff'],
+body[data-theme='dark'] [class*='bg-[linear-gradient(135deg,#fff'],
+body[data-theme='dark'] [class*='bg-[linear-gradient(180deg,#fff'],
+body[data-theme='dark'] [class*='bg-[rgba(255,255,255'],
+body[data-theme='dark'] [class*='bg-[linear-gradient(135deg,#fff8f5'],
+body[data-theme='dark'] [class*='bg-[linear-gradient(135deg,#fff1eb'],
+body[data-theme='dark'] [class*='bg-[linear-gradient(180deg,#ffffff'] {
+  background: #111827 !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+body[data-theme='dark'] [class*='text-[#1f2937]'],
+body[data-theme='dark'] [class*='text-[#201714]'],
+body[data-theme='dark'] [class*='text-black'],
+body[data-theme='dark'] [class*='text-gray-'],
+body[data-theme='dark'] [class*='text-[#6b7280]'],
+body[data-theme='dark'] [class*='text-[rgba(31,41,55'] {
+  color: var(--text) !important;
+}
+
+body[data-theme='dark'] [class*='text-[#a65434]'],
+body[data-theme='dark'] [class*='text-[#7c553d]'] {
+  color: #ffb3aa !important;
+}
+
+body[data-theme='dark'] [class*='border-[rgba(255,82,82'],
+body[data-theme='dark'] [class*='border-[#d3c5c5]'],
+body[data-theme='dark'] [class*='border-white'] {
+  border-color: var(--border) !important;
+}
+
+body[data-theme='dark'] .MuiOutlinedInput-notchedOutline,
+body[data-theme='dark'] .MuiInputBase-root fieldset {
+  border-color: var(--border) !important;
+}
+
+body[data-theme='dark'] .MuiInputBase-input,
+body[data-theme='dark'] .MuiOutlinedInput-input,
+body[data-theme='dark'] .MuiInputLabel-root,
+body[data-theme='dark'] .MuiSelect-select,
+body[data-theme='dark'] .MuiMenuItem-root,
+body[data-theme='dark'] .MuiPaginationItem-root,
+body[data-theme='dark'] .MuiTablePagination-selectLabel,
+body[data-theme='dark'] .MuiTablePagination-displayedRows {
+  color: var(--text) !important;
+}
+
+body[data-theme='dark'] .MuiPaper-root,
+body[data-theme='dark'] .MuiMenu-paper,
+body[data-theme='dark'] .MuiPopover-paper {
+  background: #111827 !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
 body[data-theme='dark'] p,
 body[data-theme='dark'] .muted-copy,
 body[data-theme='dark'] .listing-pagination-label,
@@ -1031,9 +1088,6 @@ body[data-theme='dark'] h4,
 body[data-theme='dark'] h5,
 body[data-theme='dark'] h6,
 body[data-theme='dark'] strong,
-body[data-theme='dark'] span,
-body[data-theme='dark'] a,
-body[data-theme='dark'] label,
 body[data-theme='dark'] .listing-stat__value,
 body[data-theme='dark'] .listing-stat__label,
 body[data-theme='dark'] .home-mini-stat strong,
@@ -1067,6 +1121,26 @@ body[data-theme='dark'] textarea {
   background-color: rgba(15, 23, 42, 0.92) !important;
   color: var(--text) !important;
   border-color: var(--border) !important;
+}
+
+body[data-theme='dark'] .bg-org,
+body[data-theme='dark'] .bg-org * {
+  color: #fff !important;
+}
+
+body[data-theme='dark'] .bg-org.btn-border,
+body[data-theme='dark'] .bg-org.btn-border * {
+  color: #ffd6d1 !important;
+}
+
+body[data-theme='dark'] .top-strip p,
+body[data-theme='dark'] .top-strip a,
+body[data-theme='dark'] nav a,
+body[data-theme='dark'] nav button,
+body[data-theme='dark'] header h2,
+body[data-theme='dark'] header span,
+body[data-theme='dark'] header svg {
+  color: var(--text) !important;
 }
 
 body[data-theme='dark'] input::placeholder,
