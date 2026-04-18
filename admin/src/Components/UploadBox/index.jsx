@@ -42,6 +42,14 @@ const UploadBox = (props) => {
 
       uploadImages(apiEndpoint, formData).then((res) => {
         setUploading(false);
+        if (res?.data?.error || !Array.isArray(res?.data?.images)) {
+          context.alertBox(
+            "error",
+            res?.data?.message || "Upload failed. Please try again.",
+          );
+          return;
+        }
+
         if (props?.setBannerImagesFun) {
           props.setBannerImagesFun(res.data.images);
         } else if (props?.setPreviewsFun) {
