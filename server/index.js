@@ -16,6 +16,7 @@ import bannerV1Router from "./route/bannerV1.route.js";
 import blogRouter from "./route/blog.route.js";
 import stripeRouter from "./route/stripe.route.js";
 import orderRouter from "./route/order.route.js";
+import chatRouter from "./route/chat.route.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -54,6 +55,7 @@ app.use("/api/bannerV1", bannerV1Router);
 app.use("/api/blog", blogRouter);
 app.use("/api/stripe", stripeRouter);
 app.use("/api/order", orderRouter);
+app.use("/api/chat", chatRouter);
 
 await connectDB();
 
