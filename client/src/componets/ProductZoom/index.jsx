@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
-import { FiChevronLeft, FiChevronRight, FiImage, FiZoomIn } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import './style.css';
 
 const ProductZoom = (props) => {
@@ -59,23 +59,6 @@ const ProductZoom = (props) => {
   return (
     <>
       <div className="productZoomBlock">
-        <div className="productZoomHeader">
-          <div>
-            <span className="productZoomEyebrow">Gallery</span>
-            <h3 className="productZoomTitle">Xem chi tiet san pham</h3>
-          </div>
-          <div className="productZoomMeta">
-            <span className="productZoomCount">
-              <FiImage />
-              {galleryImages.length} anh
-            </span>
-            <span className="productZoomHint">
-              <FiZoomIn />
-              {isMobile ? 'Cham de phong to' : 'Re chuot de phong to'}
-            </span>
-          </div>
-        </div>
-
         <div className="productZoomLayout">
           <div className="productZoomThumbRail">
             <Swiper
@@ -115,7 +98,6 @@ const ProductZoom = (props) => {
 
         <div className="productZoomStage">
           <div className="productZoomStageHeader">
-            <span className="productZoomStageBadge">Anh noi bat</span>
             <span className="productZoomStagePager">
               {sliderIndex + 1}/{Math.max(galleryImages.length, 1)}
             </span>

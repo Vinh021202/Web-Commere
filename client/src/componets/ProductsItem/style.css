@@ -11,6 +11,18 @@
   background: radial-gradient(circle, rgba(255, 126, 95, 0.20) 0%, rgba(255, 126, 95, 0) 72%);
 }
 
+.product-card__media{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.product-card__mediaImage{
+  padding: 8px;
+  object-position: center;
+}
+
 .product-card__image-badge{
   background: linear-gradient(135deg, rgba(17, 24, 39, 0.86), rgba(17, 24, 39, 0.55));
   box-shadow: 0 14px 32px rgba(17, 24, 39, 0.18);
@@ -83,4 +95,14 @@
 
 .product-card__qty{
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 640px){
+  .product-card__media{
+    padding: 10px;
+  }
+
+  .product-card__mediaImage{
+    padding: 4px;
+  }
 }

@@ -198,16 +198,16 @@ const ProductsItem = (props) => {
 
       <div className="group imgWrapper relative overflow-hidden rounded-[22px] rounded-bl-none rounded-br-none">
         <Link to={`/product/${props?.item?._id}`}>
-          <div className="img relative h-[176px] overflow-hidden bg-[linear-gradient(180deg,#fff8f5_0%,#fff1eb_100%)] sm:h-[190px]">
+          <div className="img product-card__media relative h-[198px] overflow-hidden bg-[linear-gradient(180deg,#fff8f5_0%,#fff1eb_100%)] sm:h-[210px]">
             <img
               src={primaryImage}
               alt={productName}
-              className="h-full w-full object-cover transition-all duration-500 group-hover:scale-[1.05]"
+              className="product-card__mediaImage h-full w-full object-contain transition-all duration-500 group-hover:scale-[1.03]"
             />
             <img
               src={hoverImage}
               alt={`${productName} hover`}
-              className="absolute left-0 top-0 h-full w-full object-cover opacity-0 transition-all duration-700 group-hover:scale-[1.08] group-hover:opacity-100"
+              className="product-card__mediaImage absolute left-0 top-0 h-full w-full object-contain opacity-0 transition-all duration-700 group-hover:scale-[1.05] group-hover:opacity-100"
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.28),transparent_36%)]" />
             <div className="absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(17,24,39,0.26)_100%)]" />

@@ -1184,6 +1184,55 @@ body[data-theme='dark'] .home-hero::before {
   opacity: 0.8;
 }
 
+body[data-theme='dark'] .categoryPanel,
+body[data-theme='dark'] .categoryPanel .MuiBox-root,
+body[data-theme='dark'] .categoryPanel .categoryRow,
+body[data-theme='dark'] .categoryPanel [class*='bg-white'],
+body[data-theme='dark'] .categoryPanel [class*='bg-[#fffaf9]'],
+body[data-theme='dark'] .categoryPanel [class*='bg-[#fff4ef]'] {
+  background: #111827 !important;
+  border-color: var(--border) !important;
+}
+
+body[data-theme='dark'] .categoryPanel__heroIcon,
+body[data-theme='dark'] .categoryTree__toggle,
+body[data-theme='dark'] .categoryTree__toggle--inner {
+  background: rgba(255, 107, 95, 0.16) !important;
+  color: #ffb3aa !important;
+  border-color: rgba(255, 107, 95, 0.18) !important;
+}
+
+body[data-theme='dark'] .categoryPanel__title,
+body[data-theme='dark'] .categoryTree__label,
+body[data-theme='dark'] .categoryTree__label span,
+body[data-theme='dark'] .categoryTree__sublabel,
+body[data-theme='dark'] .categoryTree__sublabel span,
+body[data-theme='dark'] .categoryTree__leaf {
+  color: var(--text) !important;
+}
+
+body[data-theme='dark'] .categoryPanel__copy {
+  color: var(--muted) !important;
+}
+
+body[data-theme='dark'] .categoryPanel__close {
+  background: #172033 !important;
+  color: var(--text) !important;
+}
+
+body[data-theme='dark'] .navCategoryTrigger__icon,
+body[data-theme='dark'] .navCategoryTrigger__arrow {
+  color: #ffb3aa !important;
+}
+
+body[data-theme='dark'] .navCategoryTrigger__icon {
+  background: rgba(255, 107, 95, 0.16) !important;
+}
+
+body[data-theme='dark'] .navCategoryTrigger__label {
+  color: var(--text) !important;
+}
+
 body[data-theme='dark'] .myAccountWrap,
 body[data-theme='dark'] .myAccountWrap .info,
 body[data-theme='dark'] .myAccountWrap .info h4,

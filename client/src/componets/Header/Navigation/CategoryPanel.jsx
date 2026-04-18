@@ -20,22 +20,22 @@ const CategoryPanel = (props) => {
       <div className="border-b border-[rgba(255,82,82,0.1)] px-4 py-4">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#1f2937] text-white shadow-[0_12px_24px_rgba(15,23,42,0.16)]">
+            <span className="categoryPanel__heroIcon flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#1f2937] text-white shadow-[0_12px_24px_rgba(15,23,42,0.16)]">
               <RiMenu2Fill size={18} />
             </span>
             <div>
-              <h3 className="m-0 text-[22px] font-[800] text-[#1f2937]">Shop By Categories</h3>
+              <h3 className="categoryPanel__title m-0 text-[22px] font-[800] text-[#1f2937]">Shop By Categories</h3>
             </div>
           </div>
 
           <Button
-            className="!min-w-[40px] !w-[40px] !h-[40px] !rounded-full !bg-white !text-[#1f2937] shadow-[0_10px_24px_rgba(15,23,42,0.08)]"
+            className="categoryPanel__close !min-w-[40px] !w-[40px] !h-[40px] !rounded-full !bg-white !text-[#1f2937] shadow-[0_10px_24px_rgba(15,23,42,0.08)]"
             onClick={toggleDrawer(false)}
           >
             <IoCloseSharp className="text-[20px]" />
           </Button>
         </div>
-        <p className="mb-0 mt-4 text-[13px] leading-6 text-[#6b7280]">
+        <p className="categoryPanel__copy mb-0 mt-4 text-[13px] leading-6 text-[#6b7280]">
           Explore departments and drill down into subcategories from one clean menu.
         </p>
       </div>

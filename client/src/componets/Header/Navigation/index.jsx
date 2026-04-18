@@ -41,14 +41,14 @@ export const Navigation = () => {
         <div className="container flex flex-col gap-3 py-3 xl:flex-row xl:items-center xl:justify-between">
           <div className="col_1 w-full xl:w-[14%]">
             <Button
-              className="!flex !w-full !justify-start !gap-2 !rounded-[18px] !border !border-[rgba(255,82,82,0.14)] !bg-[linear-gradient(135deg,#fff4ef_0%,#fff_100%)] !px-4 !py-3 !text-[#1f2937] shadow-[0_14px_28px_rgba(15,23,42,0.08)] hover:!bg-[#fff8f5]"
+              className="navCategoryTrigger !flex !w-full !justify-start !gap-2 !rounded-[18px] !border !border-[rgba(255,82,82,0.14)] !bg-[linear-gradient(135deg,#fff4ef_0%,#fff_100%)] !px-4 !py-3 !text-[#1f2937] shadow-[0_14px_28px_rgba(15,23,42,0.08)] hover:!bg-[#fff8f5]"
               onClick={openCategoryPanel}
             >
-              <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#ffeded] text-[#ff5252]">
+              <span className="navCategoryTrigger__icon flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#ffeded] text-[#ff5252]">
                 <RiMenu2Fill size={16} />
               </span>
-              <span className="text-[13px] font-[600] normal-case text-[#1f2937]">{context?.t('shopByCategory')}</span>
-              <LiaAngleDownSolid size={12} className="ml-auto font-bold text-[#ff5252]" />
+              <span className="navCategoryTrigger__label text-[13px] font-[600] normal-case text-[#1f2937]">{context?.t('shopByCategory')}</span>
+              <LiaAngleDownSolid size={12} className="navCategoryTrigger__arrow ml-auto font-bold text-[#ff5252]" />
             </Button>
           </div>
 
