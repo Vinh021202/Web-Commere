@@ -55,6 +55,16 @@ const ProductsItem = (props) => {
   ];
 
   const addToCart = (product, userId, quantity) => {
+    if (!userId) {
+      context?.alertBox('error', context?.t ? context.t('alertLoginRequired') : 'Vui long dang nhap');
+      setIsShowTabs(false);
+      setIsAdded(false);
+      setActiveTab(null);
+      setSelcetedTabName(null);
+      setQuantity(1);
+      return;
+    }
+
     const producItem = {
       _id: product?._id,
       name: product?.name,
@@ -82,7 +92,14 @@ const ProductsItem = (props) => {
     }
 
     setIsLoading(true);
-    context?.addToCart(producItem, userId, quantity);
+    const didAdd = context?.addToCart(producItem, userId, quantity);
+
+    if (didAdd === false) {
+      setIsLoading(false);
+      setIsAdded(false);
+      return;
+    }
+
     setIsAdded(true);
     setIsShowTabs(false);
     setTimeout(() => {
