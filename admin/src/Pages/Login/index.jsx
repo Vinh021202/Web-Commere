@@ -12,6 +12,7 @@ import { HiOutlineSparkles } from "react-icons/hi2";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { firebaseApp } from "../../firebase";
 import { fetchDataFromApi, postData } from "../../utils/api";
+import { getFirebaseAuthErrorMessage } from "../../utils/firebaseAuth";
 import { MyContext } from "../../App";
 
 const auth = getAuth(firebaseApp);
@@ -69,7 +70,13 @@ const Login = () => {
       })
       .catch((error) => {
         setLoadingGoogle(false);
-        context.alertBox("error", error.message);
+        console.error("Google sign-in failed", {
+          code: error?.code,
+          message: error?.message,
+          origin: window.location.origin,
+          authDomain: import.meta.env.VITE_FIREBASE_APP_AUTH_DOMAIN,
+        });
+        context.alertBox("error", getFirebaseAuthErrorMessage(error));
       });
   };
 

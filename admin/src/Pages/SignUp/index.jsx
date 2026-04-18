@@ -13,6 +13,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { firebaseApp } from "../../firebase";
 import { MyContext } from "../../App";
 import { fetchDataFromApi, postData } from "../../utils/api";
+import { getFirebaseAuthErrorMessage } from "../../utils/firebaseAuth";
 
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
@@ -81,7 +82,13 @@ const SignUp = () => {
       })
       .catch((error) => {
         setLoadingGoogle(false);
-        context.alertBox("error", error.message);
+        console.error("Google sign-up failed", {
+          code: error?.code,
+          message: error?.message,
+          origin: window.location.origin,
+          authDomain: import.meta.env.VITE_FIREBASE_APP_AUTH_DOMAIN,
+        });
+        context.alertBox("error", getFirebaseAuthErrorMessage(error));
       });
   };
 
