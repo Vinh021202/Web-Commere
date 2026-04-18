@@ -83,46 +83,47 @@ const Header = () => {
   const pageMeta = useMemo(() => {
     if (location.pathname.startsWith("/category")) {
       return {
-        eyebrow: "Catalog",
-        title: "Category Workspace",
+        eyebrow: context.t("catalog", "Catalog"),
+        title: context.t("categoryWorkspace", "Category Workspace"),
       };
     }
 
     if (location.pathname.startsWith("/subCategory")) {
       return {
-        eyebrow: "Catalog",
-        title: "Sub Category Workspace",
+        eyebrow: context.t("catalog", "Catalog"),
+        title: context.t("subCategoryWorkspace", "Sub Category Workspace"),
       };
     }
 
     if (location.pathname.startsWith("/products")) {
       return {
-        eyebrow: "Commerce",
-        title: "Product Manager",
+        eyebrow: context.t("commerce", "Commerce"),
+        title: context.t("productManager", "Product Manager"),
       };
     }
 
     if (location.pathname.startsWith("/orders")) {
       return {
-        eyebrow: "Commerce",
-        title: "Order Tracking",
+        eyebrow: context.t("commerce", "Commerce"),
+        title: context.t("orderTracking", "Order Tracking"),
       };
     }
 
     if (location.pathname.startsWith("/blog")) {
       return {
-        eyebrow: "Content",
-        title: "Blog Publisher",
+        eyebrow: context.t("content", "Content"),
+        title: context.t("blogPublisher", "Blog Publisher"),
       };
     }
 
     return {
-      eyebrow: "Dashboard",
-      title: "Admin Control Center",
+      eyebrow: context.t("dashboard", "Dashboard"),
+      title: context.t("adminControlCenter", "Admin Control Center"),
     };
-  }, [location.pathname]);
+  }, [context, location.pathname]);
 
-  const currentPanelTitle = context?.isOpenFullScreenPanel?.model || "Workspace";
+  const currentPanelTitle =
+    context?.isOpenFullScreenPanel?.model || context.t("workspace", "Workspace");
 
   return (
     <>
@@ -160,16 +161,37 @@ const Header = () => {
           </div>
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <div className="hidden items-center rounded-[18px] border border-white/70 bg-white p-1 shadow-[0_10px_24px_rgba(15,23,42,0.05)] md:flex">
+              {["VN", "EU"].map((lang) => {
+                const active = context.language === lang;
+
+                return (
+                  <button
+                    key={lang}
+                    type="button"
+                    onClick={() => context.setLanguage(lang)}
+                    className={`rounded-[14px] px-3 py-2 text-[12px] font-[900] transition-all ${
+                      active
+                        ? "bg-[linear-gradient(135deg,_#14213d,_#3872fa)] text-white shadow-[0_10px_24px_rgba(56,114,250,0.18)]"
+                        : "text-slate-500 hover:bg-[#f4f8ff]"
+                    }`}
+                  >
+                    {lang}
+                  </button>
+                );
+              })}
+            </div>
+
             <div className="hidden items-center gap-2 rounded-[18px] border border-white/70 bg-white px-3 py-2 shadow-[0_10px_24px_rgba(15,23,42,0.05)] lg:flex">
               <div className="flex h-9 w-9 items-center justify-center rounded-[14px] bg-[linear-gradient(135deg,_#14213d,_#3872fa)] text-white">
                 <HiOutlineSparkles className="text-[18px]" />
               </div>
               <div>
                 <p className="text-[11px] font-[800] uppercase tracking-[0.12em] text-slate-400">
-                  Workspace
+                  {context.t("workspace", "Workspace")}
                 </p>
                 <p className="text-[13px] font-[700] text-[#14213d]">
-                  Everything looks synced
+                  {context.t("everythingLooksSynced", "Everything looks synced")}
                 </p>
               </div>
             </div>
@@ -274,10 +296,10 @@ const Header = () => {
                       </div>
                       <div>
                         <span className="block text-[14px] font-[700] text-[#14213d]">
-                          Profile
+                          {context.t("profile", "Profile")}
                         </span>
                         <span className="block text-[12px] text-slate-400">
-                          Manage your account
+                          {context.t("manageYourAccount", "Manage your account")}
                         </span>
                       </div>
                     </MenuItem>
@@ -292,10 +314,10 @@ const Header = () => {
                     </div>
                     <div>
                       <span className="block text-[14px] font-[700] text-[#14213d]">
-                        Sign Out
+                        {context.t("signOut", "Sign Out")}
                       </span>
                       <span className="block text-[12px] text-slate-400">
-                        End current session
+                        {context.t("endCurrentSession", "End current session")}
                       </span>
                     </div>
                   </MenuItem>
@@ -304,7 +326,7 @@ const Header = () => {
             ) : (
               <Link to="/login">
                 <Button className="!rounded-[16px] !bg-[linear-gradient(135deg,_#14213d,_#3872fa)] !px-4 !py-2.5 !text-[13px] !font-[800] !capitalize !text-white shadow-[0_12px_26px_rgba(56,114,250,0.20)]">
-                  Sign In
+                  {context.t("signIn", "Sign In")}
                 </Button>
               </Link>
             )}
@@ -366,7 +388,7 @@ const Header = () => {
               >
                 <div className="min-w-0">
                   <p className="truncate text-[11px] font-[800] uppercase tracking-[0.16em] text-[#3872fa]">
-                    Workspace Panel
+                    {context.t("workspacePanel", "Workspace Panel")}
                   </p>
                   <span className="block truncate text-[16px] font-[900] text-[#14213d] sm:text-[18px]">
                     {currentPanelTitle}

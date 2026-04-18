@@ -18,6 +18,87 @@ import { getFirebaseAuthErrorMessage } from "../../utils/firebaseAuth";
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 
+const copy = {
+  VN: {
+    login: "Dang nhap",
+    signUp: "Dang ky",
+    newAccount: "Tai khoan moi",
+    heroTitle: "Bat dau voi tai khoan moi trong mot giao dien gon hon.",
+    heroText:
+      "Tao tai khoan de truy cap admin panel, xac thuc email va tiep tuc quan ly noi dung, san pham va don hang.",
+    simple: "Don gian",
+    fields: "3 truong",
+    fieldsText:
+      "Tao tai khoan nhanh voi ten, email va mat khau trong mot form ngan gon.",
+    nextStep: "Buoc tiep",
+    verify: "Xac thuc",
+    verifyText:
+      "Sau khi dang ky xong, he thong se chuyen ban sang buoc xac thuc.",
+    createAccount: "Tao tai khoan",
+    subtitle: "Dien thong tin co ban de bat dau.",
+    ready: "San sang",
+    register: "Dang ky",
+    continueGoogle: "Tiep tuc voi Google",
+    facebook: "Facebook",
+    divider: "hoac dang ky bang email",
+    fullName: "Ho ten",
+    fullNamePlaceholder: "Ho ten cua ban",
+    email: "Email",
+    emailPlaceholder: "name@company.com",
+    password: "Mat khau",
+    passwordPlaceholder: "Tao mat khau",
+    rememberMe: "Ghi nho toi",
+    forgotPassword: "Quen mat khau?",
+    createAccountButton: "Tao tai khoan",
+    alreadyHaveAccount: "Da co tai khoan?",
+    loginNow: "Dang nhap ngay",
+    enterName: "Vui long nhap ho ten",
+    enterEmail: "Vui long nhap email",
+    enterPassword: "Vui long nhap mat khau",
+    somethingWrong: "Da co loi xay ra",
+    facebookUnavailable: "Dang ky Facebook chua san sang",
+  },
+  EU: {
+    login: "Login",
+    signUp: "Sign Up",
+    newAccount: "New Account",
+    heroTitle: "Start with a new account in a cleaner experience.",
+    heroText:
+      "Create an account to access the admin panel, verify your email and continue managing content, products and orders.",
+    simple: "Simple",
+    fields: "3 Fields",
+    fieldsText:
+      "Create an account quickly with name, email and password in one compact form.",
+    nextStep: "Next Step",
+    verify: "Verify",
+    verifyText:
+      "After registration, the system will move you to the verification step.",
+    createAccount: "Create account",
+    subtitle: "Fill in the basic information to get started.",
+    ready: "Ready",
+    register: "Register",
+    continueGoogle: "Continue with Google",
+    facebook: "Facebook",
+    divider: "or sign up with email",
+    fullName: "Full name",
+    fullNamePlaceholder: "Your full name",
+    email: "Email",
+    emailPlaceholder: "name@company.com",
+    password: "Password",
+    passwordPlaceholder: "Create a password",
+    rememberMe: "Remember me",
+    forgotPassword: "Forgot password?",
+    createAccountButton: "Create account",
+    alreadyHaveAccount: "Already have an account?",
+    loginNow: "Login now",
+    enterName: "Please enter full name",
+    enterEmail: "Please enter email",
+    enterPassword: "Please enter password",
+    somethingWrong: "Something went wrong",
+    facebookUnavailable: "Facebook sign up is not available yet",
+  },
+};
+
 const SignUp = () => {
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingFb, setLoadingFb] = useState(false);
@@ -31,6 +112,7 @@ const SignUp = () => {
 
   const context = useContext(MyContext);
   const navigate = useNavigate();
+  const c = copy[context.language] || copy.VN;
 
   const syncUserSession = async () => {
     const userRes = await fetchDataFromApi("/api/user/user-details");
@@ -76,7 +158,7 @@ const SignUp = () => {
             localStorage.setItem("refreshToken", res?.data.refreshToken);
             syncUserSession();
           } else {
-            context.alertBox("error", res?.message || "Something went wrong");
+            context.alertBox("error", res?.message || c.somethingWrong);
           }
         });
       })
@@ -94,7 +176,7 @@ const SignUp = () => {
 
   const handleClickFb = () => {
     setLoadingFb(true);
-    context.alertBox("error", "Facebook sign up is not available yet");
+    context.alertBox("error", c.facebookUnavailable);
     setLoadingFb(false);
   };
 
@@ -106,19 +188,19 @@ const SignUp = () => {
     setIsLoading(true);
 
     if (formFields.name === "") {
-      context.alertBox("error", "Please enter full name");
+      context.alertBox("error", c.enterName);
       setIsLoading(false);
       return false;
     }
 
     if (formFields.email === "") {
-      context.alertBox("error", "Please enter email id");
+      context.alertBox("error", c.enterEmail);
       setIsLoading(false);
       return false;
     }
 
     if (formFields.password === "") {
-      context.alertBox("error", "Please enter password");
+      context.alertBox("error", c.enterPassword);
       setIsLoading(false);
       return false;
     }
@@ -135,7 +217,7 @@ const SignUp = () => {
         });
         navigate("/verify-account");
       } else {
-        context.alertBox("error", res?.message || "Something went wrong");
+        context.alertBox("error", res?.message || c.somethingWrong);
         setIsLoading(false);
       }
     });
@@ -159,7 +241,7 @@ const SignUp = () => {
           <NavLink to="/login">
             <Button className="!rounded-full !px-4 !py-2 !text-[13px] !font-[700] !text-[rgba(0,0,0,0.75)] sm:!px-5">
               <CgLogIn className="mr-2 text-[17px]" />
-              Login
+              {c.login}
             </Button>
           </NavLink>
           <NavLink to="/sign-up">
@@ -171,7 +253,7 @@ const SignUp = () => {
                     : "!text-[rgba(0,0,0,0.75)]"
                 }`}
               >
-                Sign Up
+                {c.signUp}
               </Button>
             )}
           </NavLink>
@@ -183,37 +265,35 @@ const SignUp = () => {
           <div>
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[10px] font-[700] uppercase tracking-[0.2em] text-white/90">
               <HiOutlineSparkles className="text-[16px]" />
-              New Account
+              {c.newAccount}
             </div>
 
-            <h1 className="max-w-[360px] font-[800] leading-[1.08] text-[30px]">
-              Bắt đầu với tài khoản mới trong một giao diện gọn hơn.
+            <h1 className="max-w-[360px] text-[30px] font-[800] leading-[1.08]">
+              {c.heroTitle}
             </h1>
 
             <p className="mt-4 max-w-[360px] text-[14px] leading-6 text-white/72">
-              Tạo tài khoản để truy cập admin panel, xác thực email và tiếp tục
-              quản lý nội dung, sản phẩm và đơn hàng.
+              {c.heroText}
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-[20px] border border-white/12 bg-white/8 p-3.5 backdrop-blur-sm">
               <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-white/55">
-                Simple
+                {c.simple}
               </p>
-              <p className="mt-2 text-[18px] font-[800]">3 Fields</p>
+              <p className="mt-2 text-[18px] font-[800]">{c.fields}</p>
               <p className="mt-2 text-[12px] leading-5 text-white/68">
-                Tạo tài khoản nhanh với tên, email và mật khẩu trong một form
-                ngắn gọn.
+                {c.fieldsText}
               </p>
             </div>
             <div className="rounded-[20px] border border-white/12 bg-[#f59e0b] p-3.5 text-[#1f2937]">
               <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-[#1f2937]/70">
-                Next Step
+                {c.nextStep}
               </p>
-              <p className="mt-2 text-[18px] font-[800]">Verify</p>
+              <p className="mt-2 text-[18px] font-[800]">{c.verify}</p>
               <p className="mt-2 text-[12px] leading-5 text-[#1f2937]/80">
-                Sau khi đăng ký xong, hệ thống sẽ chuyển bạn sang bước xác thực.
+                {c.verifyText}
               </p>
             </div>
           </div>
@@ -227,19 +307,19 @@ const SignUp = () => {
                   <BsPersonPlus className="text-[17px]" />
                 </div>
                 <h2 className="text-[22px] font-[800] leading-tight text-[#14213d]">
-                  Create account
+                  {c.createAccount}
                 </h2>
                 <p className="mt-1.5 text-[13px] leading-5 text-slate-500">
-                  Điền thông tin cơ bản để bắt đầu.
+                  {c.subtitle}
                 </p>
               </div>
 
               <div className="hidden rounded-[18px] bg-[#f6f8ff] px-3 py-2 text-right sm:block">
                 <p className="text-[11px] font-[700] uppercase tracking-[0.12em] text-slate-400">
-                  Ready
+                  {c.ready}
                 </p>
                 <p className="mt-1 text-[12px] font-[700] text-[#3872fa]">
-                  Register
+                  {c.register}
                 </p>
               </div>
             </div>
@@ -255,7 +335,7 @@ const SignUp = () => {
                 ) : (
                   <>
                     <FcGoogle className="text-[22px]" />
-                    Continue with Google
+                    {c.continueGoogle}
                   </>
                 )}
               </Button>
@@ -270,7 +350,7 @@ const SignUp = () => {
                 ) : (
                   <>
                     <BsFacebook className="text-[20px]" />
-                    Facebook
+                    {c.facebook}
                   </>
                 )}
               </Button>
@@ -279,7 +359,7 @@ const SignUp = () => {
             <div className="my-5 flex items-center gap-3">
               <span className="h-px flex-1 bg-slate-200" />
               <span className="text-[12px] font-[700] uppercase tracking-[0.2em] text-slate-400">
-                or sign up with email
+                {c.divider}
               </span>
               <span className="h-px flex-1 bg-slate-200" />
             </div>
@@ -287,7 +367,7 @@ const SignUp = () => {
             <form className="space-y-3.5" onSubmit={handleSubmit}>
               <div>
                 <label className="mb-1.5 block text-[13px] font-[700] text-slate-700">
-                  Full name
+                  {c.fullName}
                 </label>
                 <input
                   type="text"
@@ -295,14 +375,14 @@ const SignUp = () => {
                   value={formFields.name}
                   disabled={isLoading}
                   onChange={onChangeInput}
-                  placeholder="Your full name"
+                  placeholder={c.fullNamePlaceholder}
                   className="h-[48px] w-full rounded-[18px] border border-slate-200 bg-[#fcfcfd] px-4 text-[13px] text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-[#3872fa] focus:bg-white focus:shadow-[0_0_0_4px_rgba(56,114,250,0.12)]"
                 />
               </div>
 
               <div>
                 <label className="mb-1.5 block text-[13px] font-[700] text-slate-700">
-                  Email
+                  {c.email}
                 </label>
                 <input
                   type="email"
@@ -310,14 +390,14 @@ const SignUp = () => {
                   value={formFields.email}
                   disabled={isLoading}
                   onChange={onChangeInput}
-                  placeholder="name@company.com"
+                  placeholder={c.emailPlaceholder}
                   className="h-[48px] w-full rounded-[18px] border border-slate-200 bg-[#fcfcfd] px-4 text-[13px] text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-[#3872fa] focus:bg-white focus:shadow-[0_0_0_4px_rgba(56,114,250,0.12)]"
                 />
               </div>
 
               <div>
                 <label className="mb-1.5 block text-[13px] font-[700] text-slate-700">
-                  Password
+                  {c.password}
                 </label>
                 <div className="relative">
                   <input
@@ -326,7 +406,7 @@ const SignUp = () => {
                     value={formFields.password}
                     disabled={isLoading}
                     onChange={onChangeInput}
-                    placeholder="Create a password"
+                    placeholder={c.passwordPlaceholder}
                     className="h-[48px] w-full rounded-[18px] border border-slate-200 bg-[#fcfcfd] px-4 pr-12 text-[13px] text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-[#3872fa] focus:bg-white focus:shadow-[0_0_0_4px_rgba(56,114,250,0.12)]"
                   />
                   <Button
@@ -346,14 +426,14 @@ const SignUp = () => {
               <div className="flex flex-col gap-2 text-[13px] sm:flex-row sm:items-center sm:justify-between">
                 <FormControlLabel
                   control={<Checkbox defaultChecked />}
-                  label="Remember me"
+                  label={c.rememberMe}
                   className="!m-0 text-slate-600"
                 />
                 <Link
                   to="/forgot-password"
                   className="font-[700] text-[#3872fa] transition-all hover:text-[#14213d]"
                 >
-                  Forgot password?
+                  {c.forgotPassword}
                 </Link>
               </div>
 
@@ -366,7 +446,7 @@ const SignUp = () => {
                   <CircularProgress color="inherit" size={22} />
                 ) : (
                   <>
-                    Create account
+                    {c.createAccountButton}
                     <FaArrowRightLong className="text-[16px]" />
                   </>
                 )}
@@ -374,12 +454,12 @@ const SignUp = () => {
             </form>
 
             <div className="mt-5 rounded-[18px] bg-[#f8f9fd] p-3.5 text-[12px] leading-5 text-slate-500">
-              Đã có tài khoản?
+              {c.alreadyHaveAccount}
               <Link
                 to="/login"
                 className="ml-2 font-[700] text-[#3872fa] hover:text-[#14213d]"
               >
-                Đăng nhập ngay
+                {c.loginNow}
               </Link>
             </div>
           </div>

@@ -43,19 +43,19 @@ const SideBar = () => {
     () => [
       {
         type: "link",
-        label: "Dashboard",
+        label: context.t("dashboard", "Dashboard"),
         icon: <RxDashboard className="text-[18px]" />,
         to: "/",
       },
       {
         type: "group",
         index: 1,
-        label: "Home Sliders",
+        label: context.t("homeSliders", "Home Sliders"),
         icon: <FaRegImage className="text-[18px]" />,
         children: [
-          { label: "Home Banner List", to: "/homeSlider/list" },
+          { label: context.t("homeBannerList", "Home Banner List"), to: "/homeSlider/list" },
           {
-            label: "Add Home Banner Slide",
+            label: context.t("addHomeBannerSlide", "Add Home Banner Slide"),
             action: () =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -66,48 +66,48 @@ const SideBar = () => {
       },
       {
         type: "link",
-        label: "Users",
+        label: context.t("users", "Users"),
         icon: <FiUsers className="text-[18px]" />,
         to: "/user",
       },
       {
         type: "group",
         index: 3,
-        label: "Products",
+        label: context.t("products", "Products"),
         icon: <RiProductHuntLine className="text-[20px]" />,
         children: [
-          { label: "Products List", to: "/products" },
+          { label: context.t("productsList", "Products List"), to: "/products" },
           {
-            label: "Products Upload",
+            label: context.t("productsUpload", "Products Upload"),
             action: () =>
               context.setIsOpenFullScreenPanel({
                 open: true,
                 model: "Add Product",
               }),
           },
-          { label: "Add Products Rams", to: "/product/addRams" },
-          { label: "Add Products Weight", to: "/product/addWeight" },
-          { label: "Add Products Size", to: "/product/addSize" },
+          { label: context.t("addProductsRams", "Add Products Rams"), to: "/product/addRams" },
+          { label: context.t("addProductsWeight", "Add Products Weight"), to: "/product/addWeight" },
+          { label: context.t("addProductsSize", "Add Products Size"), to: "/product/addSize" },
         ],
       },
       {
         type: "group",
         index: 4,
-        label: "Category",
+        label: context.t("category", "Category"),
         icon: <TbCategory className="text-[20px]" />,
         children: [
-          { label: "Category List", to: "/category/list" },
+          { label: context.t("categoryList", "Category List"), to: "/category/list" },
           {
-            label: "Add New Category",
+            label: context.t("addNewCategory", "Add New Category"),
             action: () =>
               context.setIsOpenFullScreenPanel({
                 open: true,
                 model: "Add New Category",
               }),
           },
-          { label: "Sub Category List", to: "/subCategory/list" },
+          { label: context.t("subCategoryList", "Sub Category List"), to: "/subCategory/list" },
           {
-            label: "Add New Sub Category",
+            label: context.t("addNewSubCategory", "Add New Sub Category"),
             action: () =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -118,19 +118,19 @@ const SideBar = () => {
       },
       {
         type: "link",
-        label: "Orders",
+        label: context.t("orders", "Orders"),
         icon: <IoBagCheckOutline className="text-[20px]" />,
         to: "/orders",
       },
       {
         type: "group",
         index: 5,
-        label: "Banners",
+        label: context.t("banners", "Banners"),
         icon: <TbCategory className="text-[20px]" />,
         children: [
-          { label: "Banner V1 List", to: "/bannerV1/list" },
+          { label: context.t("bannerV1List", "Banner V1 List"), to: "/bannerV1/list" },
           {
-            label: "Add Banner V1",
+            label: context.t("addBannerV1", "Add Banner V1"),
             action: () =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -142,12 +142,12 @@ const SideBar = () => {
       {
         type: "group",
         index: 6,
-        label: "Blog",
+        label: context.t("blog", "Blog"),
         icon: <FaBlog className="text-[18px]" />,
         children: [
-          { label: "Blog List", to: "/blog/list" },
+          { label: context.t("blogList", "Blog List"), to: "/blog/list" },
           {
-            label: "Add Blog",
+            label: context.t("addBlog", "Add Blog"),
             action: () =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -158,7 +158,7 @@ const SideBar = () => {
       },
       {
         type: "button",
-        label: "Logout",
+        label: context.t("logout", "Logout"),
         icon: <IoMdLogOut className="text-[20px]" />,
         action: Logout,
       },
@@ -184,10 +184,10 @@ const SideBar = () => {
     >
       <div className="rounded-[20px] border border-white/75 bg-white/72 p-3.5 shadow-[0_12px_26px_rgba(15,23,42,0.05)] backdrop-blur">
         <p className="text-[11px] font-[700] uppercase tracking-[0.22em] text-slate-400">
-          Navigation
+          {context.t("navigation", "Navigation")}
         </p>
         <h3 className="mt-1.5 text-[16px] font-[800] leading-5 text-[#14213d]">
-          Manage your workspace
+          {context.t("manageWorkspace", "Manage your workspace")}
         </h3>
       </div>
 

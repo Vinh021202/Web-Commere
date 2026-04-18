@@ -75,6 +75,79 @@ const columns = [
   },
 ];
 
+const copy = {
+  VN: {
+    dashboardOverview: "Tong quan dashboard",
+    greeting: "Chao buoi sang,",
+    dashboardUser: "Cameron",
+    dashboardText:
+      "Day la nhung gi dang dien ra trong cua hang hom nay. Xem nhanh so lieu quan trong ngay lap tuc.",
+    products: "San pham",
+    orders: "Don hang",
+    addProduct: "Them san pham",
+    inventory: "Kho hang",
+    productOverview: "Tong quan san pham",
+    selected: "Da chon",
+    category: "Danh muc",
+    chooseCategory: "Chon danh muc",
+    subCategory: "Danh muc con",
+    chooseSubCategory: "Chon danh muc con",
+    thirdLevel: "Cap 3",
+    chooseThirdLevel: "Chon cap 3",
+    noProductsFound: "Khong tim thay san pham",
+    noProductsText:
+      "Thu doi bo loc hoac tu khoa tim kiem de xem them san pham trong kho.",
+    recentOrders: "Don hang gan day",
+    cashOnDelivery: "Thanh toan khi nhan hang",
+    noAddress: "Khong co dia chi",
+    orderedProducts: "San pham da dat",
+    items: "san pham",
+    analytics: "Phan tich",
+    analyticsTitle: "Tong nguoi dung va tong doanh thu",
+    analyticsText: "Chuyen doi giua tang truong nguoi dung va doanh thu theo thang.",
+    totalUsers: "Tong nguoi dung",
+    totalSales: "Tong doanh thu",
+    noAnalyticsData: "Khong co du lieu phan tich",
+    noAnalyticsText:
+      "Hay chon mot chi so de tai bieu do. Neu van khong co du lieu, hay kiem tra API.",
+  },
+  EU: {
+    dashboardOverview: "Dashboard Overview",
+    greeting: "Good Morning,",
+    dashboardUser: "Cameron",
+    dashboardText:
+      "Here's what happening on your store today. See the statistics at once.",
+    products: "Products",
+    orders: "Orders",
+    addProduct: "Add Product",
+    inventory: "Inventory",
+    productOverview: "Product Overview",
+    selected: "Selected",
+    category: "Category",
+    chooseCategory: "Choose category",
+    subCategory: "Sub Category",
+    chooseSubCategory: "Choose sub category",
+    thirdLevel: "Third Level",
+    chooseThirdLevel: "Choose third level",
+    noProductsFound: "No products found",
+    noProductsText:
+      "Try changing the filters or search keyword to see more products in your inventory.",
+    recentOrders: "Recent Orders",
+    cashOnDelivery: "Cash On Delivery",
+    noAddress: "No address",
+    orderedProducts: "Ordered products",
+    items: "items",
+    analytics: "Analytics",
+    analyticsTitle: "Total Users & Total Sales",
+    analyticsText: "Switch between user growth and monthly sales.",
+    totalUsers: "Total Users",
+    totalSales: "Total Sales",
+    noAnalyticsData: "No analytics data",
+    noAnalyticsText:
+      "Choose a metric to load the chart. If data is still missing, check the API response.",
+  },
+};
+
 function createData(name, code, population, size) {
   const density = population / size;
   return { name, code, population, size, density };
@@ -140,6 +213,7 @@ const Dashboard = () => {
   const [chartType, setChartType] = useState("sales");
 
   const context = useContext(MyContext);
+  const c = copy[context.language] || copy.EU;
 
   useEffect(() => {
     getProducts();
@@ -419,21 +493,20 @@ const getTotalSalesByYear = () => {
         className="mb-6 flex w-full items-center justify-between gap-8 overflow-hidden rounded-[28px] border border-white/70 bg-[linear-gradient(135deg,_rgba(255,255,255,0.92),_rgba(245,247,255,0.96))] p-7 shadow-[0_18px_45px_rgba(15,23,42,0.06)]"
       >
         <div className="info max-w-[55%]">
-          <span className="inline-flex rounded-full border border-[#dbe6ff] bg-[#edf3ff] px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.18em] text-[#3872fa]">
-            Dashboard Overview
-          </span>
+            <span className="inline-flex rounded-full border border-[#dbe6ff] bg-[#edf3ff] px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.18em] text-[#3872fa]">
+            {c.dashboardOverview}
+            </span>
           <h1 className="mb-4 mt-4 text-[42px] font-[900] leading-[1.02] text-[#14213d]">
-            Good Morning,
-            <br /> Cameron
+            {c.greeting}
+            <br /> {c.dashboardUser}
           </h1>
           <p className="max-w-[680px] text-[18px] leading-8 text-slate-500">
-            Here's what happening on your store today. See the statistics at
-            once.
+            {c.dashboardText}
           </p>
           <div className="mt-6 flex items-center gap-3">
             <div className="rounded-[18px] border border-[#e5ecff] bg-white/80 px-4 py-3 shadow-[0_10px_25px_rgba(15,23,42,0.04)]">
               <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
-                Products
+                {c.products}
               </p>
               <p className="mt-1 text-[22px] font-[900] text-[#14213d]">
                 {productData?.length || 0}
@@ -441,7 +514,7 @@ const getTotalSalesByYear = () => {
             </div>
             <div className="rounded-[18px] border border-[#e5ecff] bg-white/80 px-4 py-3 shadow-[0_10px_25px_rgba(15,23,42,0.04)]">
               <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
-                Orders
+                {c.orders}
               </p>
               <p className="mt-1 text-[22px] font-[900] text-[#14213d]">
                 {ordersCount || 0}
@@ -459,7 +532,7 @@ const getTotalSalesByYear = () => {
             }
           >
             <FaPlus className="mr-2" />
-            Add Product
+            {c.addProduct}
           </Button>
         </div>
         <div className="relative flex h-[250px] w-[380px] items-center justify-center rounded-[26px] bg-[radial-gradient(circle_at_top,_rgba(56,114,250,0.15),_transparent_60%),linear-gradient(180deg,_rgba(255,255,255,0.65),_rgba(255,255,255,0.35))]">
@@ -483,15 +556,15 @@ const getTotalSalesByYear = () => {
         <div className="flex items-center justify-between border-b border-[#eef2f7] px-6 pb-5">
           <div>
             <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
-              Inventory
+              {c.inventory}
             </p>
             <h3 className="mt-2 text-[22px] font-[900] text-[#14213d]">
-              Product Overview
+              {c.productOverview}
             </h3>
           </div>
           <div className="rounded-[16px] border border-[#e6edfb] bg-[#f8faff] px-4 py-3 text-right">
             <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
-              Selected
+              {c.selected}
             </p>
             <p className="mt-1 text-[18px] font-[900] text-[#3872fa]">
               {sortedIds?.length || 0}
@@ -503,7 +576,7 @@ const getTotalSalesByYear = () => {
           <div className="grid flex-1 gap-4 md:grid-cols-2 xl:grid-cols-[0.9fr_0.9fr_1.1fr]">
             <div className="col rounded-[22px] border border-[#edf2f8] bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-4 shadow-[0_10px_25px_rgba(15,23,42,0.03)]">
               <h3 className="mb-2 text-[12px] font-[800] uppercase tracking-[0.08em] text-slate-500">
-                Category
+                {c.category}
               </h3>
               {context?.catData?.length !== 0 && (
                 <Select
@@ -514,18 +587,18 @@ const getTotalSalesByYear = () => {
                   onChange={handleChangeProductCat}
                   renderValue={(selected) => {
                     if (!selected) {
-                      return "Choose category";
+                      return c.chooseCategory;
                     }
 
                     const selectedCategory = context?.catData?.find(
                       (cat) => cat?._id === selected,
                     );
 
-                    return selectedCategory?.name || "Choose category";
+                    return selectedCategory?.name || c.chooseCategory;
                   }}
                 >
                   <MenuItem value="">
-                    <em>Choose category</em>
+                    <em>{c.chooseCategory}</em>
                   </MenuItem>
                   {context?.catData.map((cat, index) => (
                     <MenuItem value={cat?._id} key={index}>
@@ -538,7 +611,7 @@ const getTotalSalesByYear = () => {
 
             <div className="col rounded-[22px] border border-[#edf2f8] bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-4 shadow-[0_10px_25px_rgba(15,23,42,0.03)]">
               <h3 className="mb-2 text-[12px] font-[800] uppercase tracking-[0.08em] text-slate-500">
-                Sub Category
+                {c.subCategory}
               </h3>
               {context?.catData?.length !== 0 && (
                 <Select
@@ -549,7 +622,7 @@ const getTotalSalesByYear = () => {
                   onChange={handleChangeProductSudCat}
                   renderValue={(selected) => {
                     if (!selected) {
-                      return "Choose sub category";
+                      return c.chooseSubCategory;
                     }
 
                     for (const cat of context?.catData || []) {
@@ -562,11 +635,11 @@ const getTotalSalesByYear = () => {
                       }
                     }
 
-                    return "Choose sub category";
+                    return c.chooseSubCategory;
                   }}
                 >
                   <MenuItem value="">
-                    <em>Choose sub category</em>
+                    <em>{c.chooseSubCategory}</em>
                   </MenuItem>
                   {context?.catData.map((cat) =>
                     cat?.children?.map((subCat, index) => (
@@ -581,7 +654,7 @@ const getTotalSalesByYear = () => {
 
             <div className="col rounded-[22px] border border-[#edf2f8] bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-4 shadow-[0_10px_25px_rgba(15,23,42,0.03)]">
               <h3 className="mb-2 text-[12px] font-[800] uppercase tracking-[0.08em] text-slate-500">
-                Third Level
+                {c.thirdLevel}
               </h3>
               {context?.catData?.length !== 0 && (
                 <Select
@@ -592,7 +665,7 @@ const getTotalSalesByYear = () => {
                   onChange={handleChangeProductThirLavelCat}
                   renderValue={(selected) => {
                     if (!selected) {
-                      return "Choose third level";
+                      return c.chooseThirdLevel;
                     }
 
                     for (const cat of context?.catData || []) {
@@ -607,11 +680,11 @@ const getTotalSalesByYear = () => {
                       }
                     }
 
-                    return "Choose third level";
+                    return c.chooseThirdLevel;
                   }}
                 >
                   <MenuItem value="">
-                    <em>Choose third level</em>
+                    <em>{c.chooseThirdLevel}</em>
                   </MenuItem>
                   {context?.catData.map((cat) =>
                     cat?.children?.map((subCat) =>
@@ -819,11 +892,10 @@ const getTotalSalesByYear = () => {
                               <HiOutlineCube className="text-[30px]" />
                             </div>
                             <h4 className="mt-5 text-[18px] font-[900] text-[#14213d]">
-                              No products found
+                              {c.noProductsFound}
                             </h4>
                             <p className="mt-2 max-w-[320px] text-[13px] leading-6 text-slate-500">
-                              Try changing the filters or search keyword to see more
-                              products in your inventory.
+                              {c.noProductsText}
                             </p>
                           </div>
                         </TableCell>
@@ -859,10 +931,10 @@ const getTotalSalesByYear = () => {
         <div className="flex items-center justify-between border-b border-[#eef2f7] px-6 py-5">
           <div>
             <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
-              Orders
+              {c.orders}
             </p>
             <h2 className="mt-2 text-[22px] font-[900] text-[#14213d]">
-              Recent Orders
+              {c.recentOrders}
             </h2>
           </div>
           <div className="w-full max-w-[320px]">
@@ -942,7 +1014,7 @@ const getTotalSalesByYear = () => {
                           <span className="text-primary whitespace-nowrap">
                             {orders?.paymentId
                               ? orders?.paymentId
-                              : "CASH ON DELIVERY"}{" "}
+                                : c.cashOnDelivery}{" "}
                           </span>
                         </td>
                         <td className="px-6 py-4 font-[700] whitespace-nowrap">
@@ -966,7 +1038,7 @@ const getTotalSalesByYear = () => {
                                 ]
                                   .filter(Boolean) // ✅ Lọc bỏ undefined/null
                                   .join(", ")
-                              : "No address"}
+                              : c.noAddress}
                           </span>
                         </td>
                         <td className="px-6 py-4 font-[700]">
@@ -999,11 +1071,11 @@ const getTotalSalesByYear = () => {
                                     Items
                                   </p>
                                   <p className="mt-1 text-[14px] font-[900] text-[#14213d]">
-                                    Ordered products
+                                    {c.orderedProducts}
                                   </p>
                                 </div>
                                 <span className="inline-flex rounded-full border border-[#e6edfb] bg-[#f7faff] px-3 py-1.5 text-[11px] font-[800] text-[#3872fa]">
-                                  {orders?.products?.length || 0} items
+                                  {orders?.products?.length || 0} {c.items}
                                 </span>
                               </div>
 
@@ -1133,13 +1205,13 @@ const getTotalSalesByYear = () => {
         <div className="flex flex-col gap-4 border-b border-[#eef2f7] px-6 py-5 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
-              Analytics
+              {c.analytics}
             </p>
             <h2 className="mt-2 text-[22px] font-[900] text-[#14213d]">
-              Total Users & Total Sales
+              {c.analyticsTitle}
             </h2>
             <p className="mt-2 text-[13px] text-slate-500">
-              Switch between user growth and monthly sales.
+              {c.analyticsText}
             </p>
           </div>
 
@@ -1158,7 +1230,7 @@ const getTotalSalesByYear = () => {
                   chartType === "users" ? "bg-[#0858f7]" : "bg-slate-300"
                 }`}
               />
-              Total Users
+              {c.totalUsers}
             </button>
 
             <button
@@ -1175,7 +1247,7 @@ const getTotalSalesByYear = () => {
                   chartType === "sales" ? "bg-[#16a34a]" : "bg-slate-300"
                 }`}
               />
-              Total Sales
+              {c.totalSales}
             </button>
           </div>
         </div>
@@ -1219,8 +1291,8 @@ const getTotalSalesByYear = () => {
                       itemStyle={{ color: "white" }}
                       cursor={{ fill: "rgba(56,114,250,0.08)" }}
                       formatter={(value, name) => {
-                        if (name === "TotalSales") return [value, "Total Sales"];
-                        if (name === "TotalUsers") return [value, "Total Users"];
+                        if (name === "TotalSales") return [value, c.totalSales];
+                        if (name === "TotalUsers") return [value, c.totalUsers];
                         return [value, name];
                       }}
                     />
@@ -1235,8 +1307,8 @@ const getTotalSalesByYear = () => {
                           : [{ value: "TotalUsers", type: "circle", color: "#0858f7" }]
                       }
                       formatter={(value) => {
-                        if (value === "TotalSales") return "Total Sales";
-                        if (value === "TotalUsers") return "Total Users";
+                        if (value === "TotalSales") return c.totalSales;
+                        if (value === "TotalUsers") return c.totalUsers;
                         return value;
                       }}
                       wrapperStyle={{
@@ -1273,11 +1345,10 @@ const getTotalSalesByYear = () => {
                   <HiOutlineCube className="text-[30px]" />
                 </div>
                 <h4 className="mt-5 text-[18px] font-[900] text-[#14213d]">
-                  No analytics data
+                  {c.noAnalyticsData}
                 </h4>
                 <p className="mt-2 max-w-[360px] text-[13px] leading-6 text-slate-500">
-                  Choose a metric to load the chart. If data is still missing,
-                  check the API response.
+                  {c.noAnalyticsText}
                 </p>
               </div>
             )}

@@ -23,11 +23,59 @@ const columns = [
   { id: "action", label: "Actions" },
 ];
 
+const copy = {
+  VN: {
+    category: "Danh muc",
+    subCategories: "Danh muc con",
+    actions: "Thao tac",
+    catalogControl: "Dieu khien danh muc",
+    categoryLibrary: "Thu vien danh muc",
+    subtitle:
+      "Quan ly danh muc cua storefront voi tong quan sach hon, tim kiem nhanh hon va thao tac sua truc tiep.",
+    refreshCategories: "Tai lai danh muc",
+    addNewCategory: "Them danh muc moi",
+    totalCategories: "Tong danh muc",
+    visibleResults: "Ket qua hien thi",
+    categoryTable: "Bang danh muc",
+    browseCategories: "Xem va cap nhat danh muc",
+    itemsFound: "muc tim thay",
+    subCategoryCount: "danh muc con",
+    readyForGrouping: "San sang cho viec nhom san pham",
+    noChildCategories: "Chua co danh muc con",
+    noCategoriesFound: "Khong tim thay danh muc",
+    noCategoriesText:
+      "Thu mot tu khoa khac hoac tao danh muc moi de bat dau sap xep catalog san pham.",
+  },
+  EU: {
+    category: "Category",
+    subCategories: "Sub Categories",
+    actions: "Actions",
+    catalogControl: "Catalog Control",
+    categoryLibrary: "Category Library",
+    subtitle:
+      "Manage storefront categories with a cleaner overview, quick search, and direct edit actions for your product structure.",
+    refreshCategories: "Refresh Categories",
+    addNewCategory: "Add New Category",
+    totalCategories: "Total Categories",
+    visibleResults: "Visible Results",
+    categoryTable: "Category Table",
+    browseCategories: "Browse and update categories",
+    itemsFound: "items found",
+    subCategoryCount: "sub categories",
+    readyForGrouping: "Ready for product grouping",
+    noChildCategories: "No child categories yet",
+    noCategoriesFound: "No categories found",
+    noCategoriesText:
+      "Try another keyword or create a new category to start organizing your product catalog.",
+  },
+};
+
 const Category = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const context = useContext(MyContext);
+  const c = copy[context.language] || copy.EU;
 
   const loadCategories = () => {
     fetchDataFromApi(`/api/category`).then((res) => {
@@ -73,19 +121,19 @@ const Category = () => {
   const stats = useMemo(
     () => [
       {
-        label: "Total Categories",
+        label: c.totalCategories,
         value: categoryData.length,
         icon: <HiOutlineCollection className="text-[20px]" />,
         tone: "from-[#14213d] to-[#3872fa]",
       },
       {
-        label: "Visible Results",
+        label: c.visibleResults,
         value: filteredCategories.length,
         icon: <HiOutlineFolderOpen className="text-[20px]" />,
         tone: "from-[#0f9f6e] to-[#34d399]",
       },
     ],
-    [categoryData.length, filteredCategories.length],
+    [c.totalCategories, c.visibleResults, categoryData.length, filteredCategories.length],
   );
 
   const handleChangePage = (event, newPage) => {
@@ -109,14 +157,13 @@ const Category = () => {
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-[680px]">
             <p className="text-[12px] font-[800] uppercase tracking-[0.22em] text-[#3872fa]">
-              Catalog Control
+              {c.catalogControl}
             </p>
             <h1 className="mt-2 text-[24px] font-[900] leading-tight text-[#14213d]">
-              Category Library
+              {c.categoryLibrary}
             </h1>
             <p className="mt-1.5 text-[13px] leading-6 text-slate-600">
-              Manage storefront categories with a cleaner overview, quick search,
-              and direct edit actions for your product structure.
+              {c.subtitle}
             </p>
           </div>
 
@@ -125,7 +172,7 @@ const Category = () => {
               className="!min-w-[158px] !rounded-[14px] !border !border-[#dbe7ff] !bg-white !px-4 !py-2 !text-[13px] !font-[800] !capitalize !text-[#24324d]"
               onClick={loadCategories}
             >
-              Refresh Categories
+              {c.refreshCategories}
             </Button>
             <Button
               className="!min-w-[176px] !rounded-[14px] !bg-[linear-gradient(135deg,_#14213d,_#3872fa)] !px-4 !py-2 !text-[13px] !font-[800] !capitalize !text-white shadow-[0_12px_26px_rgba(56,114,250,0.2)]"
@@ -137,7 +184,7 @@ const Category = () => {
               }
             >
               <IoMdAdd className="mr-2 text-[18px]" />
-              Add New Category
+              {c.addNewCategory}
             </Button>
           </div>
         </div>
@@ -177,15 +224,15 @@ const Category = () => {
           <div className="flex flex-col gap-3 border-b border-[#edf1f7] px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-[12px] font-[800] uppercase tracking-[0.16em] text-slate-400">
-                Category Table
+                {c.categoryTable}
               </p>
               <h2 className="mt-1 text-[18px] font-[900] text-[#14213d]">
-                Browse and update categories
+                {c.browseCategories}
               </h2>
             </div>
 
             <div className="rounded-[14px] bg-[#f7f9fc] px-3.5 py-2.5 text-[12px] font-[700] text-slate-500">
-              {filteredCategories.length} items found
+              {filteredCategories.length} {c.itemsFound}
             </div>
           </div>
 
@@ -259,12 +306,12 @@ const Category = () => {
                         <TableCell sx={{ py: 1.8 }}>
                           <div className="flex items-center gap-3">
                             <span className="inline-flex rounded-full bg-[#e9f3ff] px-3 py-1 text-[12px] font-[800] text-[#1d4ed8]">
-                              {childCount} sub categories
+                              {childCount} {c.subCategoryCount}
                             </span>
                             <span className="text-[13px] font-[600] text-slate-500">
                               {childCount > 0
-                                ? "Ready for product grouping"
-                                : "No child categories yet"}
+                                ? c.readyForGrouping
+                                : c.noChildCategories}
                             </span>
                           </div>
                         </TableCell>
@@ -302,11 +349,10 @@ const Category = () => {
                           <HiOutlineFolderOpen className="text-[30px]" />
                         </div>
                         <h3 className="mt-4 text-[18px] font-[800] text-[#14213d]">
-                          No categories found
+                          {c.noCategoriesFound}
                         </h3>
                         <p className="mt-2 max-w-[360px] text-[13px] leading-6 text-slate-500">
-                          Try another keyword or create a new category to start
-                          organizing your product catalog.
+                          {c.noCategoriesText}
                         </p>
                       </div>
                     </TableCell>

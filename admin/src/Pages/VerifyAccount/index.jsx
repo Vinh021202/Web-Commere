@@ -8,6 +8,61 @@ import OtpBox from "../../Components/OtpBox";
 import { MyContext } from "../../App";
 import { postData } from "../../utils/api";
 
+const copy = {
+  VN: {
+    login: "Dang nhap",
+    signUp: "Dang ky",
+    verification: "Xac thuc",
+    heroTitle: "Nhap OTP de hoan tat buoc xac thuc cua ban.",
+    heroText:
+      "Ma xac thuc da duoc gui toi email cua ban. Sau buoc nay, ban se tiep tuc dang nhap hoac doi mat khau tuy theo flow hien tai.",
+    currentFlow: "Luong hien tai",
+    recovery: "Khoi phuc",
+    register: "Dang ky",
+    currentFlowText:
+      "He thong se xu ly OTP theo dung hanh dong ban vua thuc hien.",
+    destination: "Diem den",
+    changePass: "Doi mat khau",
+    verifyText: "Xac thuc thanh cong se tu dong chuyen ban sang buoc tiep theo.",
+    verifyOtp: "Xac thuc OTP",
+    subtitle: "Nhap 6 chu so da gui toi email cua ban.",
+    sentTo: "Gui toi",
+    noEmail: "Khong co email",
+    otpSentTo: "OTP da gui toi",
+    yourEmail: "email cua ban",
+    verifyButton: "Xac thuc OTP",
+    enterOtp: "Vui long nhap OTP",
+    sessionExpired: "Phien da het han, vui long thu lai",
+    somethingWrong: "Da co loi xay ra",
+  },
+  EU: {
+    login: "Login",
+    signUp: "Sign Up",
+    verification: "Verification",
+    heroTitle: "Enter OTP to complete your verification step.",
+    heroText:
+      "A verification code has been sent to your email. After this step, you will continue to login or reset your password depending on the current flow.",
+    currentFlow: "Current Flow",
+    recovery: "Recovery",
+    register: "Register",
+    currentFlowText:
+      "The system will process the OTP according to the action you just performed.",
+    destination: "Destination",
+    changePass: "Change Pass",
+    verifyText: "Successful verification will move you to the next step.",
+    verifyOtp: "Verify OTP",
+    subtitle: "Enter the 6 digits sent to your email.",
+    sentTo: "Sent To",
+    noEmail: "No email",
+    otpSentTo: "OTP sent to",
+    yourEmail: "your email",
+    verifyButton: "Verify OTP",
+    enterOtp: "Please enter OTP",
+    sessionExpired: "Session expired, please try again",
+    somethingWrong: "Something went wrong",
+  },
+};
+
 const VerifyAccount = () => {
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +72,7 @@ const VerifyAccount = () => {
   const userEmail = localStorage.getItem("userEmail");
   const actionType = localStorage.getItem("actionType");
   const isForgotPasswordFlow = actionType === "forgot-password";
+  const c = copy[context.language] || copy.VN;
 
   const handleOtpChange = (value) => {
     setOtp(value);
@@ -26,12 +82,12 @@ const VerifyAccount = () => {
     e.preventDefault();
 
     if (otp === "") {
-      context.alertBox("error", "Please enter OTP");
+      context.alertBox("error", c.enterOtp);
       return;
     }
 
     if (!userEmail) {
-      context.alertBox("error", "Session expired, please try again");
+      context.alertBox("error", c.sessionExpired);
       navigate("/login");
       return;
     }
@@ -59,7 +115,7 @@ const VerifyAccount = () => {
           navigate("/login");
         }
       } else {
-        context.alertBox("error", res?.message || "Something went wrong");
+        context.alertBox("error", res?.message || c.somethingWrong);
         setIsLoading(false);
       }
     });
@@ -83,12 +139,12 @@ const VerifyAccount = () => {
           <NavLink to="/login">
             <Button className="!rounded-full !px-4 !py-2 !text-[13px] !font-[700] !text-[rgba(0,0,0,0.75)] sm:!px-5">
               <CgLogIn className="mr-2 text-[17px]" />
-              Login
+              {c.login}
             </Button>
           </NavLink>
           <NavLink to="/sign-up">
             <Button className="!rounded-full !px-4 !py-2 !text-[13px] !font-[700] !text-[rgba(0,0,0,0.75)] sm:!px-5">
-              Sign Up
+              {c.signUp}
             </Button>
           </NavLink>
         </div>
@@ -99,40 +155,39 @@ const VerifyAccount = () => {
           <div>
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[10px] font-[700] uppercase tracking-[0.2em] text-white/90">
               <HiOutlineSparkles className="text-[16px]" />
-              Verification
+              {c.verification}
             </div>
 
-            <h1 className="max-w-[360px] font-[800] leading-[1.08] text-[30px]">
-              Nhập OTP để hoàn tất bước xác thực của bạn.
+            <h1 className="max-w-[360px] text-[30px] font-[800] leading-[1.08]">
+              {c.heroTitle}
             </h1>
 
             <p className="mt-4 max-w-[360px] text-[14px] leading-6 text-white/72">
-              Mã xác thực đã được gửi tới email của bạn. Sau bước này, bạn sẽ
-              tiếp tục đăng nhập hoặc đổi mật khẩu tùy theo flow hiện tại.
+              {c.heroText}
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-[20px] border border-white/12 bg-white/8 p-3.5 backdrop-blur-sm">
               <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-white/55">
-                Current Flow
+                {c.currentFlow}
               </p>
               <p className="mt-2 text-[18px] font-[800]">
-                {isForgotPasswordFlow ? "Recovery" : "Register"}
+                {isForgotPasswordFlow ? c.recovery : c.register}
               </p>
               <p className="mt-2 text-[12px] leading-5 text-white/68">
-                Hệ thống sẽ xử lý OTP theo đúng hành động bạn vừa thực hiện.
+                {c.currentFlowText}
               </p>
             </div>
             <div className="rounded-[20px] border border-white/12 bg-[#f59e0b] p-3.5 text-[#1f2937]">
               <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-[#1f2937]/70">
-                Destination
+                {c.destination}
               </p>
               <p className="mt-2 text-[18px] font-[800]">
-                {isForgotPasswordFlow ? "Change Pass" : "Login"}
+                {isForgotPasswordFlow ? c.changePass : c.login}
               </p>
               <p className="mt-2 text-[12px] leading-5 text-[#1f2937]/80">
-                Xác thực thành công sẽ tự chuyển bạn sang bước tiếp theo.
+                {c.verifyText}
               </p>
             </div>
           </div>
@@ -146,27 +201,27 @@ const VerifyAccount = () => {
                   <HiOutlineShieldCheck className="text-[17px]" />
                 </div>
                 <h2 className="text-[22px] font-[800] leading-tight text-[#14213d]">
-                  Verify OTP
+                  {c.verifyOtp}
                 </h2>
                 <p className="mt-1.5 text-[13px] leading-5 text-slate-500">
-                  Nhập 6 chữ số đã gửi tới email của bạn.
+                  {c.subtitle}
                 </p>
               </div>
 
               <div className="hidden rounded-[18px] bg-[#f6f8ff] px-3 py-2 text-right sm:block">
                 <p className="text-[11px] font-[700] uppercase tracking-[0.12em] text-slate-400">
-                  Sent To
+                  {c.sentTo}
                 </p>
                 <p className="mt-1 max-w-[120px] truncate text-[12px] font-[700] text-[#3872fa]">
-                  {userEmail || "No email"}
+                  {userEmail || c.noEmail}
                 </p>
               </div>
             </div>
 
             <p className="mb-5 text-[12px] leading-5 text-slate-500">
-              OTP sent to{" "}
+              {c.otpSentTo}{" "}
               <span className="font-[700] text-[#14213d]">
-                {userEmail || "your email"}
+                {userEmail || c.yourEmail}
               </span>
             </p>
 
@@ -183,7 +238,7 @@ const VerifyAccount = () => {
                 {isLoading ? (
                   <CircularProgress color="inherit" size={22} />
                 ) : (
-                  "Verify OTP"
+                  c.verifyButton
                 )}
               </Button>
             </form>

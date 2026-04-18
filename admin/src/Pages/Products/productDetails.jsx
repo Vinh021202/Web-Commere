@@ -1,257 +1,490 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/styles.min.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { fetchDataFromApi } from "../../utils/api";
-import { MdBrandingWatermark, MdFilterVintage } from "react-icons/md";
+import {
+  MdBrandingWatermark,
+  MdFilterVintage,
+  MdOutlineInventory2,
+  MdOutlineLocalOffer,
+  MdOutlineSell,
+  MdOutlineCalendarToday,
+} from "react-icons/md";
 import { BiSolidCategoryAlt } from "react-icons/bi";
-import { MdRateReview } from "react-icons/md";
+import { HiOutlineCube } from "react-icons/hi2";
 import { BsPatchCheckFill } from "react-icons/bs";
+import { IoArrowBack } from "react-icons/io5";
+import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import CircularProgress from "@mui/material/CircularProgress";
+import { MyContext } from "../../App";
+
+const detailLabelClass =
+  "flex items-center gap-2 text-[12px] font-[800] uppercase tracking-[0.08em] text-slate-500";
+
+const attributeChipClass =
+  "inline-flex rounded-full border border-[#e4ecfb] bg-[#f7faff] px-3 py-1.5 text-[12px] font-[800] text-[#315ea8]";
 
 const ProductDetails = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
   const [bigSwiper, setBigSwiper] = useState(null);
   const [smallSwiper, setSmallSwiper] = useState(null);
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { id } = useParams();
+  const context = useContext(MyContext);
 
   const goto = (index) => {
     setSliderIndex(index);
+
     if (bigSwiper) {
       bigSwiper.slideTo(index);
     }
+
     if (smallSwiper) {
       smallSwiper.slideTo(index);
     }
   };
 
   useEffect(() => {
+    setIsLoading(true);
+
     fetchDataFromApi(`/api/product/${id}`).then((res) => {
-      if (res?.error === false) {
-        setTimeout(() => {
-          setProduct(res?.product);
-        }, 1500);
+      if (res?.error === false && res?.product) {
+        setProduct(res.product);
+      } else {
+        setProduct(null);
       }
+
+      setIsLoading(false);
     });
-  }, []);
+  }, [id]);
+
+  const galleryImages = useMemo(() => {
+    if (!Array.isArray(product?.images)) {
+      return [];
+    }
+
+    return product.images.filter(Boolean);
+  }, [product?.images]);
+
+  const reviews = useMemo(() => {
+    if (!Array.isArray(product?.reviews)) {
+      return [];
+    }
+
+    return product.reviews;
+  }, [product?.reviews]);
+
+  const detailGroups = useMemo(
+    () => [
+      {
+        icon: <MdBrandingWatermark className="text-[16px]" />,
+        label: "Brand",
+        value: product?.brand || "No brand",
+      },
+      {
+        icon: <BiSolidCategoryAlt className="text-[16px]" />,
+        label: "Category",
+        value: product?.catName || "Uncategorized",
+      },
+      {
+        icon: <MdOutlineInventory2 className="text-[16px]" />,
+        label: "Stock",
+        value: product?.countInStock ?? product?.stock ?? "N/A",
+      },
+      {
+        icon: <MdOutlineSell className="text-[16px]" />,
+        label: "Sales",
+        value: `${product?.sale || 0} sale`,
+      },
+      {
+        icon: <MdOutlineLocalOffer className="text-[16px]" />,
+        label: "Product ID",
+        value: product?._id || "N/A",
+      },
+      {
+        icon: <MdOutlineCalendarToday className="text-[16px]" />,
+        label: "Published",
+        value: product?.createdAt?.split("T")[0] || "N/A",
+      },
+    ],
+    [product],
+  );
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[70vh] items-center justify-center">
+        <div className="flex items-center gap-3 rounded-full bg-white px-5 py-3 shadow-[0_12px_30px_rgba(15,23,42,0.08)]">
+          <CircularProgress color="inherit" size={22} />
+          <span className="text-[13px] font-[700] text-slate-600">
+            Loading product details...
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product?._id) {
+    return (
+      <div className="flex min-h-[70vh] flex-col items-center justify-center rounded-[28px] border border-white/70 bg-white/90 p-8 text-center shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+        <div className="flex h-16 w-16 items-center justify-center rounded-[20px] bg-[#f4f7ff] text-[#3872fa] shadow-[0_12px_30px_rgba(56,114,250,0.08)]">
+          <HiOutlineCube className="text-[30px]" />
+        </div>
+        <h2 className="mt-5 text-[22px] font-[900] text-[#14213d]">
+          Product not found
+        </h2>
+        <p className="mt-2 max-w-[420px] text-[14px] leading-7 text-slate-500">
+          The requested product could not be loaded. It may have been deleted or
+          is currently unavailable.
+        </p>
+        <Link to="/products" className="mt-6">
+          <Button className="!rounded-[16px] !bg-[linear-gradient(135deg,_#14213d,_#3872fa)] !px-5 !py-3 !text-[13px] !font-[800] !capitalize !text-white shadow-[0_16px_35px_rgba(56,114,250,0.22)]">
+            <IoArrowBack className="mr-2 text-[16px]" />
+            Back to Products
+          </Button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <>
-      <div className="flex items-center justify-between px-2 py-0 mt-3">
-        <h2 className="text-[18px] font-[700]">
-          Products Details
-          <span className="text-[14px] font-[400]">(Materia Ui Table )</span>
-        </h2>
-      </div>
-      <br />
-
-      {product?._id !== "" &&
-      product?._id !== undefined &&
-      product?._id !== null ? (
-        <>
-          <div className="productDetails flex gap-8">
-            <div className="w-[40%]">
-              {product?.images?.length !== 0 && (
-                <div className="flex gap-3">
-                  <div className={`slider w-[15%]  `}>
-                    <Swiper
-                      onSwiper={setSmallSwiper}
-                      direction={"vertical"}
-                      slidesPerView={4}
-                      spaceBetween={0}
-                      navigation={true}
-                      modules={[Navigation]}
-                      className={`zoomProductSliderThumbs h-[400px] overflow-hidden ${product?.images?.length > 5 && "space"}`}
-                    >
-                      {product?.images?.map((item, index) => (
-                        <SwiperSlide key={index}>
-                          <div
-                            className={`item rounded-md overflow-hidden cursor-pointer group
-                                 ${sliderIndex === index ? "" : "opacity-30"}`}
-                            onClick={() => goto(index)}
-                          >
-                            <img
-                              src={item}
-                              className="w-full h-full transition-all group-hover:scale-105"
-                            />
-                          </div>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  </div>
-                  <div className="zoomContainer w-[85%]  overflow-hidden rounded-md">
-                    <Swiper
-                      onSwiper={setBigSwiper}
-                      slidesPerView={1}
-                      spaceBetween={0}
-                      navigation={false}
-                      initialSlide={sliderIndex}
-                      onSlideChange={(swiper) =>
-                        setSliderIndex(swiper.activeIndex)
-                      }
-                    >
-                      {product?.images?.map((item, index) => (
-                        <SwiperSlide key={index}>
-                          <InnerImageZoom
-                            zoomType="hover"
-                            zoomScale={1.5}
-                            src={item}
-                          />
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="w-[60%]">
-              <h1 className="text-[25px] font-[500] mb-4">{product?.name}</h1>
-              <div className="flex items-center py-1">
-                <span className="w-[15%] font-[500] flex items-center gap-2 text-[14px]">
-                  <MdBrandingWatermark className="opacity-65" />
-                  Brand :{" "}
-                </span>
-                <span className="text-[14px]">{product?.brand}</span>
-              </div>
-              <div className="flex items-center py-1">
-                <span className="w-[15%] font-[500] flex items-center gap-2 text-[14px]">
-                  <BiSolidCategoryAlt className="opacity-65" />
-                  Category:
-                </span>
-                <span className="text-[14px]">{product?.catName}</span>
-              </div>
-              {product?.productRam?.length !== 0 && (
-                <div className="flex items-center py-1">
-                  <span className="w-[15%] font-[500] flex items-center gap-2 text-[14px]">
-                    <MdFilterVintage className="opacity-65" />
-                    RAM:
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {product?.productRam?.map((ram, index) => {
-                      return (
-                        <span
-                          className="text-[12px] inline-block p-1 shadow-sm bg-[#fff] 
-                          font-[500] "
-                          key={index}
-                        >
-                          {ram}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-              {product?.size?.length !== 0 && (
-                <div className="flex items-center py-1">
-                  <span className="w-[15%] font-[500] flex items-center gap-2 text-[14px]">
-                    <MdFilterVintage className="opacity-65" />
-                    SIZE:
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {product?.size?.map((size, index) => {
-                      return (
-                        <span
-                          className="text-[12px] inline-block p-1 shadow-sm bg-[#fff] 
-                          font-[500] "
-                          key={index}
-                        >
-                          {size}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-              {product?.productWeight?.length !== 0 && (
-                <div className="flex items-center py-1">
-                  <span className="w-[15%] font-[500] flex items-center gap-2 text-[14px]">
-                    <MdFilterVintage className="opacity-65" />
-                    Weight:
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {product?.productWeight?.map((weight, index) => {
-                      return (
-                        <span
-                          className="text-[12px] inline-block p-1 shadow-sm bg-[#fff] 
-                          font-[500] "
-                          key={index}
-                        >
-                          {weight}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-              <div className="flex items-center py-1">
-                <span className="w-[15%] font-[500] flex items-center gap-2 text-[14px]">
-                  <MdRateReview className="opacity-65" />
-                  Review:
-                </span>
-                <span className="text-[14px]">
-                  ({product?.reviews?.length > 0 ? product?.reviews?.length : 0}
-                  ) Review
-                </span>
-              </div>
-              <div className="flex items-center py-1">
-                <span className="w-[15%] font-[500] flex items-center gap-2 text-[14px]">
-                  <BsPatchCheckFill className="opacity-65" />
-                  Published:
-                </span>
-                <span className="text-[14px]">
-                  {product?.createdAt?.split("T")[0]}
-                </span>
-              </div>
-              <br />
-              <h2 className="text-[20px] font-[500] mb-3">
-                Product Description
-              </h2>
-              {product?.description && (
-                <p className="text-[14px]">{product?.description} </p>
-              )}
-            </div>
+      <div className="mb-6 flex flex-col gap-4 rounded-[28px] border border-white/70 bg-[linear-gradient(135deg,_rgba(255,255,255,0.94),_rgba(245,247,255,0.98))] p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex items-start gap-4">
+          <div className="flex h-14 w-14 items-center justify-center rounded-[18px] bg-[linear-gradient(135deg,_#14213d,_#3872fa)] text-white shadow-[0_16px_35px_rgba(56,114,250,0.20)]">
+            <HiOutlineCube className="text-[26px]" />
           </div>
-          <br />
-          <h2 className="text-[18px] font-[500]">Customer Reviews</h2>
+          <div>
+            <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
+              Product Details
+            </p>
+            <h1 className="mt-2 text-[28px] font-[900] leading-tight text-[#14213d]">
+              {product?.name}
+            </h1>
+            <p className="mt-2 text-[14px] text-slate-500">
+              Review product media, pricing, attributes and customer feedback in
+              one place.
+            </p>
+          </div>
+        </div>
 
-          <div className="reviewsWrap mt-3">
-            <div className="reviews w-full h-auto mb-3 p-4 bg-white rounded-sm shadow-md flex items-center justify-between">
-              <div className="flex items-center gap-8">
-                <div className="img w-[85px] h-[85px] rounded-full overflow-hidden ">
-                  <img
-                    src={"/user.jpg"}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="info w-[80%]">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-[16px] font-[500]">Vịnh Trần</h4>
-                    <Rating name="read-only" value={5} readOnly size="small" />
-                  </div>
-                  <span className="text-[13px]">2026-03-13</span>
-                  <p className="text-[13px] mt-2">
-                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="rounded-[18px] border border-[#e6edfb] bg-white/80 px-4 py-3 text-right shadow-[0_10px_25px_rgba(15,23,42,0.04)]">
+            <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
+              Current Price
+            </p>
+            <p className="mt-1 text-[22px] font-[900] text-[#3872fa]">
+              {context?.formatCurrency
+                ? context.formatCurrency(product?.price)
+                : product?.price}
+            </p>
+          </div>
+          <Link to="/products">
+            <Button className="!rounded-[16px] !border !border-[#e7ebf3] !bg-white !px-4 !py-3 !text-[13px] !font-[800] !capitalize !text-slate-700 hover:!bg-[#f8fbff]">
+              <IoArrowBack className="mr-2 text-[16px]" />
+              Back to Products
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+        <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+          <div className="mb-5">
+            <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
+              Gallery
+            </p>
+            <h2 className="mt-2 text-[22px] font-[900] text-[#14213d]">
+              Product Media
+            </h2>
+          </div>
+
+          {galleryImages.length > 0 ? (
+            <div className="flex flex-col gap-4 lg:flex-row">
+              <div className="order-2 lg:order-1 lg:w-[108px]">
+                <Swiper
+                  onSwiper={setSmallSwiper}
+                  direction={window.innerWidth >= 1024 ? "vertical" : "horizontal"}
+                  slidesPerView={4}
+                  spaceBetween={12}
+                  navigation
+                  modules={[Navigation]}
+                  className="zoomProductSliderThumbs h-[96px] lg:h-[460px]"
+                >
+                  {galleryImages.map((image, index) => (
+                    <SwiperSlide key={index}>
+                      <button
+                        type="button"
+                        className={`h-[96px] w-full overflow-hidden rounded-[18px] border p-1.5 transition-all ${
+                          sliderIndex === index
+                            ? "border-[#3872fa] bg-[#f5f8ff] shadow-[0_12px_28px_rgba(56,114,250,0.16)]"
+                            : "border-[#e8eef7] bg-white"
+                        }`}
+                        onClick={() => goto(index)}
+                      >
+                        <img
+                          src={image}
+                          alt={`Thumbnail ${index + 1}`}
+                          className="h-full w-full rounded-[14px] object-cover"
+                        />
+                      </button>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+
+              <div className="order-1 min-w-0 flex-1 overflow-hidden rounded-[24px] border border-[#e8eef7] bg-[#fbfdff] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] lg:order-2">
+                <Swiper
+                  onSwiper={setBigSwiper}
+                  slidesPerView={1}
+                  spaceBetween={0}
+                  initialSlide={sliderIndex}
+                  onSlideChange={(swiper) => setSliderIndex(swiper.activeIndex)}
+                >
+                  {galleryImages.map((image, index) => (
+                    <SwiperSlide key={index}>
+                      <div className="overflow-hidden rounded-[18px] bg-white">
+                        <InnerImageZoom
+                          zoomType="hover"
+                          zoomScale={1.45}
+                          src={image}
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </div>
+          ) : (
+            <div className="flex min-h-[420px] items-center justify-center rounded-[24px] border border-dashed border-[#d7e2f0] bg-[#fbfdff] text-slate-400">
+              No product image
+            </div>
+          )}
+        </div>
+
+        <div className="space-y-6">
+          <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
+                  Summary
+                </p>
+                <h2 className="mt-2 text-[24px] font-[900] text-[#14213d]">
+                  {product?.name}
+                </h2>
+              </div>
+
+              <span className="inline-flex rounded-full border border-[#dbe6ff] bg-[#f5f8ff] px-3 py-1.5 text-[12px] font-[800] text-[#3872fa]">
+                ID: {product?._id?.slice(-6)}
+              </span>
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center gap-4">
+              <div>
+                <p className="text-[12px] font-[700] text-slate-400 line-through">
+                  {context?.formatCurrency
+                    ? context.formatCurrency(product?.oldPrice)
+                    : product?.oldPrice}
+                </p>
+                <p className="mt-1 text-[30px] font-[900] leading-none text-[#3872fa]">
+                  {context?.formatCurrency
+                    ? context.formatCurrency(product?.price)
+                    : product?.price}
+                </p>
+              </div>
+
+              <div className="rounded-[18px] border border-[#e6edfb] bg-[#f8faff] px-4 py-3">
+                <Rating
+                  name="product-rating"
+                  value={Number(product?.rating || 0)}
+                  precision={0.5}
+                  readOnly
+                />
+                <p className="mt-1 text-[12px] font-[700] text-slate-500">
+                  {product?.rating || 0}/5 rating
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              {detailGroups.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-[20px] border border-[#edf2f8] bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-4 shadow-[0_10px_25px_rgba(15,23,42,0.03)]"
+                >
+                  <p className={detailLabelClass}>
+                    {item.icon}
+                    {item.label}
+                  </p>
+                  <p className="mt-2 break-words text-[14px] font-[800] text-[#14213d]">
+                    {item.value}
                   </p>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+            <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
+              Attributes
+            </p>
+            <h2 className="mt-2 text-[22px] font-[900] text-[#14213d]">
+              Product Specs
+            </h2>
+
+            <div className="mt-5 space-y-5">
+              <div>
+                <p className={detailLabelClass}>
+                  <MdFilterVintage className="text-[16px]" />
+                  RAM
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {product?.productRam?.length ? (
+                    product.productRam.map((ram, index) => (
+                      <span className={attributeChipClass} key={index}>
+                        {ram}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-[13px] text-slate-400">No RAM info</span>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <p className={detailLabelClass}>
+                  <MdFilterVintage className="text-[16px]" />
+                  Size
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {product?.size?.length ? (
+                    product.size.map((size, index) => (
+                      <span className={attributeChipClass} key={index}>
+                        {size}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-[13px] text-slate-400">No size info</span>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <p className={detailLabelClass}>
+                  <MdFilterVintage className="text-[16px]" />
+                  Weight
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {product?.productWeight?.length ? (
+                    product.productWeight.map((weight, index) => (
+                      <span className={attributeChipClass} key={index}>
+                        {weight}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-[13px] text-slate-400">
+                      No weight info
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </>
-      ) : (
-        <div className="flex items-center justify-center h-96">
-          <CircularProgress color="inherit" />
         </div>
-      )}
+      </div>
+
+      <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_0.9fr]">
+        <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+          <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
+            Description
+          </p>
+          <h2 className="mt-2 text-[22px] font-[900] text-[#14213d]">
+            Product Description
+          </h2>
+          <p className="mt-4 whitespace-pre-line text-[14px] leading-7 text-slate-600">
+            {product?.description || "No description available for this product."}
+          </p>
+        </div>
+
+        <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+          <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
+            Reviews
+          </p>
+          <h2 className="mt-2 text-[22px] font-[900] text-[#14213d]">
+            Customer Feedback
+          </h2>
+
+          <div className="mt-5 space-y-4">
+            {reviews.length > 0 ? (
+              reviews.map((review, index) => (
+                <div
+                  key={`${review?._id || "review"}-${index}`}
+                  className="rounded-[22px] border border-[#edf2f8] bg-[#fbfdff] p-4 shadow-[0_10px_25px_rgba(15,23,42,0.03)]"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="h-12 w-12 overflow-hidden rounded-full border border-[#e8eef7] bg-white">
+                      <img
+                        src={review?.customerImage || review?.image || "/user.jpg"}
+                        alt={review?.customerName || review?.userName || "User"}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                          <h4 className="text-[15px] font-[900] text-[#14213d]">
+                            {review?.customerName ||
+                              review?.userName ||
+                              "Anonymous user"}
+                          </h4>
+                          <p className="mt-1 text-[12px] text-slate-400">
+                            {review?.createdAt?.split("T")[0] || "No date"}
+                          </p>
+                        </div>
+
+                        <Rating
+                          name={`review-rating-${index}`}
+                          value={Number(review?.rating || 0)}
+                          precision={0.5}
+                          readOnly
+                          size="small"
+                        />
+                      </div>
+
+                      <p className="mt-3 text-[13px] leading-6 text-slate-600">
+                        {review?.review ||
+                          review?.comment ||
+                          "No review content provided."}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="flex min-h-[240px] flex-col items-center justify-center text-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-[20px] bg-[#f4f7ff] text-[#3872fa] shadow-[0_12px_30px_rgba(56,114,250,0.08)]">
+                  <BsPatchCheckFill className="text-[28px]" />
+                </div>
+                <h4 className="mt-5 text-[18px] font-[900] text-[#14213d]">
+                  No customer reviews yet
+                </h4>
+                <p className="mt-2 max-w-[320px] text-[13px] leading-6 text-slate-500">
+                  Reviews will appear here once customers start rating and
+                  commenting on this product.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

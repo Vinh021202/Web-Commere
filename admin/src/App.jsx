@@ -26,6 +26,13 @@ import AddSize from "./Pages/Products/addSize";
 import BannersV1List from "./Pages/Banners";
 import BlogList from "./Pages/Blog";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import {
+  LANGUAGE_OPTIONS,
+  formatCurrencyByLanguage,
+  formatNumberByLanguage,
+  getLanguageConfig,
+  translate,
+} from "./utils/localization";
 
 // ✅ Khai báo context ở ngoài hàm App
 const MyContext = createContext();
@@ -71,10 +78,17 @@ function App() {
   const [address, setAddress] = useState([]);
   const [catData, setCatData] = useState([]);
   const [refreshData, setRefreshData] = useState(false);
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem("admin-language") || LANGUAGE_OPTIONS.VN.code;
+  });
   const [isOpenFullScreenPanel, setIsOpenFullScreenPanel] = useState({
     open: false,
     id: "",
   });
+
+  useEffect(() => {
+    localStorage.setItem("admin-language", language);
+  }, [language]);
 
   const alertBox = (type, msg) => {
     if (type === "success") toast.success(msg);
@@ -130,6 +144,11 @@ function App() {
       }
     });
   };
+
+  const languageConfig = getLanguageConfig(language);
+  const t = (key, fallback) => translate(language, key, fallback);
+  const formatCurrency = (value) => formatCurrencyByLanguage(language, value);
+  const formatNumber = (value) => formatNumberByLanguage(language, value);
 
   const router = createBrowserRouter([
     {
@@ -292,6 +311,12 @@ function App() {
     getCat,
     refreshData,
     setRefreshData,
+    language,
+    setLanguage,
+    languageConfig,
+    t,
+    formatCurrency,
+    formatNumber,
   };
 
   return (

@@ -18,6 +18,81 @@ import { MyContext } from "../../App";
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 
+const copy = {
+  VN: {
+    login: "Dang nhap",
+    signUp: "Dang ky",
+    adminWorkspace: "Khu vuc quan tri",
+    heroTitle: "Quan ly cua hang gon hon voi mot man hinh dang nhap ro rang.",
+    heroText:
+      "Theo doi san pham, blog, banner va don hang trong mot admin panel sang sua hon, tap trung hon va de thao tac moi ngay.",
+    fastAccess: "Truy cap nhanh",
+    dashboard: "Bang dieu khien",
+    fastAccessText:
+      "Vao nhanh cac khu vuc quan tri quan trong tu mot luong dang nhap don gian.",
+    secure: "Bao mat",
+    protected: "Da bao ve",
+    secureText:
+      "Kiem tra phien dang nhap va tu dong don token khi server khong con hoat dong.",
+    welcomeBack: "Chao mung quay lai",
+    subtitle: "Dang nhap de tiep tuc quan ly he thong cua ban.",
+    status: "Trang thai",
+    secureAccess: "Truy cap an toan",
+    continueGoogle: "Tiep tuc voi Google",
+    facebook: "Facebook",
+    emailDivider: "hoac dang nhap bang email",
+    email: "Email",
+    password: "Mat khau",
+    emailPlaceholder: "name@company.com",
+    passwordPlaceholder: "Nhap mat khau cua ban",
+    rememberMe: "Ghi nho toi",
+    forgotPassword: "Quen mat khau?",
+    loginDashboard: "Dang nhap vao dashboard",
+    noAccount: "Chua co tai khoan?",
+    createNewAccount: "Tao tai khoan moi",
+    enterEmail: "Vui long nhap email",
+    enterPassword: "Vui long nhap mat khau",
+    googleError: "Da co loi xay ra",
+    facebookUnavailable: "Dang nhap Facebook chua san sang",
+  },
+  EU: {
+    login: "Login",
+    signUp: "Sign Up",
+    adminWorkspace: "Admin Workspace",
+    heroTitle: "Manage your store with a cleaner and clearer login experience.",
+    heroText:
+      "Track products, blogs, banners and orders in one admin panel that feels lighter, more focused and easier to use every day.",
+    fastAccess: "Fast Access",
+    dashboard: "Dashboard",
+    fastAccessText:
+      "Jump into the most important admin areas from one streamlined login flow.",
+    secure: "Secure",
+    protected: "Protected",
+    secureText:
+      "Checks active sessions and clears tokens automatically when the server is unavailable.",
+    welcomeBack: "Welcome back",
+    subtitle: "Log in to continue managing your system.",
+    status: "Status",
+    secureAccess: "Secure Access",
+    continueGoogle: "Continue with Google",
+    facebook: "Facebook",
+    emailDivider: "or login with email",
+    email: "Email",
+    password: "Password",
+    emailPlaceholder: "name@company.com",
+    passwordPlaceholder: "Enter your password",
+    rememberMe: "Remember me",
+    forgotPassword: "Forgot password?",
+    loginDashboard: "Login to Dashboard",
+    noAccount: "Don't have an account?",
+    createNewAccount: "Create a new account",
+    enterEmail: "Please enter email",
+    enterPassword: "Please enter password",
+    googleError: "Something went wrong",
+    facebookUnavailable: "Facebook login is not available yet",
+  },
+};
+
 const Login = () => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +102,7 @@ const Login = () => {
 
   const context = useContext(MyContext);
   const navigate = useNavigate();
+  const c = copy[context.language] || copy.VN;
 
   const syncUserSession = async () => {
     const userRes = await fetchDataFromApi("/api/user/user-details");
@@ -64,7 +140,7 @@ const Login = () => {
             localStorage.setItem("refreshToken", res?.data.refreshToken);
             syncUserSession();
           } else {
-            context.alertBox("error", res?.message || "Something went wrong");
+            context.alertBox("error", res?.message || c.googleError);
           }
         });
       })
@@ -82,7 +158,7 @@ const Login = () => {
 
   const handleClickFb = () => {
     setLoadingFb(true);
-    context.alertBox("error", "Facebook login is not available yet");
+    context.alertBox("error", c.facebookUnavailable);
     setLoadingFb(false);
   };
 
@@ -95,11 +171,11 @@ const Login = () => {
     e.preventDefault();
 
     if (!formFields.email) {
-      context.alertBox("error", "Please enter email id");
+      context.alertBox("error", c.enterEmail);
       return;
     }
     if (!formFields.password) {
-      context.alertBox("error", "Please enter password");
+      context.alertBox("error", c.enterPassword);
       return;
     }
 
@@ -116,7 +192,7 @@ const Login = () => {
         localStorage.setItem("refreshToken", res?.data.refreshToken);
         syncUserSession();
       } else {
-        context.alertBox("error", res?.message || "Something went wrong");
+        context.alertBox("error", res?.message || c.googleError);
       }
     });
   };
@@ -125,7 +201,7 @@ const Login = () => {
     e.preventDefault();
 
     if (!formFields.email) {
-      context.alertBox("error", "Please enter email id");
+      context.alertBox("error", c.enterEmail);
       return;
     }
 
@@ -138,7 +214,7 @@ const Login = () => {
           context.alertBox("success", res?.message);
           navigate("/verify-account");
         } else {
-          context.alertBox("error", res?.message || "Something went wrong");
+          context.alertBox("error", res?.message || c.googleError);
         }
       },
     );
@@ -173,13 +249,13 @@ const Login = () => {
                 }`}
               >
                 <CgLogIn className="mr-2 text-[17px]" />
-                Login
+                {c.login}
               </Button>
             )}
           </NavLink>
           <NavLink to="/sign-up">
             <Button className="!rounded-full !px-4 !py-2 !text-[13px] !font-[700] !text-[rgba(0,0,0,0.75)] sm:!px-5">
-              Sign Up
+              {c.signUp}
             </Button>
           </NavLink>
         </div>
@@ -190,38 +266,35 @@ const Login = () => {
           <div>
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[10px] font-[700] uppercase tracking-[0.2em] text-white/90">
               <HiOutlineSparkles className="text-[16px]" />
-              Admin Workspace
+              {c.adminWorkspace}
             </div>
 
-            <h1 className="max-w-[360px] font-[800] leading-[1.08] text-[30px]">
-              Quản lý cửa hàng gọn hơn với một màn hình đăng nhập rõ ràng.
+            <h1 className="max-w-[360px] text-[30px] font-[800] leading-[1.08]">
+              {c.heroTitle}
             </h1>
 
             <p className="mt-4 max-w-[360px] text-[14px] leading-6 text-white/72">
-              Theo dõi sản phẩm, blog, banner và đơn hàng trong một admin panel
-              sáng sủa hơn, tập trung hơn và dễ thao tác mỗi ngày.
+              {c.heroText}
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-[20px] border border-white/12 bg-white/8 p-3.5 backdrop-blur-sm">
               <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-white/55">
-                Fast Access
+                {c.fastAccess}
               </p>
-              <p className="mt-2 text-[18px] font-[800]">Dashboard</p>
+              <p className="mt-2 text-[18px] font-[800]">{c.dashboard}</p>
               <p className="mt-2 text-[12px] leading-5 text-white/68">
-                Vào nhanh các khu vực quản trị quan trọng từ một luồng đăng nhập
-                đơn giản.
+                {c.fastAccessText}
               </p>
             </div>
             <div className="rounded-[20px] border border-white/12 bg-[#f59e0b] p-3.5 text-[#1f2937]">
               <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-[#1f2937]/70">
-                Secure
+                {c.secure}
               </p>
-              <p className="mt-2 text-[18px] font-[800]">Protected</p>
+              <p className="mt-2 text-[18px] font-[800]">{c.protected}</p>
               <p className="mt-2 text-[12px] leading-5 text-[#1f2937]/80">
-                Kiểm tra phiên đăng nhập và tự dọn token khi server không còn
-                hoạt động.
+                {c.secureText}
               </p>
             </div>
           </div>
@@ -235,19 +308,19 @@ const Login = () => {
                   <BsShieldLock className="text-[17px]" />
                 </div>
                 <h2 className="text-[22px] font-[800] leading-tight text-[#14213d]">
-                  Welcome back
+                  {c.welcomeBack}
                 </h2>
                 <p className="mt-1.5 text-[13px] leading-5 text-slate-500">
-                  Đăng nhập để tiếp tục quản lý hệ thống của bạn.
+                  {c.subtitle}
                 </p>
               </div>
 
               <div className="hidden rounded-[18px] bg-[#f6f8ff] px-3 py-2 text-right sm:block">
                 <p className="text-[11px] font-[700] uppercase tracking-[0.12em] text-slate-400">
-                  Status
+                  {c.status}
                 </p>
                 <p className="mt-1 text-[12px] font-[700] text-[#3872fa]">
-                  Secure Access
+                  {c.secureAccess}
                 </p>
               </div>
             </div>
@@ -263,7 +336,7 @@ const Login = () => {
                 ) : (
                   <>
                     <FcGoogle className="text-[22px]" />
-                    Continue with Google
+                    {c.continueGoogle}
                   </>
                 )}
               </Button>
@@ -278,7 +351,7 @@ const Login = () => {
                 ) : (
                   <>
                     <BsFacebook className="text-[20px]" />
-                    Facebook
+                    {c.facebook}
                   </>
                 )}
               </Button>
@@ -287,7 +360,7 @@ const Login = () => {
             <div className="my-5 flex items-center gap-3">
               <span className="h-px flex-1 bg-slate-200" />
               <span className="text-[12px] font-[700] uppercase tracking-[0.2em] text-slate-400">
-                or login with email
+                {c.emailDivider}
               </span>
               <span className="h-px flex-1 bg-slate-200" />
             </div>
@@ -295,7 +368,7 @@ const Login = () => {
             <form className="space-y-3.5" onSubmit={handleSubmit}>
               <div>
                 <label className="mb-1.5 block text-[13px] font-[700] text-slate-700">
-                  Email
+                  {c.email}
                 </label>
                 <input
                   type="email"
@@ -303,14 +376,14 @@ const Login = () => {
                   value={formFields.email}
                   onChange={onChangeInput}
                   disabled={isLoading}
-                  placeholder="name@company.com"
+                  placeholder={c.emailPlaceholder}
                   className="h-[48px] w-full rounded-[18px] border border-slate-200 bg-[#fcfcfd] px-4 text-[13px] text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-[#3872fa] focus:bg-white focus:shadow-[0_0_0_4px_rgba(56,114,250,0.12)]"
                 />
               </div>
 
               <div>
                 <label className="mb-1.5 block text-[13px] font-[700] text-slate-700">
-                  Password
+                  {c.password}
                 </label>
                 <div className="relative">
                   <input
@@ -319,7 +392,7 @@ const Login = () => {
                     value={formFields.password}
                     onChange={onChangeInput}
                     disabled={isLoading}
-                    placeholder="Enter your password"
+                    placeholder={c.passwordPlaceholder}
                     className="h-[48px] w-full rounded-[18px] border border-slate-200 bg-[#fcfcfd] px-4 pr-12 text-[13px] text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-[#3872fa] focus:bg-white focus:shadow-[0_0_0_4px_rgba(56,114,250,0.12)]"
                   />
                   <Button
@@ -339,7 +412,7 @@ const Login = () => {
               <div className="flex flex-col gap-2 text-[13px] sm:flex-row sm:items-center sm:justify-between">
                 <FormControlLabel
                   control={<Checkbox defaultChecked />}
-                  label="Remember me"
+                  label={c.rememberMe}
                   className="!m-0 text-slate-600"
                 />
                 <Link
@@ -347,7 +420,7 @@ const Login = () => {
                   onClick={forgotPassword}
                   className="font-[700] text-[#3872fa] transition-all hover:text-[#14213d]"
                 >
-                  Forgot password?
+                  {c.forgotPassword}
                 </Link>
               </div>
 
@@ -360,7 +433,7 @@ const Login = () => {
                   <CircularProgress color="inherit" size={22} />
                 ) : (
                   <>
-                    Login to Dashboard
+                    {c.loginDashboard}
                     <FaArrowRightLong className="text-[16px]" />
                   </>
                 )}
@@ -368,12 +441,12 @@ const Login = () => {
             </form>
 
             <div className="mt-5 rounded-[18px] bg-[#f8f9fd] p-3.5 text-[12px] leading-5 text-slate-500">
-              Chưa có tài khoản?
+              {c.noAccount}
               <Link
                 to="/sign-up"
                 className="ml-2 font-[700] text-[#3872fa] hover:text-[#14213d]"
               >
-                Tạo tài khoản mới
+                {c.createNewAccount}
               </Link>
             </div>
           </div>

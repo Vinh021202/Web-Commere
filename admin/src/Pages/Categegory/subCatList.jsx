@@ -6,10 +6,48 @@ import { IoMdAdd } from "react-icons/io";
 import { MyContext } from "../../App";
 import EditSubBoxCat from "./editSubBoxCat";
 
+const copy = {
+  VN: {
+    categoryStructure: "Cau truc danh muc",
+    subCategoryTree: "Cay danh muc con",
+    subtitle:
+      "Mo rong tung danh muc cha de sua cap 2 va cap 3 ma khong mat bo cuc phan cap hien tai.",
+    addNewSubCategory: "Them danh muc con moi",
+    parentCategories: "Danh muc cha",
+    nestedCategories: "Danh muc long nhau",
+    hierarchyView: "Che do phan cap",
+    parentAndNested: "Danh muc cha va danh muc con",
+    parentGroups: "nhom cha",
+    directSubCategories: "danh muc con truc tiep",
+    noSubCategoryYet: "Danh muc cha nay chua co danh muc con.",
+    noHierarchyYet: "Chua co cau truc danh muc",
+    noHierarchyText:
+      "Hay tao danh muc cha truoc, sau do them danh muc con de xay dung cay san pham.",
+  },
+  EU: {
+    categoryStructure: "Category Structure",
+    subCategoryTree: "Sub Category Tree",
+    subtitle:
+      "Expand each parent category to edit second-level and third-level nodes without losing the current hierarchy view.",
+    addNewSubCategory: "Add New Sub Category",
+    parentCategories: "Parent Categories",
+    nestedCategories: "Nested Categories",
+    hierarchyView: "Hierarchy View",
+    parentAndNested: "Parent and nested categories",
+    parentGroups: "parent groups",
+    directSubCategories: "direct sub categories",
+    noSubCategoryYet: "This parent category does not have sub categories yet.",
+    noHierarchyYet: "No category hierarchy yet",
+    noHierarchyText:
+      "Add a parent category first, then create sub categories to build your product tree.",
+  },
+};
+
 const SubCatList = () => {
   const [isOpen, setIsOpen] = useState(0);
   const context = useContext(MyContext);
   const categoryData = context?.catData || [];
+  const c = copy[context.language] || copy.EU;
 
   const stats = useMemo(() => {
     const secondLevelCount = categoryData.reduce(
@@ -29,17 +67,17 @@ const SubCatList = () => {
 
     return [
       {
-        label: "Parent Categories",
+        label: c.parentCategories,
         value: categoryData.length,
         icon: <HiOutlineFolderOpen className="text-[20px]" />,
       },
       {
-        label: "Nested Categories",
+        label: c.nestedCategories,
         value: secondLevelCount + thirdLevelCount,
         icon: <HiOutlineSquares2X2 className="text-[20px]" />,
       },
     ];
-  }, [categoryData]);
+  }, [c.nestedCategories, c.parentCategories, categoryData]);
 
   const expend = (index) => {
     setIsOpen((prev) => (prev === index ? -1 : index));
@@ -51,14 +89,13 @@ const SubCatList = () => {
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-[680px]">
             <p className="text-[12px] font-[800] uppercase tracking-[0.22em] text-[#3872fa]">
-              Category Structure
+              {c.categoryStructure}
             </p>
             <h1 className="mt-2 text-[28px] font-[900] leading-tight text-[#14213d]">
-              Sub Category Tree
+              {c.subCategoryTree}
             </h1>
             <p className="mt-2 text-[14px] leading-6 text-slate-600">
-              Expand each parent category to edit second-level and third-level
-              nodes without losing the current hierarchy view.
+              {c.subtitle}
             </p>
           </div>
 
@@ -72,7 +109,7 @@ const SubCatList = () => {
             }
           >
             <IoMdAdd className="mr-2 text-[18px]" />
-            Add New Sub Category
+            {c.addNewSubCategory}
           </Button>
         </div>
 
@@ -102,15 +139,15 @@ const SubCatList = () => {
         <div className="mb-5 flex items-center justify-between gap-4">
           <div>
             <p className="text-[12px] font-[800] uppercase tracking-[0.16em] text-slate-400">
-              Hierarchy View
+              {c.hierarchyView}
             </p>
             <h2 className="mt-1 text-[20px] font-[900] text-[#14213d]">
-              Parent and nested categories
+              {c.parentAndNested}
             </h2>
           </div>
 
           <div className="rounded-[16px] bg-[#f7f9fc] px-4 py-3 text-[13px] font-[700] text-slate-500">
-            {categoryData.length} parent groups
+            {categoryData.length} {c.parentGroups}
           </div>
         </div>
 
@@ -135,7 +172,7 @@ const SubCatList = () => {
                         {firstLevelCat?.name}
                       </p>
                       <p className="mt-1 text-[12px] font-[600] text-slate-500">
-                        {children.length} direct sub categories
+                        {children.length} {c.directSubCategories}
                       </p>
                     </div>
 
@@ -194,7 +231,7 @@ const SubCatList = () => {
                       ) : (
                         <div className="rounded-[18px] border border-dashed border-[#dbe4f0] bg-[#f8fbff] px-4 py-6 text-center">
                           <p className="text-[14px] font-[700] text-slate-500">
-                            This parent category does not have sub categories yet.
+                            {c.noSubCategoryYet}
                           </p>
                         </div>
                       )}
@@ -210,11 +247,10 @@ const SubCatList = () => {
               <HiOutlineSquares2X2 className="text-[28px]" />
             </div>
             <h3 className="mt-4 text-[18px] font-[800] text-[#14213d]">
-              No category hierarchy yet
+              {c.noHierarchyYet}
             </h3>
             <p className="mt-2 text-[13px] leading-6 text-slate-500">
-              Add a parent category first, then create sub categories to build
-              your product tree.
+              {c.noHierarchyText}
             </p>
           </div>
         )}

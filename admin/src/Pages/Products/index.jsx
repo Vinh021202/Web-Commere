@@ -42,6 +42,67 @@ const columns = [
 
 const productFontFamily = '"Montserrat", "Segoe UI", sans-serif';
 
+const copy = {
+  VN: {
+    productManager: "Quan ly san pham",
+    products: "San pham",
+    subtitle: "Xem, loc va quan ly kho hang trong mot noi.",
+    totalProducts: "Tong san pham",
+    deleteSelected: "Xoa da chon",
+    export: "Xuat file",
+    addProduct: "Them san pham",
+    inventory: "Kho hang",
+    overview: "Tong quan san pham",
+    selected: "Da chon",
+    category: "Danh muc",
+    subCategory: "Danh muc con",
+    thirdLevel: "Cap 3",
+    chooseCategory: "Chon danh muc",
+    chooseSubCategory: "Chon danh muc con",
+    chooseThirdLevel: "Chon cap 3",
+    noBrand: "Khong co thuong hieu",
+    uncategorized: "Chua phan loai",
+    noSubCategory: "Khong co danh muc con",
+    sale: "luot ban",
+    rating: "danh gia",
+    noProductsFound: "Khong tim thay san pham",
+    noProductsText:
+      "Thu doi bo loc hoac tu khoa tim kiem de xem them san pham trong kho.",
+    productDeleted: "Da xoa san pham",
+    selectDeleteItems: "Vui long chon muc can xoa",
+    deleteError: "Co loi khi xoa muc",
+  },
+  EU: {
+    productManager: "Product Manager",
+    products: "Products",
+    subtitle: "Browse, filter and manage your inventory in one place.",
+    totalProducts: "Total Products",
+    deleteSelected: "Delete Selected",
+    export: "Export",
+    addProduct: "Add Product",
+    inventory: "Inventory",
+    overview: "Product Overview",
+    selected: "Selected",
+    category: "Category",
+    subCategory: "Sub Category",
+    thirdLevel: "Third Level",
+    chooseCategory: "Choose category",
+    chooseSubCategory: "Choose sub category",
+    chooseThirdLevel: "Choose third level",
+    noBrand: "No brand",
+    uncategorized: "Uncategorized",
+    noSubCategory: "No sub category",
+    sale: "sale",
+    rating: "rating",
+    noProductsFound: "No products found",
+    noProductsText:
+      "Try changing the filters or search keyword to see more products in your inventory.",
+    productDeleted: "Product deleted",
+    selectDeleteItems: "Please select items to delete",
+    deleteError: "Error deleting item",
+  },
+};
+
 const selectSx = {
   width: "100%",
   borderRadius: "18px",
@@ -88,6 +149,7 @@ const Products = () => {
   const [pageOrder, setPageOrder] = useState(1);
 
   const context = useContext(MyContext);
+  const c = copy[context.language] || copy.EU;
 
   useEffect(() => {
     getProducts();
@@ -169,23 +231,23 @@ const Products = () => {
   const deleteProduct = (id) => {
     deleteData(`/api/product/${id}`).then(() => {
       getProducts();
-      context.alertBox("success", "Product deleted");
+      context.alertBox("success", c.productDeleted);
     });
   };
 
   const deleteMultipleProduct = () => {
     if (sortedIds.length === 0) {
-      context.alertBox("error", "please select items to delete");
+      context.alertBox("error", c.selectDeleteItems);
       return;
     }
 
     try {
       deleteMultipleData(`/api/product/deleteMultiple`, sortedIds).then(() => {
         getProducts();
-        context.alertBox("success", "Product deleted");
+        context.alertBox("success", c.productDeleted);
       });
     } catch (error) {
-      context.alertBox("error", "Error deleting item");
+      context.alertBox("error", c.deleteError);
     }
   };
 
@@ -267,13 +329,13 @@ const Products = () => {
           </div>
           <div>
             <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
-              Product Manager
+              {c.productManager}
             </p>
             <h2 className="mt-2 text-[28px] font-[900] leading-none text-[#14213d]">
-              Products
+              {c.products}
             </h2>
             <p className="mt-2 text-[14px] text-slate-500">
-              Browse, filter and manage your inventory in one place.
+              {c.subtitle}
             </p>
           </div>
         </div>
@@ -281,7 +343,7 @@ const Products = () => {
         <div className="flex items-center gap-3">
           <div className="rounded-[18px] border border-[#e6edfb] bg-white/80 px-4 py-3 text-right shadow-[0_10px_25px_rgba(15,23,42,0.04)]">
             <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
-              Total Products
+              {c.totalProducts}
             </p>
             <p className="mt-1 text-[22px] font-[900] text-[#3872fa]">
               {productData?.length || 0}
@@ -295,12 +357,12 @@ const Products = () => {
               onClick={deleteMultipleProduct}
               className="!rounded-[16px] !px-4 !py-3 !text-[13px] !font-[800] !capitalize"
             >
-              Delete Selected
+              {c.deleteSelected}
             </Button>
           )}
 
           <Button className="!rounded-[16px] !bg-[#16a34a] !px-4 !py-3 !text-[13px] !font-[800] !capitalize !text-white shadow-[0_16px_35px_rgba(22,163,74,0.18)]">
-            Export
+            {c.export}
           </Button>
 
           <Button
@@ -313,7 +375,7 @@ const Products = () => {
             }
           >
             <IoMdAdd className="mr-1 text-[18px]" />
-            Add Product
+            {c.addProduct}
           </Button>
         </div>
       </div>
@@ -322,15 +384,15 @@ const Products = () => {
         <div className="flex items-center justify-between border-b border-[#eef2f7] px-6 pb-5">
           <div>
             <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
-              Inventory
+              {c.inventory}
             </p>
             <h3 className="mt-2 text-[22px] font-[900] text-[#14213d]">
-              Product Overview
+              {c.overview}
             </h3>
           </div>
           <div className="rounded-[16px] border border-[#e6edfb] bg-[#f8faff] px-4 py-3 text-right">
             <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
-              Selected
+              {c.selected}
             </p>
             <p className="mt-1 text-[18px] font-[900] text-[#3872fa]">
               {sortedIds?.length || 0}
@@ -342,7 +404,7 @@ const Products = () => {
           <div className="grid flex-1 gap-4 md:grid-cols-2 xl:grid-cols-[0.9fr_0.9fr_1.1fr]">
             <div className="col rounded-[22px] border border-[#edf2f8] bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-4 shadow-[0_10px_25px_rgba(15,23,42,0.03)]">
               <h3 className="mb-2 text-[12px] font-[800] uppercase tracking-[0.08em] text-slate-500">
-                Category
+                {c.category}
               </h3>
               {context?.catData?.length !== 0 && (
                 <Select
@@ -353,18 +415,18 @@ const Products = () => {
                   onChange={handleChangeProductCat}
                   renderValue={(selected) => {
                     if (!selected) {
-                      return "Choose category";
+                      return c.chooseCategory;
                     }
 
                     const selectedCategory = context?.catData?.find(
                       (cat) => cat?._id === selected,
                     );
 
-                    return selectedCategory?.name || "Choose category";
+                    return selectedCategory?.name || c.chooseCategory;
                   }}
                 >
                   <MenuItem value="">
-                    <em>Choose category</em>
+                    <em>{c.chooseCategory}</em>
                   </MenuItem>
                   {context?.catData.map((cat, index) => (
                     <MenuItem value={cat?._id} key={index}>
@@ -377,7 +439,7 @@ const Products = () => {
 
             <div className="col rounded-[22px] border border-[#edf2f8] bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-4 shadow-[0_10px_25px_rgba(15,23,42,0.03)]">
               <h3 className="mb-2 text-[12px] font-[800] uppercase tracking-[0.08em] text-slate-500">
-                Sub Category
+                {c.subCategory}
               </h3>
               {context?.catData?.length !== 0 && (
                 <Select
@@ -388,7 +450,7 @@ const Products = () => {
                   onChange={handleChangeProductSudCat}
                   renderValue={(selected) => {
                     if (!selected) {
-                      return "Choose sub category";
+                      return c.chooseSubCategory;
                     }
 
                     for (const cat of context?.catData || []) {
@@ -401,11 +463,11 @@ const Products = () => {
                       }
                     }
 
-                    return "Choose sub category";
+                    return c.chooseSubCategory;
                   }}
                 >
                   <MenuItem value="">
-                    <em>Choose sub category</em>
+                    <em>{c.chooseSubCategory}</em>
                   </MenuItem>
                   {context?.catData.map((cat) =>
                     cat?.children?.map((subCat, index) => (
@@ -420,7 +482,7 @@ const Products = () => {
 
             <div className="col rounded-[22px] border border-[#edf2f8] bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-4 shadow-[0_10px_25px_rgba(15,23,42,0.03)]">
               <h3 className="mb-2 text-[12px] font-[800] uppercase tracking-[0.08em] text-slate-500">
-                Third Level
+                {c.thirdLevel}
               </h3>
               {context?.catData?.length !== 0 && (
                 <Select
@@ -431,7 +493,7 @@ const Products = () => {
                   onChange={handleChangeProductThirLavelCat}
                   renderValue={(selected) => {
                     if (!selected) {
-                      return "Choose third level";
+                      return c.chooseThirdLevel;
                     }
 
                     for (const cat of context?.catData || []) {
@@ -446,11 +508,11 @@ const Products = () => {
                       }
                     }
 
-                    return "Choose third level";
+                    return c.chooseThirdLevel;
                   }}
                 >
                   <MenuItem value="">
-                    <em>Choose third level</em>
+                    <em>{c.chooseThirdLevel}</em>
                   </MenuItem>
                   {context?.catData.map((cat) =>
                     cat?.children?.map((subCat) =>
@@ -580,7 +642,7 @@ const Products = () => {
                               className="mt-1 block truncate text-[12px] text-slate-400"
                               style={{ fontFamily: productFontFamily }}
                             >
-                              {product?.brand || "No brand"}
+                              {product?.brand || c.noBrand}
                             </span>
                             <span
                               className="mt-2 inline-flex rounded-full border border-[#e6edfb] bg-[#f7faff] px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.12em] text-[#3872fa]"
@@ -594,29 +656,33 @@ const Products = () => {
 
                       <TableCell>
                         <span className="inline-flex rounded-full border border-[#e4ecfb] bg-[#f7faff] px-3 py-1.5 text-[12px] font-[700] text-[#315ea8]">
-                          {product?.catName || "Uncategorized"}
+                          {product?.catName || c.uncategorized}
                         </span>
                       </TableCell>
                       <TableCell>
                         <span className="inline-flex rounded-full border border-[#edf0f5] bg-[#f8fafc] px-3 py-1.5 text-[12px] font-[700] text-slate-600">
-                          {product?.subCat || "No sub category"}
+                          {product?.subCat || c.noSubCategory}
                         </span>
                       </TableCell>
 
                       <TableCell>
                         <div className="flex min-w-[120px] flex-col gap-1">
                           <span className="text-[12px] font-[700] leading-4 text-slate-400 line-through">
-                            &#8363; {product?.oldPrice}
+                            {context.formatCurrency
+                              ? context.formatCurrency(product?.oldPrice)
+                              : product?.oldPrice}
                           </span>
                           <span className="text-[15px] font-[900] text-[#3872fa]">
-                            &#8363; {product?.price}
+                            {context.formatCurrency
+                              ? context.formatCurrency(product?.price)
+                              : product?.price}
                           </span>
                         </div>
                       </TableCell>
 
                       <TableCell>
                         <span className="inline-flex rounded-full border border-[#dbe6ff] bg-[#f5f8ff] px-3 py-1.5 text-[12px] font-[800] text-[#3872fa]">
-                          {product?.sale} sale
+                          {product?.sale} {c.sale}
                         </span>
                       </TableCell>
 
@@ -629,7 +695,7 @@ const Products = () => {
                             readOnly
                           />
                           <span className="text-[11px] font-[700] text-slate-400">
-                            {product?.rating || 0}/5 rating
+                            {product?.rating || 0}/5 {c.rating}
                           </span>
                         </div>
                       </TableCell>
@@ -673,11 +739,10 @@ const Products = () => {
                           <HiOutlineCube className="text-[30px]" />
                         </div>
                         <h4 className="mt-5 text-[18px] font-[900] text-[#14213d]">
-                          No products found
+                          {c.noProductsFound}
                         </h4>
                         <p className="mt-2 max-w-[320px] text-[13px] leading-6 text-slate-500">
-                          Try changing the filters or search keyword to see more
-                          products in your inventory.
+                          {c.noProductsText}
                         </p>
                       </div>
                     </TableCell>

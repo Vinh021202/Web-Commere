@@ -8,18 +8,74 @@ import { HiOutlineKey, HiOutlineSparkles } from "react-icons/hi2";
 import { MyContext } from "../../App";
 import { postData } from "../../utils/api";
 
+const copy = {
+  VN: {
+    login: "Dang nhap",
+    signUp: "Dang ky",
+    recoveryFlow: "Luong khoi phuc",
+    heroTitle: "Khoi phuc mat khau chi voi email cua ban.",
+    heroText:
+      "Nhap email da dang ky de nhan ma OTP, sau do tiep tuc doi mat khau trong buoc xac thuc.",
+    step1: "Buoc 1",
+    sendOtp: "Gui OTP",
+    step1Text:
+      "Gui ma xac thuc den email cua ban de bat dau dat lai mat khau.",
+    step2: "Buoc 2",
+    verify: "Xac thuc",
+    step2Text:
+      "Xac nhan OTP va chuyen sang man hinh doi mat khau moi.",
+    resetPassword: "Dat lai mat khau",
+    subtitle: "Nhap email de nhan ma xac thuc.",
+    email: "Email",
+    recovery: "Khoi phuc",
+    emailPlaceholder: "name@company.com",
+    sendRecoveryCode: "Gui ma khoi phuc",
+    cancelReset: "Khong muon reset nua?",
+    backToLogin: "Quay lai dang nhap",
+    enterEmail: "Vui long nhap email",
+    somethingWrong: "Da co loi xay ra",
+  },
+  EU: {
+    login: "Login",
+    signUp: "Sign Up",
+    recoveryFlow: "Recovery Flow",
+    heroTitle: "Recover your password with just your email.",
+    heroText:
+      "Enter your registered email to receive an OTP, then continue to reset your password in the verification step.",
+    step1: "Step 1",
+    sendOtp: "Send OTP",
+    step1Text:
+      "Send a verification code to your email to start the password reset flow.",
+    step2: "Step 2",
+    verify: "Verify",
+    step2Text:
+      "Confirm the OTP and move to the new password screen.",
+    resetPassword: "Reset password",
+    subtitle: "Enter your email to receive a verification code.",
+    email: "Email",
+    recovery: "Recovery",
+    emailPlaceholder: "name@company.com",
+    sendRecoveryCode: "Send recovery code",
+    cancelReset: "Don't want to reset anymore?",
+    backToLogin: "Back to login",
+    enterEmail: "Please enter email",
+    somethingWrong: "Something went wrong",
+  },
+};
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const context = useContext(MyContext);
   const navigate = useNavigate();
+  const c = copy[context.language] || copy.VN;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!email) {
-      context.alertBox("error", "Please enter email id");
+      context.alertBox("error", c.enterEmail);
       return;
     }
 
@@ -33,7 +89,7 @@ const ForgotPassword = () => {
         context.alertBox("success", res?.message);
         navigate("/verify-account");
       } else {
-        context.alertBox("error", res?.message || "Something went wrong");
+        context.alertBox("error", res?.message || c.somethingWrong);
       }
     });
   };
@@ -56,12 +112,12 @@ const ForgotPassword = () => {
           <NavLink to="/login">
             <Button className="!rounded-full !px-4 !py-2 !text-[13px] !font-[700] !text-[rgba(0,0,0,0.75)] sm:!px-5">
               <CgLogIn className="mr-2 text-[17px]" />
-              Login
+              {c.login}
             </Button>
           </NavLink>
           <NavLink to="/sign-up">
             <Button className="!rounded-full !px-4 !py-2 !text-[13px] !font-[700] !text-[rgba(0,0,0,0.75)] sm:!px-5">
-              Sign Up
+              {c.signUp}
             </Button>
           </NavLink>
         </div>
@@ -72,36 +128,35 @@ const ForgotPassword = () => {
           <div>
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[10px] font-[700] uppercase tracking-[0.2em] text-white/90">
               <HiOutlineSparkles className="text-[16px]" />
-              Recovery Flow
+              {c.recoveryFlow}
             </div>
 
-            <h1 className="max-w-[360px] font-[800] leading-[1.08] text-[30px]">
-              Khôi phục mật khẩu chỉ với email của bạn.
+            <h1 className="max-w-[360px] text-[30px] font-[800] leading-[1.08]">
+              {c.heroTitle}
             </h1>
 
             <p className="mt-4 max-w-[360px] text-[14px] leading-6 text-white/72">
-              Nhập email đã đăng ký để nhận mã OTP, sau đó tiếp tục đổi mật
-              khẩu trong bước xác thực.
+              {c.heroText}
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-[20px] border border-white/12 bg-white/8 p-3.5 backdrop-blur-sm">
               <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-white/55">
-                Step 1
+                {c.step1}
               </p>
-              <p className="mt-2 text-[18px] font-[800]">Send OTP</p>
+              <p className="mt-2 text-[18px] font-[800]">{c.sendOtp}</p>
               <p className="mt-2 text-[12px] leading-5 text-white/68">
-                Gửi mã xác thực đến email của bạn để bắt đầu reset password.
+                {c.step1Text}
               </p>
             </div>
             <div className="rounded-[20px] border border-white/12 bg-[#f59e0b] p-3.5 text-[#1f2937]">
               <p className="text-[13px] font-[700] uppercase tracking-[0.18em] text-[#1f2937]/70">
-                Step 2
+                {c.step2}
               </p>
-              <p className="mt-2 text-[18px] font-[800]">Verify</p>
+              <p className="mt-2 text-[18px] font-[800]">{c.verify}</p>
               <p className="mt-2 text-[12px] leading-5 text-[#1f2937]/80">
-                Xác nhận OTP và chuyển sang màn hình đổi mật khẩu mới.
+                {c.step2Text}
               </p>
             </div>
           </div>
@@ -115,19 +170,19 @@ const ForgotPassword = () => {
                   <HiOutlineKey className="text-[17px]" />
                 </div>
                 <h2 className="text-[22px] font-[800] leading-tight text-[#14213d]">
-                  Reset password
+                  {c.resetPassword}
                 </h2>
                 <p className="mt-1.5 text-[13px] leading-5 text-slate-500">
-                  Nhập email để nhận mã xác thực.
+                  {c.subtitle}
                 </p>
               </div>
 
               <div className="hidden rounded-[18px] bg-[#f6f8ff] px-3 py-2 text-right sm:block">
                 <p className="text-[11px] font-[700] uppercase tracking-[0.12em] text-slate-400">
-                  Email
+                  {c.email}
                 </p>
                 <p className="mt-1 text-[12px] font-[700] text-[#3872fa]">
-                  Recovery
+                  {c.recovery}
                 </p>
               </div>
             </div>
@@ -135,14 +190,14 @@ const ForgotPassword = () => {
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label className="mb-1.5 block text-[13px] font-[700] text-slate-700">
-                  Email
+                  {c.email}
                 </label>
                 <input
                   type="email"
                   value={email}
                   disabled={isLoading}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@company.com"
+                  placeholder={c.emailPlaceholder}
                   className="h-[48px] w-full rounded-[18px] border border-slate-200 bg-[#fcfcfd] px-4 text-[13px] text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-[#3872fa] focus:bg-white focus:shadow-[0_0_0_4px_rgba(56,114,250,0.12)]"
                 />
               </div>
@@ -156,7 +211,7 @@ const ForgotPassword = () => {
                   <CircularProgress color="inherit" size={22} />
                 ) : (
                   <>
-                    Send recovery code
+                    {c.sendRecoveryCode}
                     <FaArrowRightLong className="text-[16px]" />
                   </>
                 )}
@@ -164,12 +219,12 @@ const ForgotPassword = () => {
             </form>
 
             <div className="mt-5 rounded-[18px] bg-[#f8f9fd] p-3.5 text-[12px] leading-5 text-slate-500">
-              Không muốn reset nữa?
+              {c.cancelReset}
               <Link
                 to="/login"
                 className="ml-2 font-[700] text-[#3872fa] hover:text-[#14213d]"
               >
-                Quay lại đăng nhập
+                {c.backToLogin}
               </Link>
             </div>
           </div>

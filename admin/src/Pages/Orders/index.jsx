@@ -113,7 +113,9 @@ const Orders = () => {
     <>
       <div className="card my-4 shadow-md sm:rounded-lg bg-white">
         <div className="flex items-center justify-between px-5 py-5">
-          <h2 className="text-[18px] font-[700]">Recent Orders</h2>
+          <h2 className="text-[18px] font-[700]">
+            {context.t("recentOrders", "Recent Orders")}
+          </h2>
           <div className="w-[25%]">
             <SearchBox
               searchQuery={searchQuery}
@@ -130,40 +132,40 @@ const Orders = () => {
                   &nbsp;
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Order Id
+                  {context.t("orderId", "Order Id")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Payment Id
+                  {context.t("paymentId", "Payment Id")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Name
+                  {context.t("name", "Name")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Phone Number
+                  {context.t("phoneNumber", "Phone Number")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Address
+                  {context.t("address", "Address")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Pincode
+                  {context.t("pincode", "Pincode")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Total Amount
+                  {context.t("totalAmount", "Total Amount")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Email
+                  {context.t("email", "Email")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  User Id
+                  {context.t("userId", "User Id")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Order Status
+                  {context.t("orderStatus", "Order Status")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Date
+                  {context.t("date", "Date")}
                 </th>
                 <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                  Action
+                  {context.t("action", "Action")}
                 </th>
               </tr>
             </thead>
@@ -195,7 +197,7 @@ const Orders = () => {
                           <span className="text-primary">
                             {orders?.paymentId
                               ? orders?.paymentId
-                              : "CASH ON DELIVERY"}
+                              : context.t("cashOnDelivery", "Cash On Delivery")}
                           </span>
                         </td>
                         <td className="px-6 py-4 font-[500] whitespace-nowrap">
@@ -219,7 +221,7 @@ const Orders = () => {
                                 ]
                                   .filter(Boolean)
                                   .join(", ")
-                              : "No address"}
+                              : context.t("noAddress", "No address")}
                           </span>
                         </td>
                         <td className="px-6 py-4 font-[500]">
@@ -263,37 +265,37 @@ const Orders = () => {
                                       scope="col"
                                       className="px-6 py-3 whitespace-nowrap"
                                     >
-                                      Product Id
+                                      {context.t("productId", "Product Id")}
                                     </th>
                                     <th
                                       scope="col"
                                       className="px-6 py-3 whitespace-nowrap"
                                     >
-                                      Product Title
+                                      {context.t("productTitle", "Product Title")}
                                     </th>
                                     <th
                                       scope="col"
                                       className="px-6 py-3 whitespace-nowrap"
                                     >
-                                      Image
+                                      {context.t("image", "Image")}
                                     </th>
                                     <th
                                       scope="col"
                                       className="px-6 py-3 whitespace-nowrap"
                                     >
-                                      Quantity
+                                      {context.t("quantity", "Quantity")}
                                     </th>
                                     <th
                                       scope="col"
                                       className="px-6 py-3 whitespace-nowrap"
                                     >
-                                      Price
+                                      {context.t("price", "Price")}
                                     </th>
                                     <th
                                       scope="col"
                                       className="px-6 py-3 whitespace-nowrap"
                                     >
-                                      Sub Total
+                                      {context.t("subTotal", "Sub Total")}
                                     </th>
                                   </tr>
                                 </thead>
@@ -324,20 +326,12 @@ const Orders = () => {
                                         {item?.quantity}
                                       </td>
                                       <td className="px-6 py-4 font-[500]">
-                                        {item?.price?.toLocaleString("vi-VN", {
-                                          style: "currency",
-                                          currency: "VND",
-                                          minimumFractionDigits: 0,
-                                        })}
+                                        {context.formatCurrency(item?.price)}
                                       </td>
                                       <td className="px-6 py-4 font-[500]">
-                                        {(
-                                          item?.price * item?.quantity
-                                        )?.toLocaleString("vi-VN", {
-                                          style: "currency",
-                                          currency: "VND",
-                                          minimumFractionDigits: 0,
-                                        })}
+                                        {context.formatCurrency(
+                                          item?.price * item?.quantity,
+                                        )}
                                       </td>
                                     </tr>
                                   ))}
