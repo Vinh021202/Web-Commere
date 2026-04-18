@@ -29,6 +29,14 @@ const AccountSidebar = () => {
     }
   }, [context?.userData]);
 
+  const handleProtectedNavigation = (event, path) => {
+    if (path === '/my-list' && !context?.userData?._id) {
+      event.preventDefault();
+      context?.alertBox('error', context?.t ? context.t('alertLoginRequired') : 'Vui lòng đăng nhập');
+      history('/login');
+    }
+  };
+
   const onChangeFile = async (e) => {
     try {
       const files = e.target.files;
@@ -148,7 +156,7 @@ const AccountSidebar = () => {
           <ul className="list-none space-y-2 myAccountTabs">
             {navigationItems.map((item) => (
               <li className="w-full" key={item.to}>
-                <NavLink to={item.to} end={item.end}>
+                <NavLink to={item.to} end={item.end} onClick={(event) => handleProtectedNavigation(event, item.to)}>
                   <Button
                     className="account-sidebar__nav-btn w-full !justify-start !rounded-[20px] !px-4 !py-3 !text-left !capitalize flex items-center gap-3"
                   >

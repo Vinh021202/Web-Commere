@@ -58,6 +58,13 @@ const Header = () => {
   };
 
   const userInitial = context?.userData?.name?.charAt(0)?.toUpperCase() || 'U';
+  const handleMyListNavigation = (event) => {
+    if (!context?.userData?._id) {
+      event.preventDefault();
+      context?.alertBox('error', t('alertLoginRequired'));
+      history('/login');
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[linear-gradient(180deg,#fff_0%,#fff9f7_100%)] backdrop-blur-xl">
@@ -241,7 +248,7 @@ const Header = () => {
                       </span>
                     </MenuItem>
                   </Link>
-                  <Link to="/my-list" className="block w-full">
+                  <Link to="/my-list" className="block w-full" onClick={handleMyListNavigation}>
                     <MenuItem onClick={handleClose} className="account-menu__item">
                       <span className="account-menu__itemIcon">
                         <FaRegHeart className="text-[16px]" />
@@ -269,7 +276,7 @@ const Header = () => {
               <CartBadge badgeContent={5} color="primary" overlap="circular" />
             </IconButton>
 
-            <Link to="/my-list">
+            <Link to="/my-list" onClick={handleMyListNavigation}>
               <IconButton className="!h-[34px] !min-w-[34px] !w-[34px] sm:!h-[38px] sm:!min-w-[38px] sm:!w-[38px] !rounded-full !border !border-[rgba(255,82,82,0.14)] !bg-white hover:!bg-[#fff4ef]">
                 <FaRegHeart size={15} className="text-gray-700" />
                 <CartBadge

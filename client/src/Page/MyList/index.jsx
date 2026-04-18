@@ -1,13 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button } from '@mui/material';
 import MyListtems from './MyListtems';
 import AccountSidebar from '../../componets/AccountSidebar';
 import { MyContext } from '../../App';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const MyList = () => {
   const context = useContext(MyContext);
+  const navigate = useNavigate();
   const listCount = context?.myListData?.length || 0;
+
+  useEffect(() => {
+    const token = localStorage.getItem('accesstoken');
+
+    if (!context?.userData?._id && !token) {
+      context?.alertBox('error', context?.t ? context.t('alertLoginRequired') : 'Vui lòng đăng nhập');
+      navigate('/login');
+    }
+  }, [context, navigate]);
 
   return (
     <section className="pb-10 pt-[220px] md:pt-[240px] xl:pt-[260px]">
