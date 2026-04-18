@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import InnerImageZoom from 'react-inner-image-zoom';
 import 'react-inner-image-zoom/lib/styles.min.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,12 +6,24 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
+import { FiChevronLeft, FiChevronRight, FiImage, FiZoomIn } from 'react-icons/fi';
+import './style.css';
 
 const ProductZoom = (props) => {
+  const images = Array.isArray(props?.images) ? props.images.filter(Boolean) : [];
+  const galleryImages = images.length ? images : ['/bannerBox1.jpg'];
   const [sliderIndex, setSliderIndex] = useState(0);
   const [bigSwiper, setBigSwiper] = useState(null);
   const [smallSwiper, setSmallSwiper] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
 
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
 
   const goto = (index) => {
     setSliderIndex(index);
@@ -23,44 +35,112 @@ const ProductZoom = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (sliderIndex > galleryImages.length - 1) {
+      setSliderIndex(0);
+    }
+  }, [galleryImages.length, sliderIndex]);
+
+  const activeImage = useMemo(
+    () => galleryImages?.[sliderIndex] || galleryImages?.[0] || '/bannerBox1.jpg',
+    [galleryImages, sliderIndex]
+  );
+
+  const handleMove = (direction) => {
+    if (!galleryImages.length) return;
+    const nextIndex =
+      direction === 'prev'
+        ? (sliderIndex - 1 + galleryImages.length) % galleryImages.length
+        : (sliderIndex + 1) % galleryImages.length;
+
+    goto(nextIndex);
+  };
+
   return (
     <>
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <div className="slider w-full sm:w-[15%] ">
-          <Swiper
+      <div className="productZoomBlock">
+        <div className="productZoomHeader">
+          <div>
+            <span className="productZoomEyebrow">Gallery</span>
+            <h3 className="productZoomTitle">Xem chi tiet san pham</h3>
+          </div>
+          <div className="productZoomMeta">
+            <span className="productZoomCount">
+              <FiImage />
+              {galleryImages.length} anh
+            </span>
+            <span className="productZoomHint">
+              <FiZoomIn />
+              {isMobile ? 'Cham de phong to' : 'Re chuot de phong to'}
+            </span>
+          </div>
+        </div>
+
+        <div className="productZoomLayout">
+          <div className="productZoomThumbRail">
+            <Swiper
             onSwiper={setSmallSwiper}
             direction={'vertical'}
             breakpoints={{
               0: {
                 direction: 'horizontal',
                 slidesPerView: 4,
+                spaceBetween: 10,
               },
               640: {
                 direction: 'vertical',
                 slidesPerView: 4,
+                spaceBetween: 12,
               },
             }}
-            spaceBetween={0}
+            spaceBetween={12}
             navigation={true}
             modules={[Navigation]}
-            className={`zoomProductSliderThumbs h-[92px] sm:h-[400px] overflow-hidden ${props?.images?.length > 5 && 'space'}`}
+            className={`zoomProductSliderThumbs ${galleryImages?.length > 5 ? 'space' : ''}`}
           >
-            {props?.images?.map((item, index) => {
+            {galleryImages?.map((item, index) => {
               return (
-                <SwiperSlide key={index}>
+                <SwiperSlide key={index} className="zoomThumb">
                   <div
-                    className={`item rounded-md overflow-hidden cursor-pointer group
-                                 ${sliderIndex === index ? '' : 'opacity-30'}`}
+                    className={`zoomThumbCard group ${sliderIndex === index ? 'is-active' : ''}`}
                     onClick={() => goto(index)}
                   >
-                    <img src={item} className="w-full transition-all group-hover:scale-105" />
+                    <img src={item} alt={`Preview ${index + 1}`} className="zoomThumbImage" />
                   </div>
                 </SwiperSlide>
               );
             })}
           </Swiper>
         </div>
-        <div className="zoomContainer h-[320px] w-full overflow-hidden rounded-md sm:h-[500px] sm:w-[85%]">
+
+        <div className="productZoomStage">
+          <div className="productZoomStageHeader">
+            <span className="productZoomStageBadge">Anh noi bat</span>
+            <span className="productZoomStagePager">
+              {sliderIndex + 1}/{Math.max(galleryImages.length, 1)}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            className="productZoomNav productZoomNav--prev"
+            onClick={() => handleMove('prev')}
+            aria-label="Xem anh truoc"
+          >
+            <FiChevronLeft />
+          </button>
+
+          <button
+            type="button"
+            className="productZoomNav productZoomNav--next"
+            onClick={() => handleMove('next')}
+            aria-label="Xem anh tiep theo"
+          >
+            <FiChevronRight />
+          </button>
+
+          <div className="productZoomPreviewGlow" style={{ backgroundImage: `url(${activeImage})` }} />
+
           <Swiper
             onSwiper={setBigSwiper}
             slidesPerView={1}
@@ -68,13 +148,17 @@ const ProductZoom = (props) => {
             navigation={false}
             initialSlide={sliderIndex}
             onSlideChange={(swiper) => setSliderIndex(swiper.activeIndex)}
+            className="productZoomMainSlider"
           >
-            {props?.images?.map((item, index) => (
+            {galleryImages?.map((item, index) => (
               <SwiperSlide key={index}>
-                <InnerImageZoom zoomType="hover" zoomScale={1} src={item} />
+                <div className="productInnerZoom">
+                  <InnerImageZoom zoomType={isMobile ? 'click' : 'hover'} zoomScale={1} src={item} />
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>
+        </div>
         </div>
       </div>
     </>

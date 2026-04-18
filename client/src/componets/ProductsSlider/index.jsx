@@ -6,12 +6,14 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import ProductsItem from '../ProductsItem';
 import { Navigation } from 'swiper/modules';
+import './style.css';
 // import required modules
 
 const ProductsSlider = (props) => {
   return (
     <>
-      <div className="productsSlider py-3">
+      <div className="productsSlider productsSlider--showcase py-3">
+        <div className="productsSlider__backdrop" />
         <Swiper
           slidesPerView={1.15}
           spaceBetween={14}

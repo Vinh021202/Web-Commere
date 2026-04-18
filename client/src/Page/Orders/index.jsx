@@ -88,7 +88,7 @@ const Orders = () => {
                 orders.map((order, index) => (
                   <div
                     key={order?._id || index}
-                    className="rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-4 shadow-[0_12px_26px_rgba(15,23,42,0.06)]"
+                    className="orders-card rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-4 shadow-[0_12px_26px_rgba(15,23,42,0.06)]"
                   >
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                       <div className="flex-1">
@@ -184,7 +184,7 @@ const Orders = () => {
                           {order?.products?.map((item, itemIndex) => (
                             <div
                               key={item?._id || itemIndex}
-                              className="flex flex-col gap-4 rounded-[20px] border border-[rgba(255,82,82,0.12)] bg-white p-4 md:flex-row md:items-center"
+                              className="orders-card__product flex flex-col gap-4 rounded-[20px] border border-[rgba(255,82,82,0.12)] bg-white p-4 md:flex-row md:items-center"
                             >
                               <div className="h-[74px] w-[74px] overflow-hidden rounded-[16px] bg-[#fff8f5]">
                                 <img
