@@ -40,6 +40,8 @@ const columns = [
   { id: "action", label: "ACTION", minWidth: 150 },
 ];
 
+const productFontFamily = '"Montserrat", "Segoe UI", sans-serif';
+
 const selectSx = {
   width: "100%",
   borderRadius: "18px",
@@ -476,7 +478,15 @@ const Products = () => {
         <div className="px-6 pb-4 pt-5">
           <div className="overflow-hidden rounded-[24px] border border-[#edf2f8] bg-[#fcfdff] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
             <TableContainer sx={{ maxHeight: 560 }}>
-              <Table stickyHeader aria-label="products table">
+              <Table
+                stickyHeader
+                aria-label="products table"
+                sx={{
+                  "& .MuiTableCell-root": {
+                    fontFamily: productFontFamily,
+                  },
+                }}
+              >
             <TableHead>
               <TableRow>
                 <TableCell
@@ -558,15 +568,24 @@ const Products = () => {
                             </Link>
                           </div>
                           <div className="w-[75%] min-w-0">
-                            <h3 className="line-clamp-2 text-[13px] font-[800] leading-5 text-[#14213d] hover:text-[#3872fa]">
+                            <h3
+                              className="line-clamp-2 text-[13px] font-[800] leading-5 text-[#14213d] hover:text-[#3872fa]"
+                              style={{ fontFamily: productFontFamily }}
+                            >
                               <Link to={`/product/${product?._id}`}>
                                 {product?.name}
                               </Link>
                             </h3>
-                            <span className="mt-1 block truncate text-[12px] text-slate-400">
+                            <span
+                              className="mt-1 block truncate text-[12px] text-slate-400"
+                              style={{ fontFamily: productFontFamily }}
+                            >
                               {product?.brand || "No brand"}
                             </span>
-                            <span className="mt-2 inline-flex rounded-full border border-[#e6edfb] bg-[#f7faff] px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.12em] text-[#3872fa]">
+                            <span
+                              className="mt-2 inline-flex rounded-full border border-[#e6edfb] bg-[#f7faff] px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.12em] text-[#3872fa]"
+                              style={{ fontFamily: productFontFamily }}
+                            >
                               ID: {product?._id?.slice(-6)}
                             </span>
                           </div>
