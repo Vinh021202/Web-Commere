@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { RiMenu2Fill } from 'react-icons/ri';
 import { LiaAngleDownSolid } from 'react-icons/lia';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { GoRocket } from 'react-icons/go';
 import { HiOutlineSparkles } from 'react-icons/hi2';
 import CategoryPanel from './CategoryPanel';
 import '../Navigation/style.css';
@@ -48,7 +47,7 @@ export const Navigation = () => {
               <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#ffeded] text-[#ff5252]">
                 <RiMenu2Fill size={16} />
               </span>
-              <span className="text-[13px] font-[600] normal-case text-[#1f2937]">Mua theo danh mục</span>
+              <span className="text-[13px] font-[600] normal-case text-[#1f2937]">{context?.t('shopByCategory')}</span>
               <LiaAngleDownSolid size={12} className="ml-auto font-bold text-[#ff5252]" />
             </Button>
           </div>
@@ -57,15 +56,15 @@ export const Navigation = () => {
             <div className="rounded-[20px] border border-[rgba(255,82,82,0.12)] bg-white/95 p-1.5 shadow-[0_14px_28px_rgba(15,23,42,0.05)]">
               <ul className="nav flex items-center gap-1 overflow-x-auto">
                 <li className="list-none">
-                  <Link to={'/'}>
+                  <Link to="/">
                     <Button
-                    className={`navPill !rounded-full !px-3.5 !py-2.5 whitespace-nowrap !text-[13px] !font-[700] ${
+                      className={`navPill !rounded-full !px-3.5 !py-2.5 whitespace-nowrap !text-[13px] !font-[700] ${
                         location.pathname === '/'
                           ? '!bg-[#ff5252] !text-white'
                           : '!text-[rgba(0,0,0,0.8)] hover:!text-[#ff5252]'
                       }`}
                     >
-                      TRANG CHU
+                      {context?.t('home')}
                     </Button>
                   </Link>
                 </li>
@@ -125,7 +124,7 @@ export const Navigation = () => {
                 <HiOutlineSparkles className="text-[13px]" />
               </span>
               <span className="flex items-center gap-2 text-[12px] font-[700] text-[#1f2937]">
-                Miễn phí giao hàng quốc tế
+                {context?.t('freeInternationalShipping')}
               </span>
             </div>
           </div>

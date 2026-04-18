@@ -29,6 +29,7 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const history = useNavigate();
+  const { language, setLanguage, t } = context;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -38,7 +39,7 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  const Logout = () => {
+  const logout = () => {
     setAnchorEl(null);
 
     fetchDataFromApi(`/api/user/logout?token=${localStorage.getItem('accesstoken')}`, {
@@ -65,23 +66,43 @@ const Header = () => {
           <div className="flex flex-col gap-1.5 md:flex-row md:items-center md:justify-between">
             <div className="col1">
               <p className="m-0 text-[10px] font-[700] uppercase tracking-[0.08em] text-[#ff5252] sm:text-[11px]">
-                Ưu đãi chọn lọc cho phong cách sống hiện đại
+                {t('promoLifestyle')}
               </p>
             </div>
-            <div className="col2 flex items-center justify-end">
-              <div className="col2 flex items-center justify-end">
-                <ul className="flex items-center gap-3">
-                  <li className="list-none">
-                    <Link to="/help-center" className="text-[12px] link font-[500] transform md:text-[13px]">
-                      Trung tâm hỗ trợ
-                    </Link>
-                  </li>
-                  <li className="list-none">
-                    <Link to="/order-tracking" className="text-[12px] link font-[500] transform md:text-[13px]">
-                      Theo dõi đơn hàng
-                    </Link>
-                  </li>
-                </ul>
+
+            <div className="flex flex-wrap items-center justify-end gap-3">
+              <ul className="flex items-center gap-3">
+                <li className="list-none">
+                  <Link to="/help-center" className="text-[12px] font-[500] link md:text-[13px]">
+                    {t('helpCenter')}
+                  </Link>
+                </li>
+                <li className="list-none">
+                  <Link to="/order-tracking" className="text-[12px] font-[500] link md:text-[13px]">
+                    {t('orderTracking')}
+                  </Link>
+                </li>
+              </ul>
+
+              <div className="flex items-center gap-1 rounded-full border border-[rgba(255,82,82,0.14)] bg-white px-1 py-1 shadow-[0_8px_18px_rgba(15,23,42,0.06)]">
+                <button
+                  type="button"
+                  onClick={() => setLanguage('vi')}
+                  className={`rounded-full px-2.5 py-1 text-[11px] font-[800] transition ${
+                    language === 'vi' ? 'bg-[#ff5252] text-white' : 'text-[#1f2937]'
+                  }`}
+                >
+                  VN
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLanguage('en')}
+                  className={`rounded-full px-2.5 py-1 text-[11px] font-[800] transition ${
+                    language === 'en' ? 'bg-[#ff5252] text-white' : 'text-[#1f2937]'
+                  }`}
+                >
+                  EN
+                </button>
               </div>
             </div>
           </div>
@@ -91,7 +112,7 @@ const Header = () => {
       <div className="border-b border-[rgba(255,82,82,0.12)] bg-[linear-gradient(180deg,#fff_0%,#fff9f7_100%)] py-2 md:py-2.5">
         <div className="container flex flex-col gap-2 xl:grid xl:grid-cols-[auto_minmax(240px,1fr)_auto] xl:items-center xl:gap-2.5">
           <div className="logo flex items-center gap-2 md:gap-2.5">
-            <Link to={'/'}>
+            <Link to="/">
               <img
                 src="/logo.png"
                 alt="logo"
@@ -100,10 +121,10 @@ const Header = () => {
             </Link>
             <div className="hidden 2xl:block">
               <p className="mb-1 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#ff5252]">
-                Trải nghiệm mua sắm
+                {t('shoppingExperience')}
               </p>
               <h2 className="text-[16px] font-[800] leading-tight text-[#1f2937]">
-                Nhanh, gọn và tinh tế hơn
+                {t('shoppingExperienceSub')}
               </h2>
             </div>
           </div>
@@ -117,14 +138,14 @@ const Header = () => {
                   to="/login"
                   className="text-[12px] font-[700] text-[#1f2937] transition hover:text-[#ff5252] sm:text-[13px]"
                 >
-                  Đăng nhập
+                  {t('login')}
                 </Link>
                 <span className="text-[12px] font-[600] text-gray-400">/</span>
                 <Link
                   to="/Register"
                   className="text-[12px] font-[700] text-[#1f2937] transition hover:text-[#ff5252] sm:text-[13px]"
                 >
-                  Đăng ký
+                  {t('register')}
                 </Link>
               </div>
             ) : (
@@ -200,43 +221,43 @@ const Header = () => {
                     </div>
                   </div>
 
-                  <Link to={'/my-account'} className="block w-full">
+                  <Link to="/my-account" className="block w-full">
                     <MenuItem onClick={handleClose} className="account-menu__item">
                       <span className="account-menu__itemIcon">
                         <FaRegUser className="text-[16px]" />
                       </span>
                       <span className="account-menu__itemText">
-                        <strong>Tài khoản của tôi</strong>
+                        <strong>{t('myAccount')}</strong>
                       </span>
                     </MenuItem>
                   </Link>
-                  <Link to={'/my-orders'} className="block w-full">
+                  <Link to="/my-orders" className="block w-full">
                     <MenuItem onClick={handleClose} className="account-menu__item">
                       <span className="account-menu__itemIcon">
                         <IoBagCheckOutline className="text-[16px]" />
                       </span>
                       <span className="account-menu__itemText">
-                        <strong>Đơn hàng</strong>
+                        <strong>{t('myOrders')}</strong>
                       </span>
                     </MenuItem>
                   </Link>
-                  <Link to={'/my-list'} className="block w-full">
+                  <Link to="/my-list" className="block w-full">
                     <MenuItem onClick={handleClose} className="account-menu__item">
                       <span className="account-menu__itemIcon">
                         <FaRegHeart className="text-[16px]" />
                       </span>
                       <span className="account-menu__itemText">
-                        <strong>Danh sách yêu thích</strong>
+                        <strong>{t('wishlist')}</strong>
                       </span>
                     </MenuItem>
                   </Link>
-                  <MenuItem onClick={Logout} className="account-menu__item account-menu__item--logout">
+                  <MenuItem onClick={logout} className="account-menu__item account-menu__item--logout">
                     <span className="account-menu__itemIcon">
                       <IoIosLogOut className="text-[16px]" />
                     </span>
                     <span className="account-menu__itemText">
-                      <strong>Đăng xuất</strong>
-                      <small>Thoát khỏi phiên đăng nhập này</small>
+                      <strong>{t('logout')}</strong>
+                      <small>{t('logoutHint')}</small>
                     </span>
                   </MenuItem>
                 </Menu>
@@ -248,7 +269,7 @@ const Header = () => {
               <CartBadge badgeContent={5} color="primary" overlap="circular" />
             </IconButton>
 
-            <Link to={`/my-list`}>
+            <Link to="/my-list">
               <IconButton className="!h-[34px] !min-w-[34px] !w-[34px] sm:!h-[38px] sm:!min-w-[38px] sm:!w-[38px] !rounded-full !border !border-[rgba(255,82,82,0.14)] !bg-white hover:!bg-[#fff4ef]">
                 <FaRegHeart size={15} className="text-gray-700" />
                 <CartBadge

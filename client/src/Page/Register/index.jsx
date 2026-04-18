@@ -63,19 +63,19 @@ const Register = () => {
     setIsLoading(true);
 
     if (formFields.name === '') {
-      context.alertBox('error', 'Vui lòng nhập họ tên');
+      context.alertBox('error', context.t('alertEnterFullName'));
       setIsLoading(false);
       return false;
     }
 
     if (formFields.email === '') {
-      context.alertBox('error', 'Vui lòng nhập email');
+      context.alertBox('error', context.t('alertEnterEmail'));
       setIsLoading(false);
       return false;
     }
 
     if (formFields.password === '') {
-      context.alertBox('error', 'Vui lòng nhập mật khẩu');
+      context.alertBox('error', context.t('alertEnterPassword'));
       setIsLoading(false);
       return false;
     }
@@ -92,7 +92,7 @@ const Register = () => {
         });
         history('/Verify');
       } else {
-        context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
+        context.alertBox('error', res?.message || context.t('alertGenericError'));
         setIsLoading(false);
       }
     });
@@ -115,7 +115,7 @@ const Register = () => {
           context.setIsLogin(true);
           history('/');
         } else {
-          context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
+          context.alertBox('error', res?.message || context.t('alertGenericError'));
           setIsLoading(false);
         }
       })
@@ -134,36 +134,30 @@ const Register = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.12),transparent_24%)]" />
             <div className="relative z-10">
               <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-[700] uppercase tracking-[0.14em] text-white/90">
-                Tạo tài khoản
+                {context.t('createAccount')}
               </span>
               <h1 className="mt-4 max-w-[390px] text-[28px] font-[800] leading-tight md:text-[36px]">
-                Tạo tài khoản để lưu sản phẩm bạn yêu thích.
+                {context.t('registerHeroTitle')}
               </h1>
               <p className="mt-3 max-w-[430px] text-[14px] leading-6 text-white/80">
-                Đăng ký một lần để thanh toán nhanh hơn, lưu danh sách yêu thích và theo dõi đơn hàng dễ dàng.
+                {context.t('registerHeroText')}
               </p>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <HiOutlineSparkles className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Cá nhân hóa</h3>
-                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Trải nghiệm mua sắm gọn gàng hơn theo tài khoản của bạn.
-                  </p>
+                  <h3 className="mt-3 text-[14px] font-[700]">{context.t('personalized')}</h3>
+                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">{context.t('personalizedHint')}</p>
                 </div>
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiHeart className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Sẵn sàng lưu yêu thích</h3>
-                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Lưu sản phẩm ưa thích và xem lại bất cứ lúc nào.
-                  </p>
+                  <h3 className="mt-3 text-[14px] font-[700]">{context.t('saveFavorites')}</h3>
+                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">{context.t('saveFavoritesHint')}</p>
                 </div>
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiGift className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Ưu đãi thành viên</h3>
-                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Nhận ưu đãi, cập nhật đơn hàng và hỗ trợ nhanh hơn.
-                  </p>
+                  <h3 className="mt-3 text-[14px] font-[700]">{context.t('memberDeals')}</h3>
+                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">{context.t('memberDealsHint')}</p>
                 </div>
               </div>
             </div>
@@ -173,14 +167,12 @@ const Register = () => {
             <div className="mx-auto max-w-[460px]">
               <div className="mb-7">
                 <p className="mb-2 text-[12px] font-[700] uppercase tracking-[0.16em] text-[#ff5252]">
-                  Thành viên mới
+                  {context.t('newMember')}
                 </p>
                 <h2 className="text-[28px] font-[800] leading-tight text-[#1f2937] md:text-[30px]">
-                  Đăng ký tài khoản
+                  {context.t('registerTitle')}
                 </h2>
-                <p className="mb-0 mt-3 text-[13px] leading-6 text-[#6b7280]">
-                  Điền thông tin bên dưới để tạo tài khoản và tiếp tục xác minh OTP.
-                </p>
+                <p className="mb-0 mt-3 text-[13px] leading-6 text-[#6b7280]">{context.t('registerText')}</p>
               </div>
 
               <form className="w-full" onSubmit={handleSubmit}>
@@ -191,7 +183,7 @@ const Register = () => {
                     name="name"
                     value={formFields.name}
                     disabled={isLoading}
-                    label="Họ tên*"
+                    label={context.t('fullName')}
                     variant="outlined"
                     className="w-full"
                     onChange={onChangeInput}
@@ -221,7 +213,7 @@ const Register = () => {
                     name="password"
                     value={formFields.password}
                     disabled={isLoading}
-                    label="Mật khẩu*"
+                    label={context.t('password')}
                     variant="outlined"
                     className="w-full"
                     onChange={onChangeInput}
@@ -239,17 +231,17 @@ const Register = () => {
                   </Button>
                 </div>
 
-                <div className="mb-4 flex items-center w-full">
+                <div className="mb-4 flex w-full items-center">
                   <Button type="submit" disabled={!valideValue} className="bg-org flex w-full gap-3 !text-[16px]">
-                    {isLoading === true ? <CircularProgress color="inherit" /> : 'Tạo tài khoản'}
+                    {isLoading === true ? <CircularProgress color="inherit" /> : context.t('createMyAccount')}
                   </Button>
                 </div>
 
                 <div className="mb-5 text-center">
                   <p className="mb-0 text-[13px] text-[#6b7280]">
-                    Đã có tài khoản?{' '}
-                    <Link className="text-primary text-[14px] font-[700]" to={'/Login'}>
-                      Đăng nhập
+                    {context.t('haveAccount')}{' '}
+                    <Link className="text-primary text-[14px] font-[700]" to="/Login">
+                      {context.t('login')}
                     </Link>
                   </p>
                 </div>
@@ -260,7 +252,7 @@ const Register = () => {
                   </div>
                   <div className="relative flex justify-center">
                     <span className="bg-[#fff8f5] px-4 text-[13px] font-[600] text-[#6b7280]">
-                      Hoặc tiếp tục với
+                      {context.t('orContinueWith')}
                     </span>
                   </div>
                 </div>
@@ -272,7 +264,7 @@ const Register = () => {
                   onClick={authWithGoogle}
                 >
                   <FcGoogle className="text-[22px]" />
-                  Đăng ký với Google
+                  {context.t('registerWithGoogle')}
                 </Button>
               </form>
             </div>

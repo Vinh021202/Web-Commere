@@ -31,124 +31,119 @@ const Footer = () => {
             <div className="grid gap-3 border-b border-[rgba(123,86,61,0.12)] pb-6 md:grid-cols-2 xl:grid-cols-5">
               <div className="soft-card group flex flex-col items-center justify-center p-4 text-center">
                 <LiaShippingFastSolid className="text-[34px] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#ff5252]" />
-                <h3 className="mt-2.5 text-[15px] font-[600]">Miễn phí vận chuyển</h3>
-                <p className="text-[12px] font-[500]">Áp dụng cho đơn hàng từ 100$</p>
+                <h3 className="mt-2.5 text-[15px] font-[600]">{context?.t('freeShipping')}</h3>
+                <p className="text-[12px] font-[500]">{context?.t('freeShippingRule')}</p>
               </div>
 
               <div className="soft-card group flex flex-col items-center justify-center p-4 text-center">
                 <PiKeyReturn className="text-[34px] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#ff5252]" />
-                <h3 className="mt-2.5 text-[15px] font-[600]">Đổi trả 30 ngày</h3>
-                <p className="text-[12px] font-[500]">Hỗ trợ đổi sản phẩm linh hoạt</p>
+                <h3 className="mt-2.5 text-[15px] font-[600]">{context?.t('return30')}</h3>
+                <p className="text-[12px] font-[500]">{context?.t('return30Hint')}</p>
               </div>
 
               <div className="soft-card group flex flex-col items-center justify-center p-4 text-center">
                 <BsWallet2 className="text-[34px] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#ff5252]" />
-                <h3 className="mt-2.5 text-[15px] font-[600]">Thanh toán an toan</h3>
-                <p className="text-[12px] font-[500]">Chấp nhận nhiều loại thẻ</p>
+                <h3 className="mt-2.5 text-[15px] font-[600]">{context?.t('securePayment')}</h3>
+                <p className="text-[12px] font-[500]">{context?.t('securePaymentHint')}</p>
               </div>
 
               <div className="soft-card group flex flex-col items-center justify-center p-4 text-center">
                 <LiaGiftSolid className="text-[34px] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#ff5252]" />
-                <h3 className="mt-2.5 text-[15px] font-[600]">Quà tặng đặc biệt</h3>
-                <p className="text-[12px] font-[500]">Ưu đãi cho đơn hàng đầu tiên</p>
+                <h3 className="mt-2.5 text-[15px] font-[600]">{context?.t('specialGift')}</h3>
+                <p className="text-[12px] font-[500]">{context?.t('specialGiftHint')}</p>
               </div>
 
               <div className="soft-card group flex flex-col items-center justify-center p-4 text-center">
                 <BiSupport className="text-[34px] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#ff5252]" />
-                <h3 className="mt-2.5 text-[15px] font-[600]">Hỗ trợ 24/7</h3>
-                <p className="text-[12px] font-[500]">Liên hệ bất cứ lúc nào</p>
+                <h3 className="mt-2.5 text-[15px] font-[600]">{context?.t('support247')}</h3>
+                <p className="text-[12px] font-[500]">{context?.t('support247Hint')}</p>
               </div>
             </div>
 
             <div className="footer flex flex-col gap-6 py-6 xl:flex-row">
               <div className="part1 xl:w-[28%] xl:border-r xl:border-[rgba(123,86,61,0.12)] xl:pr-6">
-                <span className="eyebrow mb-4">Liên hệ</span>
-                <h2 className="section-heading mb-3 text-[17px]">Kết nối với chúng tôi</h2>
+                <span className="eyebrow mb-4">{context?.t('contact')}</span>
+                <h2 className="section-heading mb-3 text-[17px]">{context?.t('connectWithUs')}</h2>
                 <p className="pb-4 text-[13px] font-[400]">
                   ECommerce-Shoping - Mega Super Store <br /> 507 -Union Trade Centre Việt Nam
                 </p>
-                <Link className="link" to={'mailto:someone@example.com'}>
+                <Link className="link" to="mailto:someone@example.com">
                   quocvinhtran.0212@gmail.com
                 </Link>
-                <span className="text-primary mt-3 mb-4 block w-full text-[22px] font-[700]">
+                <span className="text-primary mb-4 mt-3 block w-full text-[22px] font-[700]">
                   (+84) 9465-65-316
                 </span>
 
                 <div className="soft-card flex items-center gap-3 p-3.5">
                   <MdChatBubbleOutline className="text-primary text-[34px]" />
                   <span className="text-[16px] font-[700]">
-                    Trò chuyện trực tuyến <br /> Nhận hỗ trợ nhanh
+                    {context?.t('liveChat')} <br /> {context?.t('liveChatHint')}
                   </span>
                 </div>
               </div>
 
               <div className="part2 flex xl:w-[37%] xl:pl-3">
                 <div className="part2_col1 w-[50%]">
-                  <h2 className="mb-3 text-[17px] font-[600]">Sản phẩm</h2>
+                  <h2 className="mb-3 text-[17px] font-[600]">{context?.t('products')}</h2>
                   <ul className="list">
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Giá giảm mạnh</Link>
+                      <Link to="/" className="link">{context?.t('deals')}</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Sản phẩm mới</Link>
+                      <Link to="/" className="link">{context?.t('newProducts')}</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Bán chạy</Link>
+                      <Link to="/" className="link">{context?.t('bestSellers')}</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Liên hệ</Link>
+                      <Link to="/" className="link">{context?.t('contactUs')}</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Sơ đồ trang</Link>
+                      <Link to="/" className="link">{context?.t('sitemap')}</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Cửa hàng</Link>
+                      <Link to="/" className="link">{context?.t('store')}</Link>
                     </li>
                   </ul>
                 </div>
 
                 <div className="part2_col2 w-[50%]">
-                  <h2 className="mb-3 text-[17px] font-[600]">Về chúng tôi</h2>
+                  <h2 className="mb-3 text-[17px] font-[600]">{context?.t('aboutUs')}</h2>
                   <ul className="list">
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Giao hàng</Link>
+                      <Link to="/" className="link">{context?.t('shipping')}</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Thông báo pháp lý</Link>
+                      <Link to="/" className="link">{context?.t('legalNotice')}</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Điều khoản sử dụng</Link>
+                      <Link to="/" className="link">{context?.t('termsOfUse')}</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Giới thiệu</Link>
+                      <Link to="/" className="link">{context?.t('about')}</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Thanh toán an toan</Link>
+                      <Link to="/" className="link">{context?.t('securePayment')}</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/login'} className="link">Đăng nhập</Link>
+                      <Link to="/login" className="link">{context?.t('login')}</Link>
                     </li>
                   </ul>
                 </div>
               </div>
 
               <div className="part3 flex flex-col xl:w-[35%] xl:pl-6 xl:pr-3">
-                <h2 className="mb-3 text-[17px] font-[600]">Đăng ký nhận bản tin</h2>
-                <p className="text-[13px]">
-                  Đăng ký bản tin mới nhất để nhận thông báo ưu đãi đặc biệt.
-                </p>
+                <h2 className="mb-3 text-[17px] font-[600]">{context?.t('newsletterTitle')}</h2>
+                <p className="text-[13px]">{context?.t('newsletterHint')}</p>
                 <form className="soft-card mt-4 p-4">
                   <input
                     type="text"
                     className="mb-4 h-[44px] w-full rounded-full border border-[rgba(255,82,82,0.14)] bg-white px-4 outline-none focus:border-[rgba(255,82,82,0.5)]"
-                    placeholder="Nhập địa chỉ email"
+                    placeholder={context?.t('emailPlaceholder')}
                   />
-                  <Button className="bg-org">ĐĂNG KÝ</Button>
+                  <Button className="bg-org">{context?.t('subscribe')}</Button>
 
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label="Tôi đồng ý với điều khoản sử dụng và chính sách bảo mật"
-                  />
+                  <FormControlLabel control={<Checkbox />} label={context?.t('newsletterConsent')} />
                 </form>
               </div>
             </div>
@@ -161,7 +156,7 @@ const Footer = () => {
           <ul className="flex items-center gap-2">
             <li className="list-none">
               <Link
-                to={'/'}
+                to="/"
                 target="_blank"
                 className="group flex h-[34px] w-[34px] items-center justify-center rounded-full border border-[rgba(255,82,82,0.12)] bg-white/80 transition-all hover:bg-[#ff5252]"
               >
@@ -170,7 +165,7 @@ const Footer = () => {
             </li>
             <li className="list-none">
               <Link
-                to={'/'}
+                to="/"
                 target="_blank"
                 className="group flex h-[34px] w-[34px] items-center justify-center rounded-full border border-[rgba(255,82,82,0.12)] bg-white/80 transition-all hover:bg-[#ff5252]"
               >
@@ -179,7 +174,7 @@ const Footer = () => {
             </li>
             <li className="list-none">
               <Link
-                to={'/'}
+                to="/"
                 target="_blank"
                 className="group flex h-[34px] w-[34px] items-center justify-center rounded-full border border-[rgba(255,82,82,0.12)] bg-white/80 transition-all hover:bg-[#ff5252]"
               >
@@ -188,7 +183,7 @@ const Footer = () => {
             </li>
             <li className="list-none">
               <Link
-                to={'/'}
+                to="/"
                 target="_blank"
                 className="group flex h-[34px] w-[34px] items-center justify-center rounded-full border border-[rgba(255,82,82,0.12)] bg-white/80 transition-all hover:bg-[#ff5252]"
               >
@@ -212,25 +207,24 @@ const Footer = () => {
       <Drawer
         open={context.openCartPanel}
         onClose={context.toggleCartPanel(false)}
-        anchor={'right'}
+        anchor="right"
         className="cartPanel"
       >
         <div className="flex h-full min-h-0 flex-col">
           <div className="flex items-center justify-between gap-3 overflow-hidden border-b border-[rgba(0,0,0,0.1)] px-4 py-3">
-            <h4>Giỏ hàng ({context?.cartData?.length || 0})</h4>
-            <IoCloseSharp
-              className="cursor-pointer text-[20px]"
-              onClick={context.toggleCartPanel(false)}
-            />
+            <h4>
+              {context?.t('cartTitle')} ({context?.cartData?.length || 0})
+            </h4>
+            <IoCloseSharp className="cursor-pointer text-[20px]" onClick={context.toggleCartPanel(false)} />
           </div>
           {context?.cartData?.length ? (
             <CartPanel data={context?.cartData} onClose={context.toggleCartPanel(false)} />
           ) : (
             <div className="flex flex-1 flex-col items-center justify-center gap-5 px-6 text-center">
-              <img src="/cartfoot.png" className="w-[250px]" alt="Giỏ hàng trống" />
-              <h4>Giỏ hàng của bạn đang trống</h4>
+              <img src="/cartfoot.png" className="w-[250px]" alt={context?.t('emptyCart')} />
+              <h4>{context?.t('emptyCart')}</h4>
               <Button className="bg-org btn-sm" onClick={context.toggleCartPanel(false)}>
-                Tiếp tục mua sắm
+                {context?.t('continueShopping')}
               </Button>
             </div>
           )}
@@ -240,15 +234,12 @@ const Footer = () => {
       <Drawer
         open={context?.openAddressPanel}
         onClose={context?.toggleAddressPanel(false)}
-        anchor={'right'}
+        anchor="right"
         className="addressPanel"
       >
         <div className="flex items-center justify-between gap-3 overflow-hidden border-b border-[rgba(0,0,0,0.1)] px-4 py-3">
-          <h4>{context?.addressMode === 'add' ? 'Thêm' : 'Chỉnh sửa'} địa chỉ giao hàng</h4>
-          <IoCloseSharp
-            className="cursor-pointer text-[20px]"
-            onClick={context?.toggleAddressPanel(false)}
-          />
+          <h4>{context?.addressMode === 'add' ? context?.t('addAddress') : context?.t('editAddress')}</h4>
+          <IoCloseSharp className="cursor-pointer text-[20px]" onClick={context?.toggleAddressPanel(false)} />
         </div>
 
         <AddAress />
@@ -266,17 +257,14 @@ const Footer = () => {
         <DialogContent>
           <div className="productDetailsModalContainer relative flex w-full items-center">
             <Button className="!absolute right-[15px] top-[15px] !h-[40px] !min-w-[40px] !w-[40px] !rounded-full !bg-[#f1f1f1] !text-[#000]">
-              <IoCloseSharp
-                className="text-[20px]"
-                onClick={context?.handleCloseProductDetailsModal}
-              />
+              <IoCloseSharp className="text-[20px]" onClick={context?.handleCloseProductDetailsModal} />
             </Button>
             {context?.openProductDetailsModal?.item?.length !== 0 && (
               <>
                 <div className="col1 w-[40%] px-3 py-8">
                   <ProductZoom images={context?.openProductDetailsModal?.item?.images} />
                 </div>
-                <div className="productContainer col2 w-[60%] py-8 px-8 pr-16">
+                <div className="productContainer col2 w-[60%] px-8 py-8 pr-16">
                   <ProductDetailsComponent item={context?.openProductDetailsModal?.item} />
                 </div>
               </>

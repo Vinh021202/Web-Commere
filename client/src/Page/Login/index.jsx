@@ -49,11 +49,11 @@ const Login = () => {
 
   const forgotPassword = () => {
     if (formFields.email === '') {
-      context.alertBox('error', 'Vui lòng nhập email');
+      context.alertBox('error', context.t('alertEnterEmail'));
       return false;
     }
 
-    context.alertBox('success', `Mã OTP đã được gửi tới ${formFields.email}`);
+    context.alertBox('success', context.t('alertOtpSent', { email: formFields.email }));
     localStorage.setItem('userEmail', formFields.email);
     localStorage.setItem('actionType', 'forgot-password');
 
@@ -64,7 +64,7 @@ const Login = () => {
         context.alertBox('success', res?.message);
         histoty('/verify');
       } else {
-        context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
+        context.alertBox('error', res?.message || context.t('alertGenericError'));
       }
     });
   };
@@ -84,13 +84,13 @@ const Login = () => {
     setIsLoading(true);
 
     if (formFields.email === '') {
-      context.alertBox('error', 'Vui lòng nhập email');
+      context.alertBox('error', context.t('alertEnterEmail'));
       setIsLoading(false);
       return false;
     }
 
     if (formFields.password === '') {
-      context.alertBox('error', 'Vui lòng nhập mật khẩu');
+      context.alertBox('error', context.t('alertEnterPassword'));
       setIsLoading(false);
       return false;
     }
@@ -109,7 +109,7 @@ const Login = () => {
         context.setIsLogin(true);
         histoty('/');
       } else {
-        context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
+        context.alertBox('error', res?.message || context.t('alertGenericError'));
         setIsLoading(false);
       }
     });
@@ -132,7 +132,7 @@ const Login = () => {
           context.setIsLogin(true);
           histoty('/');
         } else {
-          context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
+          context.alertBox('error', res?.message || context.t('alertGenericError'));
           setIsLoading(false);
         }
       })
@@ -151,36 +151,30 @@ const Login = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.14),transparent_24%)]" />
             <div className="relative z-10">
               <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-[700] uppercase tracking-[0.14em] text-white/90">
-                Chào mừng trở lại
+                {context.t('welcomeBack')}
               </span>
               <h1 className="mt-4 max-w-[380px] text-[28px] font-[800] leading-tight md:text-[36px]">
-                Đăng nhập để tiếp tục mua sắm nhanh hơn.
+                {context.t('loginHeroTitle')}
               </h1>
               <p className="mt-3 max-w-[430px] text-[14px] leading-6 text-white/80">
-                Theo dõi đơn hàng, lưu danh sách yêu thích và thanh toán nhanh chỉ trong vài bước.
+                {context.t('loginHeroText')}
               </p>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <HiOutlineShieldCheck className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">An toàn</h3>
-                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Bảo mật tài khoản và phiên đăng nhập tốt hơn.
-                  </p>
+                  <h3 className="mt-3 text-[14px] font-[700]">{context.t('safe')}</h3>
+                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">{context.t('safeHint')}</p>
                 </div>
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiTruck className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Theo dõi đơn</h3>
-                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Xem tiến trình giao hàng ngay trong tài khoản.
-                  </p>
+                  <h3 className="mt-3 text-[14px] font-[700]">{context.t('trackOrder')}</h3>
+                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">{context.t('trackOrderHint')}</p>
                 </div>
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiHeadphones className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Hỗ trợ nhanh</h3>
-                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Dễ liên hệ hỗ trợ khi cần đổi trả hoặc quên mật khẩu.
-                  </p>
+                  <h3 className="mt-3 text-[14px] font-[700]">{context.t('fastSupport')}</h3>
+                  <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">{context.t('fastSupportHint')}</p>
                 </div>
               </div>
             </div>
@@ -190,14 +184,12 @@ const Login = () => {
             <div className="mx-auto max-w-[460px]">
               <div className="mb-7">
                 <p className="mb-2 text-[12px] font-[700] uppercase tracking-[0.16em] text-[#ff5252]">
-                  Đăng nhập tài khoản
+                  {context.t('loginAccountEyebrow')}
                 </p>
                 <h2 className="text-[28px] font-[800] leading-tight text-[#1f2937] md:text-[30px]">
-                  Đăng nhập vào tài khoản
+                  {context.t('loginAccountTitle')}
                 </h2>
-                <p className="mb-0 mt-3 text-[13px] leading-6 text-[#6b7280]">
-                  Nhập email và mật khẩu để truy cập lịch sử mua hàng, danh sách yêu thích và thông tin giao hàng.
-                </p>
+                <p className="mb-0 mt-3 text-[13px] leading-6 text-[#6b7280]">{context.t('loginAccountText')}</p>
               </div>
 
               <form className="w-full" onSubmit={handleSubmit}>
@@ -220,7 +212,7 @@ const Login = () => {
                   <TextField
                     type={isShowPassWord === false ? 'password' : 'text'}
                     id="password"
-                    label="Mật khẩu*"
+                    label={context.t('password')}
                     variant="outlined"
                     className="w-full"
                     name="password"
@@ -250,21 +242,21 @@ const Login = () => {
                     }}
                     className="cursor-pointer text-[14px] font-[700] text-[#ff5252] transition hover:text-[#1f2937]"
                   >
-                    Quên mật khẩu?
+                    {context.t('forgotPassword')}
                   </a>
                 </div>
 
-                <div className="mb-4 flex items-center w-full">
+                <div className="mb-4 flex w-full items-center">
                   <Button type="submit" disabled={!valideValue} className="bg-org flex w-full gap-3 !text-[16px]">
-                    {isLoading === true ? <CircularProgress color="inherit" /> : 'Đăng nhập'}
+                    {isLoading === true ? <CircularProgress color="inherit" /> : context.t('login')}
                   </Button>
                 </div>
 
                 <div className="mb-5 text-center">
                   <p className="mb-0 text-[13px] text-[#6b7280]">
-                    Chưa có tài khoản?{' '}
-                    <Link className="text-primary text-[14px] font-[700]" to={'/register'}>
-                      Đăng ký
+                    {context.t('noAccount')}{' '}
+                    <Link className="text-primary text-[14px] font-[700]" to="/register">
+                      {context.t('register')}
                     </Link>
                   </p>
                 </div>
@@ -275,7 +267,7 @@ const Login = () => {
                   </div>
                   <div className="relative flex justify-center">
                     <span className="bg-[#fff8f5] px-4 text-[13px] font-[600] text-[#6b7280]">
-                      Hoặc tiếp tục với
+                      {context.t('orContinueWith')}
                     </span>
                   </div>
                 </div>
@@ -287,7 +279,7 @@ const Login = () => {
                   onClick={authWithGoogle}
                 >
                   <FcGoogle className="text-[22px]" />
-                  Đăng nhập với Google
+                  {context.t('loginWithGoogle')}
                 </Button>
               </form>
             </div>

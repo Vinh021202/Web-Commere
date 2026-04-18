@@ -31,27 +31,33 @@ const Home = () => {
 
   const context = useContext(MyContext);
 
-  const benefitChips = ['Giao nhanh toàn quốc', 'Thiết kế chọn lọc', 'Giá tốt mỗi tuần'];
+  const benefitChips = [
+    context?.t('benefitFastShipping'),
+    context?.t('benefitCurated'),
+    context?.t('benefitWeeklyDeals'),
+  ];
+
   const insightCards = [
     {
       icon: <HiOutlineSparkles />,
-      title: 'Bộ sưu tập mới',
+      title: context?.t('insightNewCollection'),
       value: `${productsData?.length || 0}+`,
-      description: 'Những sản phẩm mới được làm nổi bật để khách hàng khám phá nhanh hơn.',
+      description: context?.t('insightNewCollectionDesc'),
     },
     {
       icon: <HiOutlineChartBar />,
-      title: 'Lựa chọn nổi bật',
+      title: context?.t('insightFeatured'),
       value: `${featuredProducts?.length || 0}`,
-      description: 'Nhóm sản phẩm chủ lực giúp tăng độ tin cậy và khả năng chuyển đổi.',
+      description: context?.t('insightFeaturedDesc'),
     },
     {
       icon: <HiOutlineShieldCheck />,
-      title: 'Bài viết thương hiệu',
+      title: context?.t('insightBrandBlog'),
       value: `${blogData?.length || 0}`,
-      description: 'Nội dung blog bổ sung chiều sâu để trang chủ không chỉ tập trung vào bán hàng.',
+      description: context?.t('insightBrandBlogDesc'),
     },
   ];
+
   const spotlightSideCards =
     featuredProducts?.filter((item) => item?.images?.[0] || item?.bannerimages?.[0]).slice(0, 2) || [];
 
@@ -110,7 +116,7 @@ const Home = () => {
     });
   };
 
-  const activeCategory = context?.catData?.[value]?.name || 'Danh mục nổi bật';
+  const activeCategory = context?.catData?.[value]?.name || context?.t('featuredTitle');
 
   return (
     <>
@@ -122,15 +128,9 @@ const Home = () => {
           <div className="section-shell subtle-grid home-hero overflow-hidden px-4 py-5 md:px-8 md:py-8 xl:px-10 xl:py-10">
             <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start xl:grid-cols-[1.15fr_0.85fr]">
               <div className="relative">
-                <span className="eyebrow mb-5">B? s?u t?p mua xuan 2026</span>
-                <h1 className="section-heading home-hero-title max-w-[760px]">
-                  Trang chủ mới gọn hơn, sang hơn và dẫn mắt tốt hơn cho từng nhóm sản phẩm.
-                </h1>
-                <p className="muted-copy mt-5 max-w-[650px] text-[15px] leading-7">
-                  Bố cục được sắp lại theo nhịp rõ ràng hơn: phần mở đầu nhấn vào giá trị cốt lõi,
-                  danh mục nổi bật nằm gần khu vực mua sắm chính và các cụm banner, blog được nhóm
-                  lại để trang chủ sáng hơn nhưng vẫn giàu điểm nhấn.
-                </p>
+                <span className="eyebrow mb-5">{context?.t('springCollection')}</span>
+                <h1 className="section-heading home-hero-title max-w-[760px]">{context?.t('homeHeroTitle')}</h1>
+                <p className="muted-copy mt-5 max-w-[650px] text-[15px] leading-7">{context?.t('homeHeroText')}</p>
 
                 <div className="mt-5 flex flex-wrap gap-2.5">
                   {benefitChips.map((chip) => (
@@ -145,25 +145,19 @@ const Home = () => {
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   <div className="soft-card home-mini-stat p-4">
-                    <span className="home-mini-stat__label">Danh mục</span>
+                    <span className="home-mini-stat__label">{context?.t('statCategories')}</span>
                     <strong>{context?.catData?.length || 0}</strong>
-                    <p className="mb-0 mt-2 text-[13px] leading-6">
-                      Điều hướng nhanh đến các nhóm hàng quan trọng nhất ngay từ đầu trang.
-                    </p>
+                    <p className="mb-0 mt-2 text-[13px] leading-6">{context?.t('statCategoriesHint')}</p>
                   </div>
                   <div className="soft-card home-mini-stat p-4">
-                    <span className="home-mini-stat__label">Ưu tiên</span>
-                    <strong>Chuyển đổi</strong>
-                    <p className="mb-0 mt-2 text-[13px] leading-6">
-                      Mỗi khối đều được chia khoảng thở để banner, slider và CTA không bị dồn chật.
-                    </p>
+                    <span className="home-mini-stat__label">{context?.t('statPriority')}</span>
+                    <strong>{context?.t('statPriorityValue')}</strong>
+                    <p className="mb-0 mt-2 text-[13px] leading-6">{context?.t('statPriorityHint')}</p>
                   </div>
                   <div className="soft-card home-mini-stat p-4">
-                    <span className="home-mini-stat__label">Cảm giác</span>
-                    <strong>Hiện đại</strong>
-                    <p className="mb-0 mt-2 text-[13px] leading-6">
-                      Giao diện sáng, mềm và có chất biên tập hơn trên cả desktop lẫn mobile.
-                    </p>
+                    <span className="home-mini-stat__label">{context?.t('statFeeling')}</span>
+                    <strong>{context?.t('statFeelingValue')}</strong>
+                    <p className="mb-0 mt-2 text-[13px] leading-6">{context?.t('statFeelingHint')}</p>
                   </div>
                 </div>
               </div>
@@ -183,14 +177,11 @@ const Home = () => {
                 ))}
 
                 <div className="home-editorial-panel">
-                  <span className="home-editorial-panel__tag">Ghi chu b? c?c</span>
+                  <span className="home-editorial-panel__tag">{context?.t('layoutNote')}</span>
                   <h3 className="mt-4 text-[24px] font-[800] leading-[1.2] text-white md:text-[26px] xl:text-[28px]">
-                    Một mặt tiền rõ nhịp giúp người dùng thấy nhanh đâu là thứ đáng bấm.
+                    {context?.t('layoutTitle')}
                   </h3>
-                  <p className="mb-0 mt-3 max-w-[420px] text-[14px] leading-7 text-white/78">
-                    Hero, tab danh mục, cụm ưu đãi và blog được chia thành các lớp rõ ràng hơn để
-                    trải nghiệm lướt trang vừa nhẹ, vừa có cảm giác được tuyển chọn kỹ.
-                  </p>
+                  <p className="mb-0 mt-3 max-w-[420px] text-[14px] leading-7 text-white/78">{context?.t('layoutText')}</p>
                 </div>
               </div>
             </div>
@@ -203,11 +194,9 @@ const Home = () => {
           <div className="section-shell px-4 py-5 md:px-8 md:py-7 xl:px-10 xl:py-8">
             <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div className="leftSec">
-                <span className="eyebrow mb-4">Bán chạy</span>
-                <h2 className="section-heading">Sản phẩm phổ biến</h2>
-                <p className="mb-0 mt-2 text-[14px] font-[400]">
-                  Những danh mục đang được xem nhiều nhất và có khả năng chuyển đổi tốt trong tuần này.
-                </p>
+                <span className="eyebrow mb-4">{context?.t('popularEyebrow')}</span>
+                <h2 className="section-heading">{context?.t('popularTitle')}</h2>
+                <p className="mb-0 mt-2 text-[14px] font-[400]">{context?.t('popularText')}</p>
               </div>
 
               <div className="rightSec w-full lg:w-[58%]">
@@ -216,16 +205,12 @@ const Home = () => {
                   onChange={handleChange}
                   variant="scrollable"
                   scrollButtons="auto"
-                aria-label="tab sản phẩm phổ biến"
+                  aria-label={context?.t('popularTabsAria')}
                   className="home-tabs"
                 >
                   {context?.catData?.length !== 0 &&
                     context?.catData?.map((cat, index) => (
-                      <Tab
-                        key={cat?._id || index}
-                        label={cat?.name}
-                        onClick={() => filterByCatId(cat?._id)}
-                      />
+                      <Tab key={cat?._id || index} label={cat?.name} onClick={() => filterByCatId(cat?._id)} />
                     ))}
                 </Tabs>
               </div>
@@ -233,15 +218,13 @@ const Home = () => {
 
             <div className="mb-6 flex flex-wrap items-center gap-3">
               <span className="rounded-full bg-[#fff1eb] px-4 py-2 text-[12px] font-[700] uppercase tracking-[0.08em] text-[#a65434]">
-                Đang xem
+                {context?.t('viewing')}
               </span>
               <span className="text-[15px] font-[700] text-[#1f2937]">{activeCategory}</span>
             </div>
 
             {popularproductsData?.length === 0 && <ProductLoading />}
-            {popularproductsData?.length !== 0 && (
-              <ProductsSlider items={6} data={popularproductsData} />
-            )}
+            {popularproductsData?.length !== 0 && <ProductsSlider items={6} data={popularproductsData} />}
           </div>
         </div>
       </section>
@@ -251,19 +234,14 @@ const Home = () => {
           <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6 xl:px-7 xl:py-7">
             <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
-                <span className="eyebrow mb-4">Noi bat</span>
-                <h2 className="section-heading">Gợi ý được tuyển chọn để tăng chuyển đổi</h2>
+                <span className="eyebrow mb-4">{context?.t('featuredEyebrow')}</span>
+                <h2 className="section-heading">{context?.t('featuredTitle')}</h2>
               </div>
-              <p className="muted-copy max-w-[420px] text-[14px] leading-7">
-                Cụm banner và slider được gom vào cùng một khối để người dùng lướt dễ hơn và nhìn rõ
-                ưu đãi nổi bật hơn.
-              </p>
+              <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('featuredText')}</p>
             </div>
 
             <div className="flex flex-col items-stretch gap-4 lg:flex-row lg:gap-5">
-              <div className="part1 w-full lg:w-[68%]">
-                {productsData?.length !== 0 && <HomeBannerV2 data={productsData} />}
-              </div>
+              <div className="part1 w-full lg:w-[68%]">{productsData?.length !== 0 && <HomeBannerV2 data={productsData} />}</div>
 
               <div className="part2 flex w-full flex-col gap-4 sm:grid sm:grid-cols-2 lg:w-[32%] lg:flex lg:grid-cols-none lg:flex-col lg:justify-between">
                 <BannerBoxV2
@@ -291,22 +269,16 @@ const Home = () => {
                   <LiaShippingFastSolid className="text-[34px]" />
                 </div>
                 <div>
-                  <span className="text-[13px] font-[700] uppercase tracking-[0.12em] text-[#ff5252]">
-                    Ưu đãi thành viên
-                  </span>
-                  <span className="block text-[22px] font-[800] uppercase text-[#1f2937]">
-                    Miễn phí vận chuyển
-                  </span>
+                  <span className="text-[13px] font-[700] uppercase tracking-[0.12em] text-[#ff5252]">{context?.t('memberOffer')}</span>
+                  <span className="block text-[22px] font-[800] uppercase text-[#1f2937]">{context?.t('freeShippingLarge')}</span>
                 </div>
               </div>
 
               <div className="col2">
-                <p className="m-0 text-[15px] font-[500]">
-                  Miễn phí giao hàng cho đơn đầu tiên và mọi giỏ hàng từ 200 USD.
-                </p>
+                <p className="m-0 text-[15px] font-[500]">{context?.t('freeShippingText')}</p>
               </div>
 
-              <p className="m-0 text-[24px] font-bold text-[#1f2937]">Tu 200 USD</p>
+              <p className="m-0 text-[24px] font-bold text-[#1f2937]">{context?.t('from200Usd')}</p>
             </div>
 
             {bannerV1Data?.length !== 0 && <AdsBannerSliderV2 items={4} data={bannerV1Data} />}
@@ -319,12 +291,10 @@ const Home = () => {
           <div className="section-shell px-4 py-5 md:px-8 md:py-7 xl:px-10 xl:py-8">
             <div className="mb-2 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
-                <span className="eyebrow mb-4">Moi cap nhat</span>
-                <h2 className="section-heading">Sản phẩm mới nhat</h2>
+                <span className="eyebrow mb-4">{context?.t('latestEyebrow')}</span>
+                <h2 className="section-heading">{context?.t('latestTitle')}</h2>
               </div>
-              <p className="muted-copy max-w-[420px] text-[14px] leading-7">
-                Sản phẩm mới được ưu tiên hiển thị với khoảng thở rộng hơn và banner hỗ trợ ngay bên dưới.
-              </p>
+              <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('latestText')}</p>
             </div>
 
             {productsData?.length === 0 && <ProductLoading />}
@@ -340,12 +310,10 @@ const Home = () => {
           <div className="section-shell px-4 py-5 md:px-8 md:py-7 xl:px-10 xl:py-8">
             <div className="mb-2 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
-                <span className="eyebrow mb-4">Lua chon bien tap</span>
-                <h2 className="section-heading">Sản phẩm nổi bật</h2>
+                <span className="eyebrow mb-4">{context?.t('editorsChoiceEyebrow')}</span>
+                <h2 className="section-heading">{context?.t('editorsChoiceTitle')}</h2>
               </div>
-              <p className="muted-copy max-w-[420px] text-[14px] leading-7">
-                Nhóm nổi bật được tách riêng để tạo điểm nhấn rõ hơn và giữ cảm giác cao cấp hơn.
-              </p>
+              <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('editorsChoiceText')}</p>
             </div>
 
             {featuredProducts?.length !== 0 && <ProductsSlider items={6} data={featuredProducts} />}
@@ -360,37 +328,20 @@ const Home = () => {
             <div className="section-shell px-4 py-5 md:px-8 md:py-7 xl:px-10 xl:py-8">
               <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
-                  <span className="eyebrow mb-4">Tap chi</span>
-                  <h2 className="section-heading mb-0">Tu blog cua chung toi</h2>
+                  <span className="eyebrow mb-4">{context?.t('magazineEyebrow')}</span>
+                  <h2 className="section-heading mb-0">{context?.t('magazineTitle')}</h2>
                 </div>
-                <p className="muted-copy max-w-[420px] text-[14px] leading-7">
-                  Góc nội dung được làm mềm hơn để kết nối cảm hứng mua sắm với câu chuyện thương hiệu.
-                </p>
+                <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('magazineText')}</p>
               </div>
               <Swiper
                 slidesPerView={1.1}
                 spaceBetween={16}
                 breakpoints={{
-                  480: {
-                    slidesPerView: 1.35,
-                    spaceBetween: 16,
-                  },
-                  640: {
-                    slidesPerView: 2,
-                    spaceBetween: 18,
-                  },
-                  768: {
-                    slidesPerView: 2.4,
-                    spaceBetween: 20,
-                  },
-                  1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 24,
-                  },
-                  1280: {
-                    slidesPerView: 4,
-                    spaceBetween: 30,
-                  },
+                  480: { slidesPerView: 1.35, spaceBetween: 16 },
+                  640: { slidesPerView: 2, spaceBetween: 18 },
+                  768: { slidesPerView: 2.4, spaceBetween: 20 },
+                  1024: { slidesPerView: 3, spaceBetween: 24 },
+                  1280: { slidesPerView: 4, spaceBetween: 30 },
                 }}
                 navigation={true}
                 modules={[Navigation]}

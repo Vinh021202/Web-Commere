@@ -25,6 +25,7 @@ import MyAccount from './Page/MyAccount';
 import MyList from './Page/MyList';
 import Orders from './Page/Orders';
 import { fetchDataFromApi, postData } from './utils/api';
+import { translate } from './utils/i18n';
 import Address from './Page/MyAccount/address';
 import OrderSuccess from './Page/Orders/success';
 import OrderFailed from './Page/Orders/failed';
@@ -50,7 +51,22 @@ function App() {
   const [myListData, setMyListData] = useState([]);
   const [addressMode, setAddressMode] = useState('add');
   const [addressId, setAddressId] = useState('');
-  const [searchData , setSearchData ] = useState([]);
+  const [searchData, setSearchData] = useState([]);
+  const [language, setLanguage] = useState(() => localStorage.getItem('language') || 'vi');
+
+  useEffect(() => {
+    localStorage.setItem('language', language);
+    document.documentElement.lang = language;
+  }, [language]);
+
+  const t = (key, replacements) => translate(language, key, replacements);
+  const formatCurrency = (value) =>
+    new Intl.NumberFormat(language === 'en' ? 'en-US' : 'vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(Number(value || 0));
 
   // const handleClickOpenProductDetailsModal = () => {
   //   setOpenProductDetailsModal(true);
@@ -90,7 +106,7 @@ function App() {
           localStorage.removeItem('accesstoken');
           localStorage.removeItem('refreshToken');
 
-          alertBox('error', 'Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại');
+          alertBox('error', t('alertLoginExpired'));
 
           window.location.href = '/login';
         }
@@ -140,7 +156,7 @@ function App() {
 
   const addToCart = (product, userId, quantity) => {
     if (userId === undefined) {
-      alertBox('error', 'Bạn chưa đăng nhập, vui lòng đăng nhập trước');
+      alertBox('error', t('alertLoginRequired'));
 
       return false;
     }
@@ -227,6 +243,10 @@ function App() {
     addressId,
     searchData,
     setSearchData,
+    language,
+    setLanguage,
+    t,
+    formatCurrency,
   };
 
   return (

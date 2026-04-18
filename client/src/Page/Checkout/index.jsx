@@ -81,10 +81,10 @@ const Checkout = () => {
                 );
                 const respData = await resp.json();
                 if (respData.result === 'success' && respData.conversion_rates?.USD) {
-                  amountInUSD = parseFloat(
-                    (totalAmount * respData.conversion_rates.USD).toFixed(2)
-                  );
-                } else throw new Error('Invalid exchange rate');
+                  amountInUSD = parseFloat((totalAmount * respData.conversion_rates.USD).toFixed(2));
+                } else {
+                  throw new Error('Invalid exchange rate');
+                }
               } catch {
                 amountInUSD = parseFloat((totalAmount / 24000).toFixed(2));
               }
@@ -137,12 +137,12 @@ const Checkout = () => {
       const userId = context?.userData?._id || localStorage.getItem('userId');
 
       if (!userId) {
-        context?.alertBox('error', 'Không tìm thấy người dùng. Vui lòng đăng nhập lại.');
+        context?.alertBox('error', context.t('alertUserMissing'));
         return;
       }
 
       if (!context?.cartData?.length || context.cartData.length === 0) {
-        context?.alertBox('error', 'Giỏ hàng của bạn đang trống.');
+        context?.alertBox('error', context.t('alertCartEmpty'));
         return;
       }
 
@@ -176,12 +176,12 @@ const Checkout = () => {
       if (response.data.success) {
         await deleteData(`/api/cart/emptyCart/${userId}`);
         if (context?.getCartItems) await context.getCartItems();
-        context?.alertBox('success', 'Đơn hàng da duoc hoan tat!');
+        context?.alertBox('success', context.t('alertOrderCompleted'));
         histoty('/orders/success');
       }
     } catch (error) {
       console.error('Payment Error:', error);
-      context?.alertBox('error', 'Đã có lỗi xảy ra trong quá trình thanh toán.');
+      context?.alertBox('error', context.t('alertCheckoutError'));
     }
   };
 
@@ -202,7 +202,7 @@ const Checkout = () => {
     e.preventDefault();
 
     if (!selectedAddress) {
-      context?.alertBox('error', 'Vui lòng chọn địa chỉ giao hàng trước khi thanh toán.');
+      context?.alertBox('error', context.t('alertChooseAddress'));
       return;
     }
 
@@ -215,7 +215,7 @@ const Checkout = () => {
         : 0;
 
     if (numericTotal === 0) {
-      context?.alertBox('error', 'Giỏ hàng của bạn đang trống.');
+      context?.alertBox('error', context.t('alertCartEmpty'));
       return;
     }
 
@@ -250,14 +250,14 @@ const Checkout = () => {
       setShowPaymentModal(true);
     } catch (err) {
       console.error('Checkout error:', err);
-      context?.alertBox('error', 'Kh?ng th? kh?i t?o thanh to?n. Vui l?ng th? l?i.');
+      context?.alertBox('error', context.t('alertInitPayment'));
     }
   };
 
   const cashOnDeLivery = async (e) => {
     e.preventDefault();
     if (!selectedAddress) {
-      context?.alertBox('error', 'Vui lÃ²ng chá»n Ä‘á»‹a chá»‰ giao hÃ ng trÆ°á»›c khi thanh toÃ¡n.');
+      context?.alertBox('error', context.t('alertChooseAddress'));
       return;
     }
 
@@ -290,7 +290,7 @@ const Checkout = () => {
       const orderRes = await postData('/api/order/create', codOrderPayload);
 
       if (orderRes.success || orderRes.order) {
-        context?.alertBox('success', 'Đơn hàng tạo thành công! Thanh toán khi nhận hàng.');
+        context?.alertBox('success', context.t('alertOrderCreatedCod'));
         try {
           await deleteData(`/api/cart/emptyCart/${context?.userData?._id}`);
           context?.getCartItems();
@@ -300,11 +300,11 @@ const Checkout = () => {
           histoty('/orders/failed');
         }
       } else {
-        context?.alertBox('error', 'Có lỗi tạo đơn hàng. Vui lòng thử lại.');
+        context?.alertBox('error', context.t('alertOrderCreateFailed'));
       }
     } catch (err) {
       console.error('COD checkout error:', err);
-      context?.alertBox('error', 'C? l?i x?y ra. Vui l?ng th? l?i.');
+      context?.alertBox('error', context.t('alertTryAgain'));
     }
   };
 
@@ -317,11 +317,11 @@ const Checkout = () => {
         <div className="section-shell max-h-[calc(100vh-24px)] w-full max-w-[460px] overflow-y-auto px-4 py-4 sm:max-h-[calc(100vh-32px)] sm:max-w-[520px] sm:px-6 sm:py-6">
           <div className="mb-5 flex items-center justify-between gap-4 border-b border-[rgba(255,82,82,0.12)] pb-4">
             <div>
-              <span className="listing-stat__label">Secure payment</span>
-              <h3 className="mt-2 text-[20px] font-[800] text-[#201714] sm:text-[24px]">Complete your payment</h3>
+              <span className="listing-stat__label">{context.t('securePaymentBadge')}</span>
+              <h3 className="mt-2 text-[20px] font-[800] text-[#201714] sm:text-[24px]">{context.t('completePayment')}</h3>
             </div>
             <Button className="bg-org btn-border" onClick={onClose}>
-              Huy
+              {context.t('cancel')}
             </Button>
           </div>
           <Elements stripe={stripePromise} options={options}>
@@ -348,7 +348,7 @@ const Checkout = () => {
 
         if (error) {
           console.error('Payment confirmation error', error);
-          alert(error.message || 'Thanh to?n th?t b?i');
+          alert(error.message || context.t('alertPaymentFailed'));
         } else {
           try {
             if (orderPayload) {
@@ -358,7 +358,7 @@ const Checkout = () => {
               });
               console.log('Order created:', orderRes);
               if (orderRes.success || orderRes.order) {
-                alert('Thanh toán và tạo đơn hàng thành công!');
+                alert(context.t('alertPaymentSuccessCreateOrder'));
                 try {
                   await deleteData(`/api/cart/emptyCart/${context?.userData?._id}`);
                   context?.getCartItems();
@@ -368,20 +368,20 @@ const Checkout = () => {
                   histoty('/orders/failed');
                 }
               } else {
-              alert('Thanh to?n th?nh c?ng');
-            }
+                alert(context.t('alertPaymentSuccess'));
+              }
             } else {
-              alert('Thanh toÃ¡n thÃ nh cÃ´ng');
+              alert(context.t('alertPaymentSuccess'));
             }
           } catch (orderErr) {
             console.error('Order creation error:', orderErr);
-            alert('Thanh toán thành công nhưng có lỗi tạo đơn hàng');
+            alert(context.t('alertPaymentSuccessOrderError'));
           }
           onClose();
         }
       } catch (err) {
         console.error(err);
-        alert('C? l?i x?y ra');
+        alert(context.t('alertTryAgain'));
       }
     };
 
@@ -392,10 +392,10 @@ const Checkout = () => {
         </div>
         <div className="mt-5 flex gap-3">
           <Button type="submit" className="bg-org btn-lg w-full">
-            Thanh toán ngay
+            {context.t('payNow')}
           </Button>
           <Button type="button" className="bg-org btn-border" onClick={onClose}>
-            Đóng
+            {context.t('close')}
           </Button>
         </div>
       </form>
@@ -423,33 +423,27 @@ const Checkout = () => {
             <div className="section-shell listing-hero overflow-hidden px-5 py-6 md:px-6 md:py-7">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-[720px]">
-                  <span className="eyebrow mb-3">Thanh toán</span>
+                  <span className="eyebrow mb-3">{context?.t('checkout')}</span>
                   <h1 className="mb-2 text-[32px] font-[800] leading-[1.15] tracking-[-0.03em] text-[#201714] md:text-[38px]">
-                    Chọn địa chỉ giao hàng và phương thức thanh toán.
+                    {context?.t('checkoutHeroTitle')}
                   </h1>
                   <p className="mb-0 max-w-[580px] text-[13px] text-[rgba(31,41,55,0.72)] md:text-[14px]">
-                    Xác nhận nơi nhận hàng và hoàn tất thanh toán an toàn tại một nơi.
+                    {context?.t('checkoutHeroText')}
                   </p>
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[390px]">
                   <div className="soft-card p-3">
-                    <span className="listing-stat__label">Sản phẩm</span>
+                    <span className="listing-stat__label">{context?.t('itemCount')}</span>
                     <strong className="listing-stat__value !mt-2 !text-[1.4rem]">{totalProducts}</strong>
                   </div>
                   <div className="soft-card p-3">
-                    <span className="listing-stat__label">Số lượng</span>
+                    <span className="listing-stat__label">{context?.t('quantity')}</span>
                     <strong className="listing-stat__value !mt-2 !text-[1.4rem]">{totalUnits}</strong>
                   </div>
                   <div className="soft-card p-3">
-                    <span className="listing-stat__label">Tổng cộng</span>
-                    <strong className="listing-stat__value !mt-2 !text-[1.2rem]">
-                      {totalAmount.toLocaleString('vi-VN', {
-                        style: 'currency',
-                        currency: 'VND',
-                        minimumFractionDigits: 0,
-                      })}
-                    </strong>
+                    <span className="listing-stat__label">{context?.t('total')}</span>
+                    <strong className="listing-stat__value !mt-2 !text-[1.2rem]">{context?.formatCurrency(totalAmount)}</strong>
                   </div>
                 </div>
               </div>
@@ -465,9 +459,11 @@ const Checkout = () => {
                           <FiMapPin className="text-[20px]" />
                         </div>
                         <div>
-                          <h2 className="m-0 text-[22px] font-[800] text-[#201714] md:text-[24px]">Chon địa chỉ giao hàng</h2>
+                          <h2 className="m-0 text-[22px] font-[800] text-[#201714] md:text-[24px]">
+                            {context?.t('chooseDeliveryAddress')}
+                          </h2>
                           <p className="mb-0 mt-1 text-[13px] text-[rgba(31,41,55,0.68)]">
-                            Chọn nơi bạn muốn nhận đơn hàng này.
+                            {context?.t('chooseDeliveryAddressHint')}
                           </p>
                         </div>
                       </div>
@@ -479,7 +475,7 @@ const Checkout = () => {
                           context?.setAddressMode('add');
                         }}
                       >
-                        <FaPlus className="mr-2" /> Thêm địa chỉ mới
+                        <FaPlus className="mr-2" /> {context?.t('addNewAddress')}
                       </Button>
                     </div>
                   </div>
@@ -512,22 +508,18 @@ const Checkout = () => {
                                 </span>
                                 {isChecked === index ? (
                                   <span className="rounded-full bg-[#eefbf3] px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.1em] text-[#1f8f52]">
-                                    Đã chọn
+                                    {context?.t('selected')}
                                   </span>
                                 ) : null}
                               </div>
 
-                              <h3 className="mt-3 text-[18px] font-[800] text-[#201714]">
-                                {userData?.name}
-                              </h3>
+                              <h3 className="mt-3 text-[18px] font-[800] text-[#201714]">{userData?.name}</h3>
 
                               <p className="mb-0 mt-2 text-[13px] leading-6 text-[rgba(31,41,55,0.68)]">
-                                {address?.address_line1} {address?.city} {address?.country}{' '}
-                                {address?.pincode} {address?.state} {address?.lamdmark}
+                                {address?.address_line1} {address?.city} {address?.country} {address?.pincode}{' '}
+                                {address?.state} {address?.lamdmark}
                               </p>
-                              <p className="mb-0 mt-2 text-[13px] font-[700] text-[#1f2937]">
-                                +{userData?.mobile}
-                              </p>
+                              <p className="mb-0 mt-2 text-[13px] font-[700] text-[#1f2937]">+{userData?.mobile}</p>
                             </div>
 
                             <Button
@@ -536,7 +528,7 @@ const Checkout = () => {
                               size="small"
                               onClick={() => editAddress(address?._id)}
                             >
-                              Sửa
+                              {context?.t('edit')}
                             </Button>
                           </label>
                         ))
@@ -546,10 +538,8 @@ const Checkout = () => {
                             <FiMapPin className="text-[38px]" />
                           </div>
                           <div>
-                            <h2 className="text-[24px] font-[800] text-[#201714]">Không tìm thấy địa chỉ</h2>
-                            <p className="mt-2 text-[14px] text-[rgba(31,41,55,0.66)]">
-                              Hay them địa chỉ giao hàng truoc khi dat don.
-                            </p>
+                            <h2 className="text-[24px] font-[800] text-[#201714]">{context?.t('noAddress')}</h2>
+                            <p className="mt-2 text-[14px] text-[rgba(31,41,55,0.66)]">{context?.t('noAddressHint')}</p>
                           </div>
                           <Button
                             className="bg-org btn-lg"
@@ -558,7 +548,7 @@ const Checkout = () => {
                               context?.setAddressMode('add');
                             }}
                           >
-                            Thêm địa chỉ
+                            {context?.t('addAddress')}
                           </Button>
                         </div>
                       )}
@@ -575,10 +565,8 @@ const Checkout = () => {
                         <FiCreditCard className="text-[19px]" />
                       </div>
                       <div>
-                        <h2 className="m-0 text-[22px] font-[800] text-[#201714] md:text-[23px]">Đơn hàng cua ban</h2>
-                        <p className="mb-0 mt-1 text-[13px] text-[rgba(31,41,55,0.68)]">
-                          Kiểm tra sản phẩm và chọn cách thanh toán.
-                        </p>
+                        <h2 className="m-0 text-[22px] font-[800] text-[#201714] md:text-[23px]">{context?.t('yourOrder')}</h2>
+                        <p className="mb-0 mt-1 text-[13px] text-[rgba(31,41,55,0.68)]">{context?.t('yourOrderHint')}</p>
                       </div>
                     </div>
                   </div>
@@ -587,15 +575,15 @@ const Checkout = () => {
                     <div className="rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(180deg,#ffffff_0%,#fff8f5_100%)] p-4 shadow-[0_16px_30px_rgba(15,23,42,0.06)] md:p-5">
                       <div className="flex items-center justify-between">
                         <span className="text-[13px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                          Giao t?i
+                          {context?.t('deliveringTo')}
                         </span>
                         {selectedAddressData ? (
                           <span className="rounded-full bg-[#eefbf3] px-3 py-1 text-[11px] font-[800] text-[#1f8f52]">
-                            S?n s?ng
+                            {context?.t('ready')}
                           </span>
                         ) : (
                           <span className="rounded-full bg-[#fff1eb] px-3 py-1 text-[11px] font-[800] text-[#a65434]">
-                            C?n ch?n
+                            {context?.t('needChoose')}
                           </span>
                         )}
                       </div>
@@ -603,56 +591,47 @@ const Checkout = () => {
                       <div className="mt-3 rounded-[18px] border border-[rgba(255,82,82,0.1)] bg-white px-4 py-4">
                         {selectedAddressData ? (
                           <>
-                            <h4 className="text-[15px] font-[800] text-[#201714]">
-                              {userData?.name}
-                            </h4>
+                            <h4 className="text-[15px] font-[800] text-[#201714]">{userData?.name}</h4>
                             <p className="mb-0 mt-2 text-[12px] leading-6 text-[rgba(31,41,55,0.66)]">
-                              {selectedAddressData?.address_line1} {selectedAddressData?.city}{' '}
-                              {selectedAddressData?.country} {selectedAddressData?.pincode}{' '}
-                              {selectedAddressData?.state} {selectedAddressData?.lamdmark}
+                              {selectedAddressData?.address_line1} {selectedAddressData?.city} {selectedAddressData?.country}{' '}
+                              {selectedAddressData?.pincode} {selectedAddressData?.state} {selectedAddressData?.lamdmark}
                             </p>
                           </>
                         ) : (
                           <p className="mb-0 text-[13px] leading-6 text-[rgba(31,41,55,0.58)]">
-                            Hãy chọn địa chỉ ở bên trái trước khi thanh toán.
+                            {context?.t('selectAddressBeforeCheckout')}
                           </p>
                         )}
                       </div>
 
                       <div className="mt-5 flex items-center justify-between border-t border-[rgba(255,82,82,0.1)] pt-4">
-                        <span className="text-[14px] font-[700] text-[#6b7280]">Sản phẩm</span>
+                        <span className="text-[14px] font-[700] text-[#6b7280]">{context?.t('itemCount')}</span>
                         <span className="text-[14px] font-[800] text-[#1f2937]">{totalProducts}</span>
                       </div>
 
                       <div className="mt-3 flex items-center justify-between">
-                        <span className="text-[14px] font-[700] text-[#6b7280]">Số lượng</span>
+                        <span className="text-[14px] font-[700] text-[#6b7280]">{context?.t('quantity')}</span>
                         <span className="text-[14px] font-[800] text-[#1f2937]">{totalUnits}</span>
                       </div>
 
                       <div className="mt-3 flex items-center justify-between">
-                        <span className="text-[14px] font-[700] text-[#6b7280]">Vận chuyển</span>
+                        <span className="text-[14px] font-[700] text-[#6b7280]">{context?.t('shippingLabel')}</span>
                         <span className="inline-flex items-center gap-2 rounded-full bg-[#eefbf3] px-3 py-1 text-[12px] font-[800] text-[#1f8f52]">
-                          <FiTruck className="text-[14px]" /> Miễn phí
+                          <FiTruck className="text-[14px]" /> {context?.t('freeLabel')}
                         </span>
                       </div>
 
                       <div className="mt-4 flex items-center justify-between border-t border-dashed border-[rgba(255,82,82,0.16)] pt-4">
-                        <span className="text-[15px] font-[800] text-[#201714]">Tổng cộng</span>
-                        <span className="text-primary text-[24px] font-[800]">
-                          {totalAmount.toLocaleString('vi-VN', {
-                            style: 'currency',
-                            currency: 'VND',
-                            minimumFractionDigits: 0,
-                          })}
-                        </span>
+                        <span className="text-[15px] font-[800] text-[#201714]">{context?.t('total')}</span>
+                        <span className="text-primary text-[24px] font-[800]">{context?.formatCurrency(totalAmount)}</span>
                       </div>
                     </div>
 
                     <div className="mt-4 rounded-[22px] border border-[rgba(255,82,82,0.12)] bg-white/75 p-4">
                       <div className="mb-3 flex items-center justify-between">
-                        <h3 className="text-[16px] font-[800] text-[#201714]">Sản phẩm trong đơn</h3>
+                        <h3 className="text-[16px] font-[800] text-[#201714]">{context?.t('productsInOrder')}</h3>
                         <span className="text-[12px] font-[700] text-[rgba(31,41,55,0.55)]">
-                          {totalProducts} s?n ph?m
+                          {context?.t('productsCount', { count: totalProducts })}
                         </span>
                       </div>
 
@@ -667,7 +646,7 @@ const Checkout = () => {
                                 <div className="h-[56px] w-[56px] overflow-hidden rounded-[14px] bg-[#fff4ef]">
                                   <img
                                     src={item?.image}
-                                    alt={item?.productTitle || 'Sản phẩm'}
+                                    alt={item?.productTitle || context?.t('productAlt')}
                                     className="h-full w-full object-cover"
                                   />
                                 </div>
@@ -677,17 +656,13 @@ const Checkout = () => {
                                     {item?.productTitle}
                                   </h4>
                                   <span className="mt-1 inline-flex items-center gap-2 text-[12px] font-[700] text-[rgba(31,41,55,0.55)]">
-                                    <FiPackage className="text-[13px]" /> SL: {item?.quantity}
+                                    <FiPackage className="text-[13px]" /> {context?.t('quantity')}: {item?.quantity}
                                   </span>
                                 </div>
                               </div>
 
                               <span className="shrink-0 text-[13px] font-[800] text-[#1f2937]">
-                                {(item?.quantity * item?.price)?.toLocaleString('vi-VN', {
-                                  style: 'currency',
-                                  currency: 'VND',
-                                  minimumFractionDigits: 0,
-                                })}
+                                {context?.formatCurrency((item?.quantity || 0) * (item?.price || 0))}
                               </span>
                             </div>
                           ))}
@@ -700,7 +675,7 @@ const Checkout = () => {
                         className="checkout-payment-btn bg-org flex w-full gap-2"
                         disabled={!selectedAddress || totalProducts === 0}
                       >
-                        <BsFillBagCheckFill className="text-[20px]" /> Thanh toán bang the
+                        <BsFillBagCheckFill className="text-[20px]" /> {context?.t('payByCard')}
                       </Button>
 
                       <div
@@ -714,19 +689,16 @@ const Checkout = () => {
                         onClick={cashOnDeLivery}
                         disabled={!selectedAddress || totalProducts === 0}
                       >
-                        <BsFillBagCheckFill className="text-[20px]" /> Thanh toán khi nhan hang
+                        <BsFillBagCheckFill className="text-[20px]" /> {context?.t('cashOnDelivery')}
                       </Button>
                     </div>
 
                     <div className="mt-4 flex items-center justify-between gap-3 rounded-[20px] border border-[rgba(255,82,82,0.1)] bg-white/75 p-4">
                       <p className="mb-0 text-[12px] leading-6 text-[rgba(31,41,55,0.6)]">
-                        Bạn muốn chỉnh sửa giỏ hàng trước khi thanh toán?
+                        {context?.t('backToCartQuestion')}
                       </p>
-                      <Link
-                        to="/cart"
-                        className="inline-flex shrink-0 items-center gap-2 text-[13px] font-[800] text-[#7c553d]"
-                      >
-                        Quay lại giỏ hàng <FiArrowRight className="text-[15px]" />
+                      <Link to="/cart" className="inline-flex shrink-0 items-center gap-2 text-[13px] font-[800] text-[#7c553d]">
+                        {context?.t('backToCart')} <FiArrowRight className="text-[15px]" />
                       </Link>
                     </div>
                   </div>

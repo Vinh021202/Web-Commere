@@ -34,6 +34,8 @@ const Search = () => {
           history('/search');
         }, 1000);
       });
+    } else {
+      setIsLoading(false);
     }
   };
 
@@ -42,7 +44,7 @@ const Search = () => {
       <input
         type="text"
         className="h-[42px] w-full bg-transparent pl-4 pr-14 text-[13px] outline-none md:h-[46px]"
-        placeholder="Tìm sản phẩm, thương hiệu hoặc danh mục..."
+        placeholder={context?.t('searchPlaceholder')}
         value={searchQuery}
         onChange={onChangeInput}
       />
