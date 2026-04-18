@@ -74,7 +74,10 @@ const ProductsItem = (props) => {
 
     if (hasVariantOptions && !selectedTabName) {
       setIsShowTabs(true);
-      context?.alertBox('error', hasSizeOptions ? 'Vui lòng chọn kích thước trước' : 'Vui lòng chọn tùy chọn trước');
+      context?.alertBox(
+        'error',
+        hasSizeOptions ? 'Vui lòng chọn kích thước trước' : 'Vui lòng chọn tùy chọn trước'
+      );
       return;
     }
 
@@ -209,7 +212,7 @@ const ProductsItem = (props) => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.28),transparent_36%)]" />
             <div className="absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(17,24,39,0.26)_100%)]" />
             <div className="product-card__image-badge absolute bottom-[12px] left-[12px] z-40 rounded-full px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.08em] text-white">
-              {isInStock ? 'S?n s?ng giao' : 'Het hang'}
+              {isInStock ? 'Săn sàng giao' : 'Het hang'}
             </div>
           </div>
         </Link>
@@ -227,7 +230,9 @@ const ProductsItem = (props) => {
               <span
                 key={`${option}-${index}`}
                 className={`flex h-[30px] min-w-[42px] cursor-pointer items-center justify-center rounded-full px-2.5 text-[11px] font-[700] transition-colors duration-200 ${
-                  activeTab === index ? '!bg-[#ff5252] text-white' : 'bg-white/85 text-[#1f2937] hover:bg-white'
+                  activeTab === index
+                    ? '!bg-[#ff5252] text-white'
+                    : 'bg-white/85 text-[#1f2937] hover:bg-white'
                 }`}
                 onClick={() => handleClickActivetab(index, option)}
               >
@@ -288,10 +293,11 @@ const ProductsItem = (props) => {
         </div>
 
         <h3 className="product-card__heading text-[13px] font-[800] leading-5 text-[#1f2937]">
-          <Link to={`/product/${props?.item?._id}`} className="link product-card__title transition-all">
-            <span className="product-card__titleText">
-              {productName}
-            </span>
+          <Link
+            to={`/product/${props?.item?._id}`}
+            className="link product-card__title transition-all"
+          >
+            <span className="product-card__titleText">{productName}</span>
           </Link>
         </h3>
 
@@ -321,7 +327,9 @@ const ProductsItem = (props) => {
                   Giá ưu đãi
                 </span>
               )}
-              <span className="price text-[15px] font-[800] leading-5 text-primary">{priceText}</span>
+              <span className="price text-[15px] font-[800] leading-5 text-primary">
+                {priceText}
+              </span>
             </div>
 
             {props?.item?.discount && (
@@ -349,7 +357,10 @@ const ProductsItem = (props) => {
           ) : (
             <>
               {isLoading === true ? (
-                <Button className="bg-org product-card__cta product-card__cta--primary flex w-full gap-2" size="small">
+                <Button
+                  className="bg-org product-card__cta product-card__cta--primary flex w-full gap-2"
+                  size="small"
+                >
                   <CircularProgress />
                   <MdOutlineShoppingCart className="text-[16px]" /> Thêm
                 </Button>

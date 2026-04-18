@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import UploadBox from "../../Components/UploadBox";
 import { IoMdClose } from "react-icons/io";
@@ -11,6 +10,18 @@ import { deleteImages, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 
+const normalizeImages = (value) => {
+  if (Array.isArray(value)) {
+    return value.filter(Boolean);
+  }
+
+  if (typeof value === "string" && value.trim() !== "") {
+    return [value];
+  }
+
+  return [];
+};
+
 const AddHomeSlide = () => {
   const [previews, setPreviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,19 +30,26 @@ const AddHomeSlide = () => {
   });
 
   const context = useContext(MyContext);
-  const histoty = useNavigate();
+  const navigate = useNavigate();
 
-  const setPreviewsFun = (previewArr) => {
-    setPreviews((prev) => [...prev, ...previewArr]);
+  const setPreviewsFun = (previewValue) => {
+    const normalizedImages = normalizeImages(previewValue);
+
+    if (normalizedImages.length === 0) {
+      context.alertBox("error", "Upload image failed");
+      return;
+    }
+
+    setPreviews(normalizedImages);
     setFormFields((prev) => ({
       ...prev,
-      images: [...prev.images, ...previewArr], // ✅ dùng setState
+      images: normalizedImages,
     }));
   };
 
   const removeImg = (image, index) => {
-    deleteImages(`/api/homeSlider/deteleImage?img=${image}`).then((res) => {
-      const imageArr = previews.filter((_, i) => i !== index);
+    deleteImages(`/api/homeSlider/deteleImage?img=${image}`).then(() => {
+      const imageArr = normalizeImages(previews).filter((_, i) => i !== index);
       setPreviews(imageArr);
       setFormFields((prev) => ({
         ...prev,
@@ -45,19 +63,24 @@ const AddHomeSlide = () => {
 
     setIsLoading(true);
 
-    if (previews?.length === 0) {
-      context.alertBox("error", "Please Category image");
+    const normalizedPreviews = normalizeImages(previews);
+
+    if (normalizedPreviews.length === 0) {
+      context.alertBox("error", "Please select a banner image");
       setIsLoading(false);
       return false;
     }
 
-    postData(`/api/homeSlider/add`, formFields).then((res) => {
+    postData(`/api/homeSlider/add`, {
+      ...formFields,
+      images: normalizedPreviews,
+    }).then(() => {
       setTimeout(() => {
         setIsLoading(false);
         context.setIsOpenFullScreenPanel({
           open: false,
         });
-        histoty("/homeSlider/list");
+        navigate("/homeSlider/list");
       }, 2500);
     });
   };
@@ -134,12 +157,14 @@ const AddHomeSlide = () => {
                   );
                 })}
 
-              <UploadBox
-                multiple={false}
-                name="images"
-                url="/api/homeSlider/uploadImages"
-                setPreviewsFun={setPreviewsFun}
-              />
+              {previews.length === 0 && (
+                <UploadBox
+                  multiple={false}
+                  name="images"
+                  url="/api/homeSlider/uploadImages"
+                  setPreviewsFun={setPreviewsFun}
+                />
+              )}
             </div>
           </div>
         </div>
