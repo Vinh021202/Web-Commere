@@ -69,15 +69,17 @@ const ProductDetails = () => {
     setActiveTab(1);
   };
 
-  const breadcrumbLabel = productData?.name || 'Product details';
+  const breadcrumbLabel = productData?.name || 'Chi tiết sản phẩm';
   const categoryLabel =
     productData?.subCat ||
     productData?.category?.name ||
     productData?.catName ||
     productData?.brand ||
-    'Collection';
+    'Bộ sưu tập';
   const descriptionPreview = useMemo(() => {
-    if (!productData?.description) return 'Chi tiet san pham duoc trinh bay ro rang de ban xem nhanh va ra quyet dinh mua hang de hon.';
+    if (!productData?.description) {
+      return 'Chi tiết sản phẩm được trình bày rõ ràng để bạn xem nhanh và ra quyết định mua hàng dễ hơn.';
+    }
     return productData.description.length > 170
       ? `${productData.description.slice(0, 170)}...`
       : productData.description;
@@ -93,7 +95,7 @@ const ProductDetails = () => {
             <div className="max-w-[760px]">
               <Breadcrumbs aria-label="breadcrumb" className="listing-breadcrumbs">
                 <Link to="/" className="link !text-[14px]">
-                  Home
+                  Trang chủ
                 </Link>
                 <Link to="/" className="link !text-[14px]">
                   {categoryLabel}
@@ -103,36 +105,36 @@ const ProductDetails = () => {
                 </span>
               </Breadcrumbs>
 
-              <span className="eyebrow mt-5">Product detail</span>
+              <span className="eyebrow mt-5">Chi tiết sản phẩm</span>
               <h1 className="section-heading mt-4 max-w-[760px]">
-                {productData?.name || 'Kham pha chi tiet san pham voi bo cuc ro rang hon.'}
+                {productData?.name || 'Khám phá chi tiết sản phẩm với bố cục rõ ràng hơn.'}
               </h1>
               <p className="muted-copy mt-4 max-w-[660px] text-[15px] leading-7">
                 {descriptionPreview}
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
-                <span className="listing-chip">Thong tin mua hang ro rang</span>
-                <span className="listing-chip">Hinh anh chi tiet</span>
-                <span className="listing-chip">Danh gia tu khach hang</span>
+                <span className="listing-chip">Thông tin mua hàng rõ ràng</span>
+                <span className="listing-chip">Hình ảnh chi tiết</span>
+                <span className="listing-chip">Đánh giá từ khách hàng</span>
               </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 xl:min-w-[460px]">
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Thuong hieu</span>
+                <span className="listing-stat__label">Thương hiệu</span>
                 <strong className="listing-stat__value !text-[1.2rem]">
-                  {productData?.brand || 'Collection'}
+                  {productData?.brand || 'Bộ sưu tập'}
                 </strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Danh gia</span>
+                <span className="listing-stat__label">Đánh giá</span>
                 <strong className="listing-stat__value !text-[1.2rem]">
                   {productData?.rating || 0}
                 </strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Reviews</span>
+                <span className="listing-stat__label">Đánh giá</span>
                 <strong className="listing-stat__value !text-[1.2rem]">{reviewsCount}</strong>
               </div>
             </div>
@@ -167,9 +169,9 @@ const ProductDetails = () => {
                           <FiTruck className="text-[20px]" />
                         </span>
                         <div>
-                          <h3 className="text-[14px] font-[800] text-[#1f2937]">Fast shipping</h3>
+                          <h3 className="text-[14px] font-[800] text-[#1f2937]">Giao nhanh</h3>
                           <p className="mb-0 mt-1 text-[12px] leading-6">
-                            Giao hang nhanh va dong goi gon gang.
+                            Giao hàng nhanh và đóng gói gọn gàng.
                           </p>
                         </div>
                       </div>
@@ -179,9 +181,9 @@ const ProductDetails = () => {
                           <FiShield className="text-[20px]" />
                         </span>
                         <div>
-                          <h3 className="text-[14px] font-[800] text-[#1f2937]">Authentic item</h3>
+                          <h3 className="text-[14px] font-[800] text-[#1f2937]">Sản phẩm chính hãng</h3>
                           <p className="mb-0 mt-1 text-[12px] leading-6">
-                            Thong tin san pham va ton kho hien thi ro rang.
+                            Thông tin sản phẩm và tồn kho hiển thị rõ ràng.
                           </p>
                         </div>
                       </div>
@@ -191,9 +193,9 @@ const ProductDetails = () => {
                           <HiOutlineSparkles className="text-[20px]" />
                         </span>
                         <div>
-                          <h3 className="text-[14px] font-[800] text-[#1f2937]">Curated detail</h3>
+                          <h3 className="text-[14px] font-[800] text-[#1f2937]">Thông tin chi tiết</h3>
                           <p className="mb-0 mt-1 text-[12px] leading-6">
-                            Hinh anh, mo ta va review duoc sap xep de xem nhanh.
+                            Hình ảnh, mô tả và review được sắp xếp để xem nhanh.
                           </p>
                         </div>
                       </div>
@@ -212,7 +214,7 @@ const ProductDetails = () => {
                     }`}
                     onClick={() => setActiveTab(0)}
                   >
-                    Description
+                    Mô tả
                   </Button>
                   <Button
                     className={`!rounded-full !px-5 !py-2 !text-[13px] !font-[800] !capitalize ${
@@ -222,13 +224,13 @@ const ProductDetails = () => {
                     }`}
                     onClick={() => setActiveTab(1)}
                   >
-                    Reviews ({reviewsCount})
+                    Đánh giá ({reviewsCount})
                   </Button>
                 </div>
 
                 {activeTab === 0 && (
                   <div className="soft-card rounded-[28px] p-5 md:p-6">
-                    <h2 className="text-[20px] font-[800] text-[#1f2937]">Mo ta san pham</h2>
+                    <h2 className="text-[20px] font-[800] text-[#1f2937]">Mô tả sản phẩm</h2>
                     <p className="mb-0 mt-4 whitespace-pre-line text-[14px] leading-7 text-[#4b5563]">
                       {productData?.description}
                     </p>
@@ -248,14 +250,14 @@ const ProductDetails = () => {
                 <div className="section-shell mt-5 overflow-hidden px-4 py-4 md:px-6 md:py-6">
                   <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
                     <div>
-                      <span className="eyebrow">You may also like</span>
+                      <span className="eyebrow">Có thể bạn sẽ thích</span>
                       <h2 className="mt-3 text-[22px] font-[800] text-[#1f2937]">
-                        Related Products
+                        Sản phẩm liên quan
                       </h2>
                     </div>
                     <p className="mb-0 max-w-[520px] text-[14px] leading-7 text-[#6b7280]">
-                      Goi y them nhung san pham cung nhom de ban so sanh nhanh ngay trong cung mot
-                      bo cuc.
+                      Gợi ý thêm những sản phẩm cùng nhóm để bạn so sánh nhanh ngay trong cùng một
+                      bố cục.
                     </p>
                   </div>
                   <ProductsSlider items={6} data={relatedProductData} />

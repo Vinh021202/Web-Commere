@@ -171,20 +171,20 @@ const SideBar = (props) => {
 
           <div>
             <span className="block text-[12px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-              Filter panel
+              Bảng lọc
             </span>
             <h3 className="mt-1 text-[18px] font-[800] leading-6 text-[#1f2937]">
               Tinh chinh ket qua
             </h3>
             <p className="mb-0 mt-1 text-[13px] leading-6 text-[#6b7280]">
-              Chon danh muc, khoang gia va danh gia de thu hep danh sach san pham.
+              Chọn danh mục, khoảng giá và đánh giá để thu hẹp danh sách sản phẩm.
             </p>
           </div>
         </div>
 
         <div className="filter-box">
           <div className="mb-3 flex items-center gap-3 pr-1">
-            <h3 className="text-[16px] font-[700] text-[#1f2937]">Shop By Category</h3>
+            <h3 className="text-[16px] font-[700] text-[#1f2937]">Lọc theo danh mục</h3>
             <Button
               className="!ml-auto !h-[34px] !min-w-[34px] !w-[34px] !rounded-full !bg-[#fff1eb] !text-[#a65434]"
               onClick={() => setIsopenCategoryFilter(!isopenCategoryFilter)}
@@ -213,7 +213,7 @@ const SideBar = (props) => {
 
         <div className="filter-box mt-4">
           <div className="mb-3 flex items-center justify-between gap-3">
-            <h3 className="text-[16px] font-[700] text-[#1f2937]">Filter By Price</h3>
+            <h3 className="text-[16px] font-[700] text-[#1f2937]">Lọc theo giá</h3>
             <span className="rounded-full bg-[#fff1eb] px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.06em] text-[#a65434]">
               VND
             </span>
@@ -243,7 +243,7 @@ const SideBar = (props) => {
         </div>
 
         <div className="filter-box mt-4">
-          <h3 className="mb-3 text-[16px] font-[700] text-[#1f2937]">Filter By Rating</h3>
+          <h3 className="mb-3 text-[16px] font-[700] text-[#1f2937]">Lọc theo đánh giá</h3>
 
           <div className="space-y-2">
             {[5, 4, 3, 2, 1].map((star) => (

@@ -4,19 +4,19 @@ import { auth, googleProvider } from '../firebase';
 const getMessageFromFirebaseError = (error) => {
   switch (error?.code) {
     case 'auth/popup-blocked':
-      return 'Trinh duyet dang chan popup Google. Hay cho phep popup va thu lai.';
+      return 'Trình duyệt đang chặn popup Google. Hãy cho phép popup và thử lại.';
     case 'auth/popup-closed-by-user':
-      return 'Ban da dong cua so dang nhap Google truoc khi hoan tat.';
+      return 'Bạn đã đóng cửa sổ đăng nhập Google trước khi hoàn tất.';
     case 'auth/cancelled-popup-request':
-      return 'Yeu cau dang nhap Google truoc do da bi huy.';
+      return 'Yêu cầu đăng nhập Google trước đó đã bị hủy.';
     case 'auth/unauthorized-domain':
-      return 'Domain hien tai chua duoc them vao Firebase Authorized Domains.';
+      return 'Domain hiện tại chưa được thêm vào Firebase Authorized Domains.';
     case 'auth/operation-not-allowed':
       return 'Google sign-in chua duoc bat trong Firebase Authentication.';
     case 'auth/invalid-api-key':
-      return 'Firebase API key khong hop le. Hay kiem tra lai file .env.';
+      return 'Firebase API key không hợp lệ. Hãy kiểm tra lại file .env.';
     default:
-      return error?.message || 'Khong the dang nhap Google luc nay.';
+      return error?.message || 'Không thể đăng nhập Google lúc này.';
   }
 };
 
@@ -40,7 +40,7 @@ export const signInWithGoogle = async () => {
   };
 
   if (!profile.email) {
-    throw new Error('Tai khoan Google nay khong tra ve email.');
+    throw new Error('Tài khoản Google này không trả về email.');
   }
 
   return profile;

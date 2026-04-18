@@ -31,39 +31,39 @@ const Footer = () => {
             <div className="grid gap-3 border-b border-[rgba(123,86,61,0.12)] pb-6 md:grid-cols-2 xl:grid-cols-5">
               <div className="soft-card group flex flex-col items-center justify-center p-4 text-center">
                 <LiaShippingFastSolid className="text-[34px] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#ff5252]" />
-                <h3 className="mt-2.5 text-[15px] font-[600]">Free Shipping</h3>
-                <p className="text-[12px] font-[500]">For all Orders Over $100</p>
+                <h3 className="mt-2.5 text-[15px] font-[600]">Miễn phí vận chuyển</h3>
+                <p className="text-[12px] font-[500]">Áp dụng cho đơn hàng từ 100$</p>
               </div>
 
               <div className="soft-card group flex flex-col items-center justify-center p-4 text-center">
                 <PiKeyReturn className="text-[34px] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#ff5252]" />
-                <h3 className="mt-2.5 text-[15px] font-[600]">30 Days Returns</h3>
-                <p className="text-[12px] font-[500]">For an Exchange Products</p>
+                <h3 className="mt-2.5 text-[15px] font-[600]">Đổi trả 30 ngày</h3>
+                <p className="text-[12px] font-[500]">Hỗ trợ đổi sản phẩm linh hoạt</p>
               </div>
 
               <div className="soft-card group flex flex-col items-center justify-center p-4 text-center">
                 <BsWallet2 className="text-[34px] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#ff5252]" />
-                <h3 className="mt-2.5 text-[15px] font-[600]">Securde Payment</h3>
-                <p className="text-[12px] font-[500]">Payment Cards Accepted</p>
+                <h3 className="mt-2.5 text-[15px] font-[600]">Thanh toán an toan</h3>
+                <p className="text-[12px] font-[500]">Chấp nhận nhiều loại thẻ</p>
               </div>
 
               <div className="soft-card group flex flex-col items-center justify-center p-4 text-center">
                 <LiaGiftSolid className="text-[34px] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#ff5252]" />
-                <h3 className="mt-2.5 text-[15px] font-[600]">Special Gifts</h3>
-                <p className="text-[12px] font-[500]">Our First Product Order</p>
+                <h3 className="mt-2.5 text-[15px] font-[600]">Quà tặng đặc biệt</h3>
+                <p className="text-[12px] font-[500]">Ưu đãi cho đơn hàng đầu tiên</p>
               </div>
 
               <div className="soft-card group flex flex-col items-center justify-center p-4 text-center">
                 <BiSupport className="text-[34px] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#ff5252]" />
-                <h3 className="mt-2.5 text-[15px] font-[600]">Shupport 24/7</h3>
-                <p className="text-[12px] font-[500]">Contact us Anytime</p>
+                <h3 className="mt-2.5 text-[15px] font-[600]">Hỗ trợ 24/7</h3>
+                <p className="text-[12px] font-[500]">Liên hệ bất cứ lúc nào</p>
               </div>
             </div>
 
             <div className="footer flex flex-col gap-6 py-6 xl:flex-row">
               <div className="part1 xl:w-[28%] xl:border-r xl:border-[rgba(123,86,61,0.12)] xl:pr-6">
-                <span className="eyebrow mb-4">Contact</span>
-                <h2 className="section-heading mb-3 text-[17px]">Contact us</h2>
+                <span className="eyebrow mb-4">Liên hệ</span>
+                <h2 className="section-heading mb-3 text-[17px]">Kết nối với chúng tôi</h2>
                 <p className="pb-4 text-[13px] font-[400]">
                   ECommerce-Shoping - Mega Super Store <br /> 507 -Union Trade Centre Việt Nam
                 </p>
@@ -77,77 +77,77 @@ const Footer = () => {
                 <div className="soft-card flex items-center gap-3 p-3.5">
                   <MdChatBubbleOutline className="text-primary text-[34px]" />
                   <span className="text-[16px] font-[700]">
-                    Online Chat <br /> Get Expert Help
+                    Trò chuyện trực tuyến <br /> Nhận hỗ trợ nhanh
                   </span>
                 </div>
               </div>
 
               <div className="part2 flex xl:w-[37%] xl:pl-3">
                 <div className="part2_col1 w-[50%]">
-                  <h2 className="mb-3 text-[17px] font-[600]">Products</h2>
+                  <h2 className="mb-3 text-[17px] font-[600]">Sản phẩm</h2>
                   <ul className="list">
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Prices drop</Link>
+                      <Link to={'/'} className="link">Giá giảm mạnh</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">New Products</Link>
+                      <Link to={'/'} className="link">Sản phẩm mới</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Bet Sales</Link>
+                      <Link to={'/'} className="link">Bán chạy</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Contact Us</Link>
+                      <Link to={'/'} className="link">Liên hệ</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Sitemap</Link>
+                      <Link to={'/'} className="link">Sơ đồ trang</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Stores</Link>
+                      <Link to={'/'} className="link">Cửa hàng</Link>
                     </li>
                   </ul>
                 </div>
 
                 <div className="part2_col2 w-[50%]">
-                  <h2 className="mb-3 text-[17px] font-[600]">Our Company</h2>
+                  <h2 className="mb-3 text-[17px] font-[600]">Về chúng tôi</h2>
                   <ul className="list">
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Delivery</Link>
+                      <Link to={'/'} className="link">Giao hàng</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Legal Notice</Link>
+                      <Link to={'/'} className="link">Thông báo pháp lý</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">Terms And Conditions Of Use</Link>
+                      <Link to={'/'} className="link">Điều khoản sử dụng</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">About Us</Link>
+                      <Link to={'/'} className="link">Giới thiệu</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/'} className="link">SecurePayment</Link>
+                      <Link to={'/'} className="link">Thanh toán an toan</Link>
                     </li>
                     <li className="mb-2 w-full list-none text-[14px]">
-                      <Link to={'/login'} className="link">Login</Link>
+                      <Link to={'/login'} className="link">Đăng nhập</Link>
                     </li>
                   </ul>
                 </div>
               </div>
 
               <div className="part3 flex flex-col xl:w-[35%] xl:pl-6 xl:pr-3">
-                <h2 className="mb-3 text-[17px] font-[600]">Subscribe To Newsletter</h2>
+                <h2 className="mb-3 text-[17px] font-[600]">Đăng ký nhận bản tin</h2>
                 <p className="text-[13px]">
-                  Subscribe to our latest newsletter to get news about special discounts.
+                  Đăng ký bản tin mới nhất để nhận thông báo ưu đãi đặc biệt.
                 </p>
                 <form className="soft-card mt-4 p-4">
                   <input
                     type="text"
                     className="mb-4 h-[44px] w-full rounded-full border border-[rgba(255,82,82,0.14)] bg-white px-4 outline-none focus:border-[rgba(255,82,82,0.5)]"
-                    placeholder="Your Email Address"
+                    placeholder="Nhập địa chỉ email"
                   />
-                  <Button className="bg-org">SUBSCRIBE</Button>
+                  <Button className="bg-org">ĐĂNG KÝ</Button>
 
                   <FormControlLabel
                     control={<Checkbox />}
-                    label="I agree to the terms and conditions and the privacy policy"
+                    label="Tôi đồng ý với điều khoản sử dụng và chính sách bảo mật"
                   />
                 </form>
               </div>
@@ -217,7 +217,7 @@ const Footer = () => {
       >
         <div className="flex h-full min-h-0 flex-col">
           <div className="flex items-center justify-between gap-3 overflow-hidden border-b border-[rgba(0,0,0,0.1)] px-4 py-3">
-            <h4>Shopping Cart ({context?.cartData?.length || 0})</h4>
+            <h4>Giỏ hàng ({context?.cartData?.length || 0})</h4>
             <IoCloseSharp
               className="cursor-pointer text-[20px]"
               onClick={context.toggleCartPanel(false)}
@@ -227,10 +227,10 @@ const Footer = () => {
             <CartPanel data={context?.cartData} onClose={context.toggleCartPanel(false)} />
           ) : (
             <div className="flex flex-1 flex-col items-center justify-center gap-5 px-6 text-center">
-              <img src="/cartfoot.png" className="w-[250px]" alt="Empty Cart" />
-              <h4>Your Cart is currently empty</h4>
+              <img src="/cartfoot.png" className="w-[250px]" alt="Giỏ hàng trống" />
+              <h4>Giỏ hàng của bạn đang trống</h4>
               <Button className="bg-org btn-sm" onClick={context.toggleCartPanel(false)}>
-                Continue Shopping
+                Tiếp tục mua sắm
               </Button>
             </div>
           )}
@@ -244,7 +244,7 @@ const Footer = () => {
         className="addressPanel"
       >
         <div className="flex items-center justify-between gap-3 overflow-hidden border-b border-[rgba(0,0,0,0.1)] px-4 py-3">
-          <h4>{context?.addressMode === 'add' ? 'Add' : 'Edit'} Delivery Address</h4>
+          <h4>{context?.addressMode === 'add' ? 'Thêm' : 'Chỉnh sửa'} địa chỉ giao hàng</h4>
           <IoCloseSharp
             className="cursor-pointer text-[20px]"
             onClick={context?.toggleAddressPanel(false)}

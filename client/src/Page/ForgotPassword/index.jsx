@@ -58,19 +58,19 @@ const ForgotPassword = () => {
     setIsLoading(true);
 
     if (formFields.newPassword === '') {
-      context.alertBox('error', 'Please enter new password');
+      context.alertBox('error', 'Vui lòng nhập mật khẩu mới');
       setIsLoading(false);
       return false;
     }
 
     if (formFields.confirmPassword === '') {
-      context.alertBox('error', 'Please enter password');
+      context.alertBox('error', 'Vui lòng nhập lại mật khẩu');
       setIsLoading(false);
       return false;
     }
 
     if (formFields.confirmPassword !== formFields.newPassword) {
-      context.alertBox('error', 'Password and confirm password not match');
+      context.alertBox('error', 'Mật khẩu xác nhận không trùng khớp');
       setIsLoading(false);
       return false;
     }
@@ -97,28 +97,28 @@ const ForgotPassword = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.12),transparent_24%)]" />
             <div className="relative z-10">
               <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-[700] uppercase tracking-[0.14em] text-white/90">
-                Reset password
+                Đặt lại mật khẩu
               </span>
               <h1 className="mt-4 max-w-[390px] text-[28px] font-[800] leading-tight md:text-[36px]">
-                Create a stronger password for your account.
+                Tạo mật khẩu mới an toàn hơn cho tài khoản.
               </h1>
               <p className="mt-3 max-w-[410px] text-[14px] leading-6 text-white/80">
-                Set a fresh password you can remember easily while keeping your account secure.
+                Đặt mật khẩu mới để bạn dễ nhớ hơn nhưng vẫn giữ tài khoản an toàn.
               </p>
 
               <div className="mt-6 grid gap-3">
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiShield className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Keep it secure</h3>
+                  <h3 className="mt-3 text-[14px] font-[700]">Bảo mật tốt hơn</h3>
                   <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Use a password that is unique and harder to guess.
+                    Sử dụng mật khẩu riêng và khó đoán hơn để bảo vệ tài khoản.
                   </p>
                 </div>
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiCheckCircle className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Confirm once</h3>
+                  <h3 className="mt-3 text-[14px] font-[700]">Xác nhận lại</h3>
                   <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Re-enter the new password to avoid mistyped credentials.
+                    Nhập lại mật khẩu mới để tránh nhầm lẫn khi đặt lại.
                   </p>
                 </div>
               </div>
@@ -129,13 +129,13 @@ const ForgotPassword = () => {
             <div className="mx-auto max-w-[460px]">
               <div className="mb-7">
                 <p className="mb-2 text-[12px] font-[700] uppercase tracking-[0.16em] text-[#ff5252]">
-                  Password recovery
+                  Khôi phục mật khẩu
                 </p>
                 <h2 className="text-[28px] font-[800] leading-tight text-[#1f2937] md:text-[30px]">
-                  Set a new password
+                  Đặt mật khẩu mới
                 </h2>
                 <p className="mb-0 mt-3 text-[13px] leading-6 text-[#6b7280]">
-                  Your password will be updated for <span className="font-[700] text-[#1f2937]">{formFields.email}</span>.
+                  Mật khẩu sẽ được cập nhật cho <span className="font-[700] text-[#1f2937]">{formFields.email}</span>.
                 </p>
               </div>
 
@@ -145,9 +145,9 @@ const ForgotPassword = () => {
                     <HiOutlineLockClosed className="text-[22px]" />
                   </div>
                   <div>
-                    <h3 className="text-[15px] font-[700] text-[#1f2937]">New credentials</h3>
+                    <h3 className="text-[15px] font-[700] text-[#1f2937]">Thông tin mới</h3>
                     <p className="mb-0 mt-1 text-[13px] text-[#6b7280]">
-                      Choose a password that you have not used before.
+                      Chọn mật khẩu bạn chưa từng sử dụng trước đây.
                     </p>
                   </div>
                 </div>
@@ -157,7 +157,7 @@ const ForgotPassword = () => {
                     <TextField
                       type={isShowPassWord === false ? 'password' : 'text'}
                       id="password"
-                      label="New Password*"
+                      label="Mật khẩu mới*"
                       variant="outlined"
                       className="w-full"
                       name="newPassword"
@@ -182,7 +182,7 @@ const ForgotPassword = () => {
                     <TextField
                       type={isShowPassWord2 === false ? 'password' : 'text'}
                       id="confirm_password"
-                      label="Confirm Password*"
+                      label="Xác nhận mật khẩu*"
                       variant="outlined"
                       className="w-full"
                       name="confirmPassword"
@@ -205,7 +205,7 @@ const ForgotPassword = () => {
 
                   <div className="flex items-center w-full">
                     <Button type="submit" disabled={!valideValue} className="bg-org flex w-full gap-3 !text-[16px]">
-                      {isLoading === true ? <CircularProgress color="inherit" /> : 'Change Password'}
+                      {isLoading === true ? <CircularProgress color="inherit" /> : 'Đổi mật khẩu'}
                     </Button>
                   </div>
                 </form>

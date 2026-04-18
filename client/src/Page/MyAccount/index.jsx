@@ -68,10 +68,10 @@ const MyAccount = () => {
 
   const accountSummary = useMemo(() => {
     if (!context?.userData?.name) {
-      return 'Quan ly thong tin tai khoan, bao mat va thong tin lien he trong mot bo cuc gon gang hon.';
+      return 'Quản lý thông tin tài khoản, bảo mật và thông tin liên hệ trong một bố cục gọn gàng hơn.';
     }
 
-    return `${context.userData.name}, cap nhat nhanh thong tin ca nhan va bao mat tai khoan ngay tai day.`;
+    return `${context.userData.name}, cập nhật nhanh thông tin cá nhân và bảo mật tài khoản ngay tại đây.`;
   }, [context?.userData]);
 
   const handleSubmit = (e) => {
@@ -79,17 +79,17 @@ const MyAccount = () => {
     setIsLoading(true);
 
     if (!formFields.name) {
-      context.alertBox('error', 'Please enter full name');
+      context.alertBox('error', 'Vui lòng nhập họ tên');
       setIsLoading(false);
       return;
     }
     if (!formFields.email) {
-      context.alertBox('error', 'Please enter email id');
+      context.alertBox('error', 'Vui lòng nhập email');
       setIsLoading(false);
       return;
     }
     if (!formFields.mobile) {
-      context.alertBox('error', 'Please enter mobile number');
+      context.alertBox('error', 'Vui lòng nhập số điện thoại');
       setIsLoading(false);
       return;
     }
@@ -100,7 +100,7 @@ const MyAccount = () => {
         context.alertBox('success', res?.data?.message);
         context.setIsLogin(true);
       } else {
-        context.alertBox('error', res?.data?.message || 'Something went wrong');
+        context.alertBox('error', res?.data?.message || 'Đã có lỗi xảy ra');
         setIsLoading(false);
       }
     });
@@ -111,22 +111,22 @@ const MyAccount = () => {
     setIsLoading2(true);
 
     if (context?.userData?.signUpWithGoogle === false && !changePassword.oldPassword) {
-      context.alertBox('error', 'Please enter old password');
+      context.alertBox('error', 'Vui lòng nhập mật khẩu cũ');
       setIsLoading2(false);
       return;
     }
     if (!changePassword.newPassword) {
-      context.alertBox('error', 'Please enter new password');
+      context.alertBox('error', 'Vui lòng nhập mật khẩu mới');
       setIsLoading2(false);
       return;
     }
     if (!changePassword.confirmPassword) {
-      context.alertBox('error', 'Please confirm new password');
+      context.alertBox('error', 'Vui lòng xác nhận mật khẩu mới');
       setIsLoading2(false);
       return;
     }
     if (changePassword.confirmPassword !== changePassword.newPassword) {
-      context.alertBox('error', 'New password and confirm password do not match');
+      context.alertBox('error', 'Mật khẩu mới và mật khẩu xác nhận không trùng khớp');
       setIsLoading2(false);
       return;
     }
@@ -143,12 +143,12 @@ const MyAccount = () => {
             confirmPassword: '',
           }));
         } else {
-          context.alertBox('error', res?.message || 'Something went wrong');
+          context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
         }
       })
       .catch(() => {
         setIsLoading2(false);
-        context.alertBox('error', 'Something went wrong');
+        context.alertBox('error', 'Đã có lỗi xảy ra');
       });
   };
 
@@ -160,22 +160,22 @@ const MyAccount = () => {
 
           <div className="relative flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
             <div className="max-w-[760px]">
-              <span className="eyebrow">My account</span>
+              <span className="eyebrow">Tài khoản của tôi</span>
               <h1 className="section-heading mt-4 max-w-[700px]">
-                Khong gian quan ly tai khoan duoc sap xep gon, ro va de cap nhat hon.
+                Không gian quản lý tài khoản được sắp xếp gọn, rõ và dễ cập nhật hơn.
               </h1>
               <p className="muted-copy mt-4 max-w-[620px] text-[15px] leading-7">{accountSummary}</p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <span className="listing-chip">Thong tin ca nhan</span>
-                <span className="listing-chip">Bao mat tai khoan</span>
+                <span className="listing-chip">Bảo mật tài khoản</span>
                 <span className="listing-chip">Avatar va lien he</span>
               </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 xl:min-w-[460px]">
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Ho ten</span>
+                <span className="listing-stat__label">Họ tên</span>
                 <strong className="listing-stat__value !text-[1.1rem]">
                   {context?.userData?.name || '--'}
                 </strong>
@@ -183,13 +183,13 @@ const MyAccount = () => {
               <div className="soft-card p-4">
                 <span className="listing-stat__label">Email</span>
                 <strong className="listing-stat__value !text-[1.1rem]">
-                  {context?.userData?.email ? 'Connected' : '--'}
+                  {context?.userData?.email ? 'Da lien ket' : '--'}
                 </strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Bao mat</span>
+                <span className="listing-stat__label">B?o m?t</span>
                 <strong className="listing-stat__value !text-[1.1rem]">
-                  {isChangePasswordFromShow ? 'Editing' : 'Stable'}
+                  {isChangePasswordFromShow ? 'Đang sửa' : 'Ổn định'}
                 </strong>
               </div>
             </div>
@@ -205,8 +205,8 @@ const MyAccount = () => {
             <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6">
               <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <span className="listing-stat__label">Profile settings</span>
-                  <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">My Profile</h2>
+                  <span className="listing-stat__label">Cai dat ho so</span>
+                  <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">Ho so cua toi</h2>
                 </div>
                 <Button
                   className={`!rounded-full !px-5 !py-2 !text-[13px] !font-[800] !capitalize ${
@@ -216,7 +216,7 @@ const MyAccount = () => {
                   }`}
                   onClick={() => setIsChangePasswordFromShow(!isChangePasswordFromShow)}
                 >
-                  {isChangePasswordFromShow ? 'Hide Password Form' : 'Change Password'}
+                  {isChangePasswordFromShow ? 'Ẩn form mật khẩu' : 'Đổi mật khẩu'}
                 </Button>
               </div>
 
@@ -224,7 +224,7 @@ const MyAccount = () => {
                 <div className="grid gap-4 md:grid-cols-2">
                   <TextField
                     type="text"
-                    label="Full Name"
+                    label="Họ tên"
                     variant="outlined"
                     size="small"
                     className="w-full"
@@ -265,7 +265,7 @@ const MyAccount = () => {
                     className="bg-org product-card__cta product-card__cta--primary !px-6"
                     sx={{ width: '190px', height: '46px', fontSize: '14px', whiteSpace: 'nowrap' }}
                   >
-                    {isLoading ? <CircularProgress color="inherit" /> : 'Update Profile'}
+                    {isLoading ? <CircularProgress color="inherit" /> : 'Cap nhat ho so'}
                   </Button>
                 </div>
               </form>
@@ -274,10 +274,10 @@ const MyAccount = () => {
             <Collapse isOpened={isChangePasswordFromShow}>
               <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6">
                 <div className="mb-5">
-                  <span className="listing-stat__label">Security</span>
-                  <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">Change Password</h2>
+                  <span className="listing-stat__label">B?o m?t</span>
+                  <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">Đổi mật khẩu</h2>
                   <p className="mb-0 mt-2 text-[14px] leading-7 text-[#6b7280]">
-                    Cap nhat mat khau moi de tang bao mat cho tai khoan cua ban.
+                    Cập nhật mật khẩu mới để tăng bảo mật cho tài khoản của bạn.
                   </p>
                 </div>
 
@@ -286,7 +286,7 @@ const MyAccount = () => {
                     {context?.userData?.signUpWithGoogle === false && (
                       <TextField
                         type="password"
-                        label="Old Password"
+                        label="Mật khẩu cũ"
                         variant="outlined"
                         size="small"
                         className="w-full"
@@ -299,7 +299,7 @@ const MyAccount = () => {
 
                     <TextField
                       type="password"
-                      label="New Password"
+                      label="Mật khẩu mới"
                       variant="outlined"
                       size="small"
                       className="w-full"
@@ -311,7 +311,7 @@ const MyAccount = () => {
 
                     <TextField
                       type="password"
-                      label="Confirm Password"
+                      label="Xác nhận mật khẩu"
                       variant="outlined"
                       size="small"
                       className="w-full"
@@ -328,7 +328,7 @@ const MyAccount = () => {
                       className="bg-org product-card__cta product-card__cta--primary !px-6"
                       sx={{ width: '200px', height: '46px', fontSize: '14px', whiteSpace: 'nowrap' }}
                     >
-                      {isLoading2 ? <CircularProgress color="inherit" /> : 'Change Password'}
+                      {isLoading2 ? <CircularProgress color="inherit" /> : 'Cập nhật mật khẩu'}
                     </Button>
                   </div>
                 </form>

@@ -81,37 +81,37 @@ const AddAress = () => {
     e.preventDefault();
 
     if (formFields.address_line1 === '') {
-      context.alertBox('error', 'Please enter Address Line 1');
+      context.alertBox('error', 'Vui lòng nhập địa chỉ cụ thể');
       return false;
     }
 
     if (formFields.city === '') {
-      context.alertBox('error', 'Please enter your city name');
+      context.alertBox('error', 'Vui lòng nhập thành phố');
       return false;
     }
 
     if (formFields.state === '') {
-      context.alertBox('error', 'Please enter your state');
+      context.alertBox('error', 'Vui lòng nhập tỉnh/thành');
       return false;
     }
     if (formFields.pincode === '') {
-      context.alertBox('error', 'Please enter your pincode');
+      context.alertBox('error', 'Vui lòng nhập mã bưu chính');
       return false;
     }
     if (formFields.country === '') {
-      context.alertBox('error', 'Please enter your country');
+      context.alertBox('error', 'Vui lòng nhập quốc gia');
       return false;
     }
     if (phone === '') {
-      context.alertBox('error', 'Please enter your 10 digit mobile');
+      context.alertBox('error', 'Vui lòng nhập số điện thoại');
       return false;
     }
     if (formFields.lamdmark === '') {
-      context.alertBox('error', 'Please enter your landmark');
+      context.alertBox('error', 'Vui lòng nhập mốc ghi chú');
       return false;
     }
     if (addressType === '') {
-      context.alertBox('error', 'Please enter your address type');
+      context.alertBox('error', 'Vui lòng chọn loại địa chỉ');
       return false;
     }
 
@@ -128,7 +128,7 @@ const AddAress = () => {
           context?.getUserAddress();
           resetForm();
         } else {
-          context.alertBox('error', res?.message || 'Something went wrong');
+          context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
           setIsLoading(false);
         }
       });
@@ -173,13 +173,13 @@ const AddAress = () => {
     <form className="address-form-shell p-4 md:p-6" onSubmit={handleSubmit}>
       <div className="mb-6">
         <span className="listing-stat__label">
-          {context?.addressMode === 'edit' ? 'Edit location' : 'New location'}
+          {context?.addressMode === 'edit' ? 'Chỉnh sửa địa chỉ' : 'Địa chỉ mới'}
         </span>
         <h2 className="mt-2 text-[22px] font-[800] text-[#1f2937]">
-          {context?.addressMode === 'edit' ? 'Update Address' : 'Add Address'}
+          {context?.addressMode === 'edit' ? 'Cập nhật địa chỉ' : 'Thêm địa chỉ'}
         </h2>
         <p className="mb-0 mt-2 text-[13px] leading-6 text-[#6b7280]">
-          Dien day du thong tin de viec giao hang duoc xu ly nhanh va chinh xac hon.
+          Điền đầy đủ thông tin để việc giao hàng được xử lý nhanh và chính xác hơn.
         </p>
       </div>
 
@@ -187,7 +187,7 @@ const AddAress = () => {
         <div className="md:col-span-2">
           <TextField
             className="w-full"
-            label="Address Line 1"
+            label="Địa chỉ cụ thể"
             variant="outlined"
             size="small"
             name="address_line1"
@@ -198,7 +198,7 @@ const AddAress = () => {
 
         <TextField
           className="w-full"
-          label="City"
+          label="Thành phố"
           variant="outlined"
           size="small"
           name="city"
@@ -208,7 +208,7 @@ const AddAress = () => {
 
         <TextField
           className="w-full"
-          label="State"
+          label="Tinh/Thanh"
           variant="outlined"
           size="small"
           name="state"
@@ -218,7 +218,7 @@ const AddAress = () => {
 
         <TextField
           className="w-full"
-          label="Pincode"
+          label="Ma buu chinh"
           variant="outlined"
           size="small"
           name="pincode"
@@ -228,7 +228,7 @@ const AddAress = () => {
 
         <TextField
           className="w-full"
-          label="Country"
+          label="Quoc gia"
           variant="outlined"
           size="small"
           name="country"
@@ -253,7 +253,7 @@ const AddAress = () => {
         <div className="md:col-span-2">
           <TextField
             className="w-full"
-            label="Landmark"
+            label="Moc ghi chu"
             variant="outlined"
             size="small"
             name="lamdmark"
@@ -269,7 +269,7 @@ const AddAress = () => {
             id="demo-row-radio-buttons-group-label"
             className="!mb-2 !text-[13px] !font-[800] !uppercase !tracking-[0.08em] !text-[#a65434]"
           >
-            Address Type
+            Loại địa chỉ
           </FormLabel>
           <RadioGroup
             row
@@ -279,15 +279,15 @@ const AddAress = () => {
             value={addressType}
             onChange={handleChangeAddressType}
           >
-            <FormControlLabel value="Home" control={<Radio />} label="Home" />
-            <FormControlLabel value="Office" control={<Radio />} label="Office" />
+            <FormControlLabel value="Home" control={<Radio />} label="Nha rieng" />
+            <FormControlLabel value="Office" control={<Radio />} label="Van phong" />
           </RadioGroup>
         </FormControl>
       </div>
 
       <div className="mt-6 flex items-center gap-4">
         <Button type="submit" className="bg-org product-card__cta product-card__cta--primary w-full flex gap-2 items-center">
-          {isLoading === true ? <CircularProgress color="inherit" /> : 'Save Address'}
+          {isLoading === true ? <CircularProgress color="inherit" /> : 'Lưu địa chỉ'}
         </Button>
       </div>
     </form>

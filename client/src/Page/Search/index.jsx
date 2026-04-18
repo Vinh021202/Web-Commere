@@ -20,7 +20,7 @@ const SearchPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedSortVal, setSelectedSortVal] = useState('Sales, highest to lowest');
+  const [selectedSortVal, setSelectedSortVal] = useState('Độ bán chạy giảm dần');
 
   // Lấy tên category từ URL để hiển thị breadcrumb động
   const [searchParams] = useSearchParams();
@@ -28,7 +28,7 @@ const SearchPage = () => {
     searchParams.get('cat') ||
     searchParams.get('subCat') ||
     searchParams.get('thirdsubCat') ||
-    'Products';
+    'Sản phẩm';
 
   const open = Boolean(anchorEl);
 
@@ -40,14 +40,14 @@ const SearchPage = () => {
     setAnchorEl(null);
   };
 
-  // ✅ Sort trực tiếp trên frontend - không cần gọi API
+  // Sort trực tiếp trên frontend - không cần gọi API
   const handleSortBy = (name, order, label) => {
     setSelectedSortVal(label);
 
     const sorted = [...(productsData?.products || [])].sort((a, b) => {
       if (name === 'name') {
         return order === 'asc'
-          ? a.name.localeCompare(b.name) // ✅ localeCompare đúng chính tả
+          ? a.name.localeCompare(b.name) // localeCompare đúng chính tả
           : b.name.localeCompare(a.name);
       }
       if (name === 'price') {
@@ -64,12 +64,12 @@ const SearchPage = () => {
   };
 
   const sortOptions = [
-    { label: 'Sales, highest to lowest', name: 'sale', order: 'desc' },
-    { label: 'Sales, lowest to highest', name: 'sale', order: 'asc' },
-    { label: 'Name, A to Z', name: 'name', order: 'asc' },
-    { label: 'Name, Z to A', name: 'name', order: 'desc' },
-    { label: 'Price, low to high', name: 'price', order: 'asc' },
-    { label: 'Price, high to low', name: 'price', order: 'desc' },
+    { label: 'Độ bán chạy giảm dần', name: 'sale', order: 'desc' },
+    { label: 'Độ bán chạy tăng dần', name: 'sale', order: 'asc' },
+    { label: 'Tên từ A đến Z', name: 'name', order: 'asc' },
+    { label: 'Tên từ Z đến A', name: 'name', order: 'desc' },
+    { label: 'Giá từ thấp đến cao', name: 'price', order: 'asc' },
+    { label: 'Giá từ cao đến thấp', name: 'price', order: 'desc' },
   ];
 
   return (
@@ -84,16 +84,16 @@ const SearchPage = () => {
               href="/"
               className="link transition !text-[14px]"
             >
-              Home
+              Trang chủ
             </Link>
             <span className="text-[14px] text-[rgba(0,0,0,0.6)]">{catName}</span>
           </Breadcrumbs>
         </div>
 
-        <div className="bg-white p-3 mt-4">
+        <div className="mt-4 bg-white p-3">
           <div className="container flex gap-3">
             {/* Sidebar */}
-            <div className="sidebarWrapper w-[20%]  bg-white">
+            <div className="sidebarWrapper w-[20%] bg-white">
               <SideBar
                 productsData={productsData}
                 setProductsData={setProductsData}
@@ -108,14 +108,14 @@ const SearchPage = () => {
             <div className="rightContainer w-[80%] py-3">
               {/* Toolbar */}
               <div
-                className="bg-[#f1f1f1] p-2 w-full mb-4 rounded-md flex items-center justify-between
-               sticky top-[130px] z-[99]"
+                className="sticky top-[130px] z-[99] mb-4 flex w-full items-center justify-between rounded-md bg-[#f1f1f1] p-2"
               >
-                <div className="col1 flex items-center gap-3 itemViewActions">
+                <div className="col1 itemViewActions flex items-center gap-3">
                   {/* List view button */}
                   <Button
-                    className={`!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#000]
-                      ${isItemView === 'list' ? 'active' : ''}`}
+                    className={`!h-[40px] !w-[40px] !min-w-[40px] !rounded-full !text-[#000] ${
+                      isItemView === 'list' ? 'active' : ''
+                    }`}
                     onClick={() => setIsItemView('list')}
                   >
                     <LuMenu className="text-[rgba(0,0,0,0.7)]" />
@@ -123,28 +123,31 @@ const SearchPage = () => {
 
                   {/* Grid view button */}
                   <Button
-                    className={`!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#000]
-                      ${isItemView === 'grid' ? 'active' : ''}`}
+                    className={`!h-[40px] !w-[40px] !min-w-[40px] !rounded-full !text-[#000] ${
+                      isItemView === 'grid' ? 'active' : ''
+                    }`}
                     onClick={() => setIsItemView('grid')}
                   >
                     <IoGridSharp className="text-[rgba(0,0,0,0.7)]" />
                   </Button>
 
-                  <span className="text-[14px] font-[500] pl-3 text-[rgba(0,0,0,0.7)]">
-                    There are spa {productsData?.total || 0} products.
+                  <span className="pl-3 text-[14px] font-[500] text-[rgba(0,0,0,0.7)]">
+                    Có {productsData?.total || 0} sản phẩm.
                   </span>
                 </div>
 
                 {/* Sort */}
                 <div className="col2 ml-auto flex items-center justify-end gap-3 pr-4">
-                  <span className="text-[14px] font-[500] text-[rgba(0,0,0,0.7)]">Sort By</span>
+                  <span className="text-[14px] font-[500] text-[rgba(0,0,0,0.7)]">
+                    Sắp xếp theo
+                  </span>
                   <Button
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
-                    className="!bg-white !text-[12px] !text-[#000] !capitalize !border !border-[#d3c5c5]"
+                    className="!border !border-[#d3c5c5] !bg-white !text-[12px] !capitalize !text-[#000]"
                   >
                     {selectedSortVal}
                   </Button>
@@ -160,7 +163,7 @@ const SearchPage = () => {
                       <MenuItem
                         key={opt.label}
                         onClick={() => handleSortBy(opt.name, opt.order, opt.label)}
-                        className="!text-[13px] !text-[#000] !capitalize"
+                        className="!text-[13px] !capitalize !text-[#000]"
                       >
                         {opt.label}
                       </MenuItem>
@@ -204,7 +207,7 @@ const SearchPage = () => {
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-center mt-10">
+                <div className="mt-10 flex items-center justify-center">
                   <Pagination
                     showFirstButton
                     showLastButton

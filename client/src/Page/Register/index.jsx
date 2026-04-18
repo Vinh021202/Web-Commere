@@ -63,19 +63,19 @@ const Register = () => {
     setIsLoading(true);
 
     if (formFields.name === '') {
-      context.alertBox('error', 'Please enter full name');
+      context.alertBox('error', 'Vui lòng nhập họ tên');
       setIsLoading(false);
       return false;
     }
 
     if (formFields.email === '') {
-      context.alertBox('error', 'Please enter email id');
+      context.alertBox('error', 'Vui lòng nhập email');
       setIsLoading(false);
       return false;
     }
 
     if (formFields.password === '') {
-      context.alertBox('error', 'Please enter password');
+      context.alertBox('error', 'Vui lòng nhập mật khẩu');
       setIsLoading(false);
       return false;
     }
@@ -92,7 +92,7 @@ const Register = () => {
         });
         history('/Verify');
       } else {
-        context.alertBox('error', res?.message || 'Something went wrong');
+        context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
         setIsLoading(false);
       }
     });
@@ -115,7 +115,7 @@ const Register = () => {
           context.setIsLogin(true);
           history('/');
         } else {
-          context.alertBox('error', res?.message || 'Something went wrong');
+          context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
           setIsLoading(false);
         }
       })
@@ -134,35 +134,35 @@ const Register = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.12),transparent_24%)]" />
             <div className="relative z-10">
               <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-[700] uppercase tracking-[0.14em] text-white/90">
-                Create account
+                Tạo tài khoản
               </span>
               <h1 className="mt-4 max-w-[390px] text-[28px] font-[800] leading-tight md:text-[36px]">
-                Start your account and save the products you love.
+                Tạo tài khoản để lưu sản phẩm bạn yêu thích.
               </h1>
               <p className="mt-3 max-w-[430px] text-[14px] leading-6 text-white/80">
-                Join once to get a smoother checkout flow, saved favorites, and faster order tracking.
+                Đăng ký một lần để thanh toán nhanh hơn, lưu danh sách yêu thích và theo dõi đơn hàng dễ dàng.
               </p>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <HiOutlineSparkles className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Personalized</h3>
+                  <h3 className="mt-3 text-[14px] font-[700]">Cá nhân hóa</h3>
                   <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Get a cleaner shopping flow tailored to your account.
+                    Trải nghiệm mua sắm gọn gàng hơn theo tài khoản của bạn.
                   </p>
                 </div>
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiHeart className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Wishlist ready</h3>
+                  <h3 className="mt-3 text-[14px] font-[700]">Sẵn sàng lưu yêu thích</h3>
                   <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Save favorite items and revisit them any time.
+                    Lưu sản phẩm ưa thích và xem lại bất cứ lúc nào.
                   </p>
                 </div>
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiGift className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Member perks</h3>
+                  <h3 className="mt-3 text-[14px] font-[700]">Ưu đãi thành viên</h3>
                   <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Unlock offers, order updates, and better support access.
+                    Nhận ưu đãi, cập nhật đơn hàng và hỗ trợ nhanh hơn.
                   </p>
                 </div>
               </div>
@@ -173,13 +173,13 @@ const Register = () => {
             <div className="mx-auto max-w-[460px]">
               <div className="mb-7">
                 <p className="mb-2 text-[12px] font-[700] uppercase tracking-[0.16em] text-[#ff5252]">
-                  New member
+                  Thành viên mới
                 </p>
                 <h2 className="text-[28px] font-[800] leading-tight text-[#1f2937] md:text-[30px]">
-                  Register your account
+                  Đăng ký tài khoản
                 </h2>
                 <p className="mb-0 mt-3 text-[13px] leading-6 text-[#6b7280]">
-                  Fill in your details below to create an account and continue to OTP verification.
+                  Điền thông tin bên dưới để tạo tài khoản và tiếp tục xác minh OTP.
                 </p>
               </div>
 
@@ -191,7 +191,7 @@ const Register = () => {
                     name="name"
                     value={formFields.name}
                     disabled={isLoading}
-                    label="Full Name*"
+                    label="Họ tên*"
                     variant="outlined"
                     className="w-full"
                     onChange={onChangeInput}
@@ -206,7 +206,7 @@ const Register = () => {
                     name="email"
                     value={formFields.email}
                     disabled={isLoading}
-                    label="Email Id*"
+                    label="Email*"
                     variant="outlined"
                     className="w-full"
                     onChange={onChangeInput}
@@ -221,7 +221,7 @@ const Register = () => {
                     name="password"
                     value={formFields.password}
                     disabled={isLoading}
-                    label="Password*"
+                    label="Mật khẩu*"
                     variant="outlined"
                     className="w-full"
                     onChange={onChangeInput}
@@ -241,15 +241,15 @@ const Register = () => {
 
                 <div className="mb-4 flex items-center w-full">
                   <Button type="submit" disabled={!valideValue} className="bg-org flex w-full gap-3 !text-[16px]">
-                    {isLoading === true ? <CircularProgress color="inherit" /> : 'Create Account'}
+                    {isLoading === true ? <CircularProgress color="inherit" /> : 'Tạo tài khoản'}
                   </Button>
                 </div>
 
                 <div className="mb-5 text-center">
                   <p className="mb-0 text-[13px] text-[#6b7280]">
-                    Already have an account?{' '}
+                    Đã có tài khoản?{' '}
                     <Link className="text-primary text-[14px] font-[700]" to={'/Login'}>
-                      Login
+                      Đăng nhập
                     </Link>
                   </p>
                 </div>
@@ -260,7 +260,7 @@ const Register = () => {
                   </div>
                   <div className="relative flex justify-center">
                     <span className="bg-[#fff8f5] px-4 text-[13px] font-[600] text-[#6b7280]">
-                      Or continue with
+                      Hoặc tiếp tục với
                     </span>
                   </div>
                 </div>
@@ -272,7 +272,7 @@ const Register = () => {
                   onClick={authWithGoogle}
                 >
                   <FcGoogle className="text-[22px]" />
-                  Sign up with Google
+                  Đăng ký với Google
                 </Button>
               </form>
             </div>

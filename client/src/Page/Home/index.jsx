@@ -122,7 +122,7 @@ const Home = () => {
           <div className="section-shell subtle-grid home-hero overflow-hidden px-4 py-5 md:px-8 md:py-8 xl:px-10 xl:py-10">
             <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start xl:grid-cols-[1.15fr_0.85fr]">
               <div className="relative">
-                <span className="eyebrow mb-5">Spring edit 2026</span>
+                <span className="eyebrow mb-5">B? s?u t?p mua xuan 2026</span>
                 <h1 className="section-heading home-hero-title max-w-[760px]">
                   Trang chủ mới gọn hơn, sang hơn và dẫn mắt tốt hơn cho từng nhóm sản phẩm.
                 </h1>
@@ -183,7 +183,7 @@ const Home = () => {
                 ))}
 
                 <div className="home-editorial-panel">
-                  <span className="home-editorial-panel__tag">Layout notes</span>
+                  <span className="home-editorial-panel__tag">Ghi chu b? c?c</span>
                   <h3 className="mt-4 text-[24px] font-[800] leading-[1.2] text-white md:text-[26px] xl:text-[28px]">
                     Một mặt tiền rõ nhịp giúp người dùng thấy nhanh đâu là thứ đáng bấm.
                   </h3>
@@ -203,8 +203,8 @@ const Home = () => {
           <div className="section-shell px-4 py-5 md:px-8 md:py-7 xl:px-10 xl:py-8">
             <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div className="leftSec">
-                <span className="eyebrow mb-4">Best sellers</span>
-                <h2 className="section-heading">Popular Products</h2>
+                <span className="eyebrow mb-4">Bán chạy</span>
+                <h2 className="section-heading">Sản phẩm phổ biến</h2>
                 <p className="mb-0 mt-2 text-[14px] font-[400]">
                   Những danh mục đang được xem nhiều nhất và có khả năng chuyển đổi tốt trong tuần này.
                 </p>
@@ -216,7 +216,7 @@ const Home = () => {
                   onChange={handleChange}
                   variant="scrollable"
                   scrollButtons="auto"
-                  aria-label="popular product tabs"
+                aria-label="tab sản phẩm phổ biến"
                   className="home-tabs"
                 >
                   {context?.catData?.length !== 0 &&
@@ -251,7 +251,7 @@ const Home = () => {
           <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6 xl:px-7 xl:py-7">
             <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
-                <span className="eyebrow mb-4">Spotlight</span>
+                <span className="eyebrow mb-4">Noi bat</span>
                 <h2 className="section-heading">Gợi ý được tuyển chọn để tăng chuyển đổi</h2>
               </div>
               <p className="muted-copy max-w-[420px] text-[14px] leading-7">
@@ -292,21 +292,21 @@ const Home = () => {
                 </div>
                 <div>
                   <span className="text-[13px] font-[700] uppercase tracking-[0.12em] text-[#ff5252]">
-                    Member perk
+                    Ưu đãi thành viên
                   </span>
                   <span className="block text-[22px] font-[800] uppercase text-[#1f2937]">
-                    Free Shipping
+                    Miễn phí vận chuyển
                   </span>
                 </div>
               </div>
 
               <div className="col2">
                 <p className="m-0 text-[15px] font-[500]">
-                  Free delivery on your first order and all carts above 200 USD.
+                  Miễn phí giao hàng cho đơn đầu tiên và mọi giỏ hàng từ 200 USD.
                 </p>
               </div>
 
-              <p className="m-0 text-[24px] font-bold text-[#1f2937]">From $200</p>
+              <p className="m-0 text-[24px] font-bold text-[#1f2937]">Tu 200 USD</p>
             </div>
 
             {bannerV1Data?.length !== 0 && <AdsBannerSliderV2 items={4} data={bannerV1Data} />}
@@ -319,8 +319,8 @@ const Home = () => {
           <div className="section-shell px-4 py-5 md:px-8 md:py-7 xl:px-10 xl:py-8">
             <div className="mb-2 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
-                <span className="eyebrow mb-4">Just landed</span>
-                <h2 className="section-heading">Latest Products</h2>
+                <span className="eyebrow mb-4">Moi cap nhat</span>
+                <h2 className="section-heading">Sản phẩm mới nhat</h2>
               </div>
               <p className="muted-copy max-w-[420px] text-[14px] leading-7">
                 Sản phẩm mới được ưu tiên hiển thị với khoảng thở rộng hơn và banner hỗ trợ ngay bên dưới.
@@ -340,8 +340,8 @@ const Home = () => {
           <div className="section-shell px-4 py-5 md:px-8 md:py-7 xl:px-10 xl:py-8">
             <div className="mb-2 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
-                <span className="eyebrow mb-4">Editor picks</span>
-                <h2 className="section-heading">Featured Products</h2>
+                <span className="eyebrow mb-4">Lua chon bien tap</span>
+                <h2 className="section-heading">Sản phẩm nổi bật</h2>
               </div>
               <p className="muted-copy max-w-[420px] text-[14px] leading-7">
                 Nhóm nổi bật được tách riêng để tạo điểm nhấn rõ hơn và giữ cảm giác cao cấp hơn.
@@ -360,8 +360,8 @@ const Home = () => {
             <div className="section-shell px-4 py-5 md:px-8 md:py-7 xl:px-10 xl:py-8">
               <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
-                  <span className="eyebrow mb-4">Journal</span>
-                  <h2 className="section-heading mb-0">From The Blog</h2>
+                  <span className="eyebrow mb-4">Tap chi</span>
+                  <h2 className="section-heading mb-0">Tu blog cua chung toi</h2>
                 </div>
                 <p className="muted-copy max-w-[420px] text-[14px] leading-7">
                   Góc nội dung được làm mềm hơn để kết nối cảm hứng mua sắm với câu chuyện thương hiệu.

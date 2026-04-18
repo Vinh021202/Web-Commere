@@ -34,7 +34,7 @@ const ProductDetailsComponent = (props) => {
 
   const addToCart = (product, userId, quantity) => {
     if (userId === undefined) {
-      context?.alertBox('error', 'you are not login please login first');
+      context?.alertBox('error', 'Bạn chưa đăng nhập, vui lòng đăng nhập trước');
       return false;
     }
 
@@ -42,7 +42,7 @@ const ProductDetailsComponent = (props) => {
       setTabError(true);
       context?.alertBox(
         'error',
-        hasSizeOptions ? 'Please select a size first' : 'Please select an option first'
+        hasSizeOptions ? 'Vui lòng chọn kích thước trước' : 'Vui lòng chọn tùy chọn trước'
       );
       return false;
     }
@@ -86,11 +86,11 @@ const ProductDetailsComponent = (props) => {
         <h1 className="mb-2 text-[24px] font-[600]">{props?.item?.name}</h1>
         <div className="flex items-center gap-3">
           <span className="text-[13px] text-gray-400">
-            Brands :<span className="font-[500] text-black opacity-75"> {props?.item?.brand}</span>
+            Thương hiệu :<span className="font-[500] text-black opacity-75"> {props?.item?.brand}</span>
           </span>
           <Rating name="size-small" defaultValue={4} size="small" readOnly />
           <span className="cursor-pointer text-[13px] text-gray-500" onClick={props?.gotoReviews}>
-            Review ({props?.reviewsCount})
+            Đánh giá ({props?.reviewsCount})
           </span>
         </div>
         <div className="mt-4 flex items-center gap-4">
@@ -101,7 +101,7 @@ const ProductDetailsComponent = (props) => {
             &#8363; {props?.item?.oldPrice}
           </span>
           <span className="text-[14px]">
-            Available In Stock:
+            Số lượng ton kho:
             <span className="font-bold text-green-600"> {props?.item?.countInStock}</span>
           </span>
         </div>
@@ -180,11 +180,11 @@ const ProductDetailsComponent = (props) => {
 
         {tabError && !selectedTabName && (
           <p className="product-option-error mb-0 mt-3">
-            {hasSizeOptions ? 'Vui long chon size truoc khi them vao gio hang.' : 'Vui long chon mot tuy chon truoc khi them vao gio hang.'}
+            {hasSizeOptions ? 'Vui lòng chọn size trước khi thêm vào giỏ hàng.' : 'Vui lòng chọn một tùy chọn trước khi thêm vào giỏ hàng.'}
           </p>
         )}
 
-        <p className="mb-2 mt-5 !text-[#000] text-[14px]">Free Shipping (Est. Delivery Time 2-3 Days)</p>
+        <p className="mb-2 mt-5 !text-[#000] text-[14px]">Miễn phí vận chuyển (du kien giao trong 2-3 ngay)</p>
         <div className="flex items-center gap-4 py-4">
           <div className="qtyBoxWrapper w-[70px]">
             <QtyBox handleSelecteQty={handleSelecteQty} />
@@ -198,7 +198,7 @@ const ProductDetailsComponent = (props) => {
             ) : (
               <>
                 <MdOutlineShoppingCart className="text-[22px]" />
-                Add To Cart
+                Thêm vào giỏ hàng
               </>
             )}
           </Button>
@@ -206,11 +206,11 @@ const ProductDetailsComponent = (props) => {
         <div className="mt-4 flex items-center gap-4">
           <span className="link flex cursor-pointer items-center gap-2 text-[15px] font-[500]">
             <FaRegHeart className="text-[18px]" />
-            Add to Wishlist
+            Thêm vao yeu thich
           </span>
           <span className="link flex cursor-pointer items-center gap-2 text-[15px] font-[500]">
             <IoIosGitCompare className="text-[18px]" />
-            Add to Compare
+            Thêm vao so sanh
           </span>
         </div>
       </div>

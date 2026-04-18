@@ -90,7 +90,7 @@ function App() {
           localStorage.removeItem('accesstoken');
           localStorage.removeItem('refreshToken');
 
-          alertBox('error', 'Your session is closed please login again');
+          alertBox('error', 'Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại');
 
           window.location.href = '/login';
         }
@@ -140,7 +140,7 @@ function App() {
 
   const addToCart = (product, userId, quantity) => {
     if (userId === undefined) {
-      alertBox('error', 'you are not login please login first');
+      alertBox('error', 'Bạn chưa đăng nhập, vui lòng đăng nhập trước');
 
       return false;
     }

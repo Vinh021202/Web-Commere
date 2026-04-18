@@ -65,7 +65,7 @@ const Header = () => {
           <div className="flex flex-col gap-1.5 md:flex-row md:items-center md:justify-between">
             <div className="col1">
               <p className="m-0 text-[10px] font-[700] uppercase tracking-[0.08em] text-[#ff5252] sm:text-[11px]">
-                Curated deals for modern living
+                Ưu đãi chọn lọc cho phong cách sống hiện đại
               </p>
             </div>
             <div className="col2 flex items-center justify-end">
@@ -73,12 +73,12 @@ const Header = () => {
                 <ul className="flex items-center gap-3">
                   <li className="list-none">
                     <Link to="/help-center" className="text-[12px] link font-[500] transform md:text-[13px]">
-                      Help Center
+                      Trung tâm hỗ trợ
                     </Link>
                   </li>
                   <li className="list-none">
                     <Link to="/order-tracking" className="text-[12px] link font-[500] transform md:text-[13px]">
-                      Order Tracking
+                      Theo dõi đơn hàng
                     </Link>
                   </li>
                 </ul>
@@ -100,10 +100,10 @@ const Header = () => {
             </Link>
             <div className="hidden 2xl:block">
               <p className="mb-1 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#ff5252]">
-                Elevated shopping
+                Trải nghiệm mua sắm
               </p>
               <h2 className="text-[16px] font-[800] leading-tight text-[#1f2937]">
-                Nhanh, gon va tinh te hon
+                Nhanh, gọn và tinh tế hơn
               </h2>
             </div>
           </div>
@@ -117,14 +117,14 @@ const Header = () => {
                   to="/login"
                   className="text-[12px] font-[700] text-[#1f2937] transition hover:text-[#ff5252] sm:text-[13px]"
                 >
-                  Login
+                  Đăng nhập
                 </Link>
                 <span className="text-[12px] font-[600] text-gray-400">/</span>
                 <Link
                   to="/Register"
                   className="text-[12px] font-[700] text-[#1f2937] transition hover:text-[#ff5252] sm:text-[13px]"
                 >
-                  Register
+                  Đăng ký
                 </Link>
               </div>
             ) : (
@@ -206,7 +206,7 @@ const Header = () => {
                         <FaRegUser className="text-[16px]" />
                       </span>
                       <span className="account-menu__itemText">
-                        <strong>My Account</strong>
+                        <strong>Tài khoản của tôi</strong>
                       </span>
                     </MenuItem>
                   </Link>
@@ -216,7 +216,7 @@ const Header = () => {
                         <IoBagCheckOutline className="text-[16px]" />
                       </span>
                       <span className="account-menu__itemText">
-                        <strong>Orders</strong>
+                        <strong>Đơn hàng</strong>
                       </span>
                     </MenuItem>
                   </Link>
@@ -226,7 +226,7 @@ const Header = () => {
                         <FaRegHeart className="text-[16px]" />
                       </span>
                       <span className="account-menu__itemText">
-                        <strong>My List</strong>
+                        <strong>Danh sách yêu thích</strong>
                       </span>
                     </MenuItem>
                   </Link>
@@ -235,8 +235,8 @@ const Header = () => {
                       <IoIosLogOut className="text-[16px]" />
                     </span>
                     <span className="account-menu__itemText">
-                      <strong>Logout</strong>
-                      <small>Sign out from this session</small>
+                      <strong>Đăng xuất</strong>
+                      <small>Thoát khỏi phiên đăng nhập này</small>
                     </span>
                   </MenuItem>
                 </Menu>

@@ -28,8 +28,8 @@ const ProductsItem = (props) => {
 
   const primaryImage = props?.item?.images?.[0] || '/bannerBox1.jpg';
   const hoverImage = props?.item?.images?.[1] || primaryImage;
-  const brandName = props?.item?.brand || 'Collection';
-  const productName = props?.item?.name || 'San pham noi bat';
+  const brandName = props?.item?.brand || 'B? s?u t?p';
+  const productName = props?.item?.name || 'Sản phẩm nổi bật';
   const hasVariantOptions =
     props?.item?.size?.length !== 0 ||
     props?.item?.productRam?.length !== 0 ||
@@ -74,7 +74,7 @@ const ProductsItem = (props) => {
 
     if (hasVariantOptions && !selectedTabName) {
       setIsShowTabs(true);
-      context?.alertBox('error', hasSizeOptions ? 'Please select a size first' : 'Please select an option first');
+      context?.alertBox('error', hasSizeOptions ? 'Vui lòng chọn kích thước trước' : 'Vui lòng chọn tùy chọn trước');
       return;
     }
 
@@ -126,7 +126,7 @@ const ProductsItem = (props) => {
     if (quantity === 1) {
       deleteData(`/api/cart/delete-cart-item/${cartItem[0]?._id}`).then(() => {
         setIsAdded(false);
-        context.alertBox('success', 'Item Removed');
+        context.alertBox('success', 'Đã xóa sản phẩm');
         context?.getCartItems();
         setIsShowTabs(false);
         setActiveTab(null);
@@ -162,7 +162,7 @@ const ProductsItem = (props) => {
 
   const handleAddToMyList = (item) => {
     if (context?.userData === null) {
-      context?.alertBox('error', 'you are not login please login first');
+      context?.alertBox('error', 'Bạn chưa đăng nhập, vui lòng đăng nhập trước');
       return false;
     }
 
@@ -209,7 +209,7 @@ const ProductsItem = (props) => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.28),transparent_36%)]" />
             <div className="absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(17,24,39,0.26)_100%)]" />
             <div className="product-card__image-badge absolute bottom-[12px] left-[12px] z-40 rounded-full px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.08em] text-white">
-              {isInStock ? 'Ready to ship' : 'Sold out'}
+              {isInStock ? 'S?n s?ng giao' : 'Het hang'}
             </div>
           </div>
         </Link>
@@ -245,7 +245,7 @@ const ProductsItem = (props) => {
           )}
           {hasVariantOptions && (
             <span className="rounded-full bg-white/88 px-2.5 py-1 text-[10px] font-[800] uppercase tracking-[0.06em] text-[#7c553d] shadow-[0_10px_20px_rgba(255,255,255,0.24)]">
-              Options
+              Tuy chon
             </span>
           )}
         </div>
@@ -306,7 +306,7 @@ const ProductsItem = (props) => {
             />
             <span className="text-[11px] font-[700] text-[#6b7280]">({ratingValue})</span>
           </div>
-          <span className="text-[10px] font-[700] text-[#8b5e3c]">Premium</span>
+          <span className="text-[10px] font-[700] text-[#8b5e3c]">Noi bat</span>
         </div>
 
         <div className="product-card__meta product-card__priceBlock mt-3 rounded-[18px] p-3">
@@ -318,7 +318,7 @@ const ProductsItem = (props) => {
                 </span>
               ) : (
                 <span className="text-[10px] font-[700] uppercase tracking-[0.06em] text-[#7c553d]">
-                  Gia uu dai
+                  Giá ưu đãi
                 </span>
               )}
               <span className="price text-[15px] font-[800] leading-5 text-primary">{priceText}</span>
@@ -326,14 +326,14 @@ const ProductsItem = (props) => {
 
             {props?.item?.discount && (
               <span className="rounded-full border border-[rgba(255,82,82,0.16)] bg-white px-2 py-1 text-[9px] font-[800] uppercase tracking-[0.06em] text-[#ff5252]">
-                Hot deal
+                Ưu đãi hot
               </span>
             )}
           </div>
 
           <div className="mt-2 flex items-center justify-between gap-2 text-[10px] font-[700] text-[#6b7280]">
-            <span>Fast ship</span>
-            <span>Authentic</span>
+            <span>Giao nhanh</span>
+            <span>Chinh hang</span>
           </div>
         </div>
 
@@ -344,14 +344,14 @@ const ProductsItem = (props) => {
               size="small"
               onClick={() => addToCart(props?.item, context?.userData?._id, quantity)}
             >
-              <MdOutlineShoppingCart className="text-[16px]" /> Add
+              <MdOutlineShoppingCart className="text-[16px]" /> Thêm
             </Button>
           ) : (
             <>
               {isLoading === true ? (
                 <Button className="bg-org product-card__cta product-card__cta--primary flex w-full gap-2" size="small">
                   <CircularProgress />
-                  <MdOutlineShoppingCart className="text-[16px]" /> Add
+                  <MdOutlineShoppingCart className="text-[16px]" /> Thêm
                 </Button>
               ) : (
                 <div className="product-card__qty flex items-center justify-between overflow-hidden rounded-full border border-[rgba(255,82,82,0.14)] bg-[#fff8f5]">

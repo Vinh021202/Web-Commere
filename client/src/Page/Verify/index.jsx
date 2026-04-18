@@ -19,22 +19,22 @@ const Verify = () => {
   const pageCopy = useMemo(() => {
     if (isForgotPasswordFlow) {
       return {
-        badge: 'Security verification',
-        title: 'Verify your reset code',
-        subtitle: 'Enter the OTP sent to your email address to continue with password recovery.',
-        button: 'Verify Code',
-        sideTitle: 'One quick step before you reset your password.',
-        sideText: 'The verification code helps us confirm that the password reset request belongs to you.',
+        badge: 'Xác minh bảo mật',
+        title: 'Xác minh mã đặt lại',
+        subtitle: 'Nhập mã OTP đã được gửi tới email của bạn để tiếp tục khôi phục mật khẩu.',
+        button: 'Xác minh mã',
+        sideTitle: 'Chỉ còn một bước nữa trước khi đặt lại mật khẩu.',
+        sideText: 'Mã xác minh giúp chúng tôi xác nhận yêu cầu đặt lại mật khẩu này là của bạn.',
       };
     }
 
     return {
-      badge: 'Email confirmation',
-      title: 'Verify your account',
-      subtitle: 'Enter the OTP sent to your email address to complete registration and activate your account.',
-      button: 'Verify OTP',
-      sideTitle: 'Your account is almost ready.',
-      sideText: 'Use the verification code from your inbox to finish setup and unlock your account.',
+      badge: 'Xác nhận email',
+      title: 'Xác minh tài khoản',
+      subtitle: 'Nhập mã OTP đã được gửi tới email của bạn để hoàn tất đăng ký và kích hoạt tài khoản.',
+      button: 'Xác minh OTP',
+      sideTitle: 'Tài khoản của bạn đã gần sẵn sàng.',
+      sideText: 'Sử dụng mã xác minh trong hộp thư để hoàn tất thiết lập và mở khóa tài khoản.',
     };
   }, [isForgotPasswordFlow]);
 
@@ -93,16 +93,16 @@ const Verify = () => {
               <div className="mt-6 grid gap-3">
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiMail className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Check your inbox</h3>
+                  <h3 className="mt-3 text-[14px] font-[700]">Kiểm tra hộp thư</h3>
                   <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    We sent a six-digit code to the email linked to this flow.
+                    Chúng tôi đã gửi mã gồm 6 chữ số tới email đang được sử dụng.
                   </p>
                 </div>
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <HiOutlineShieldCheck className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Fast verification</h3>
+                  <h3 className="mt-3 text-[14px] font-[700]">Xác minh nhanh</h3>
                   <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Enter the code once to continue securely to the next step.
+                    Nhập mã một lần để tiếp tục an toàn sang bước kế tiếp.
                   </p>
                 </div>
               </div>
@@ -113,7 +113,7 @@ const Verify = () => {
             <div className="mx-auto max-w-[460px]">
               <div className="mb-7">
                 <p className="mb-2 text-[12px] font-[700] uppercase tracking-[0.16em] text-[#ff5252]">
-                  OTP confirmation
+                  Xác nhận OTP
                 </p>
                 <h2 className="text-[28px] font-[800] leading-tight text-[#1f2937] md:text-[30px]">
                   {pageCopy.title}
@@ -129,8 +129,8 @@ const Verify = () => {
                     <FiKey className="text-[22px]" />
                   </div>
                   <div>
-                    <h3 className="text-[15px] font-[700] text-[#1f2937]">Code destination</h3>
-                    <p className="mb-0 mt-1 text-[13px] text-[#6b7280]">{userEmail || 'No email found'}</p>
+                    <h3 className="text-[15px] font-[700] text-[#1f2937]">Email nhận mã</h3>
+                    <p className="mb-0 mt-1 text-[13px] text-[#6b7280]">{userEmail || 'Không tìm thấy email'}</p>
                   </div>
                 </div>
 

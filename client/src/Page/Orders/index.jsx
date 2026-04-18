@@ -33,36 +33,36 @@ const Orders = () => {
 
           <div className="relative flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
             <div className="max-w-[760px]">
-              <span className="eyebrow">Order history</span>
+              <span className="eyebrow">Lịch sử đơn hàng</span>
               <h1 className="section-heading mt-4 max-w-[700px]">
-                Theo doi don hang trong mot bo cuc ro rang, de xem nhanh va de doi chieu hon.
+                Theo dõi đơn hàng trong mot b? c?c r? r?ng, de xem nhanh va de doi chieu hon.
               </h1>
               <p className="muted-copy mt-4 max-w-[620px] text-[15px] leading-7">
-                Xem trang thai, tong tien, thong tin giao nhan va chi tiet san pham cua tung don
+                Xem trạng thái, tổng tiền, thông tin giao nhận và chi tiết sản phẩm của từng đơn
                 ngay tai mot noi.
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
-                <span className="listing-chip">Order summary</span>
-                <span className="listing-chip">Delivery info</span>
-                <span className="listing-chip">Expandable products</span>
+                <span className="listing-chip">Tóm tắt đơn hàng</span>
+                <span className="listing-chip">Thong tin giao nhan</span>
+                <span className="listing-chip">Chi tiết sản phẩm</span>
               </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 xl:min-w-[460px]">
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Tong don hang</span>
+                <span className="listing-stat__label">Tổng đơn hàng</span>
                 <strong className="listing-stat__value !text-[1.2rem]">{orders?.length || 0}</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Trang thai</span>
+                <span className="listing-stat__label">Tr?ng th?i</span>
                 <strong className="listing-stat__value !text-[1.2rem]">
-                  {orders?.length > 0 ? 'Tracked' : 'Empty'}
+                  {orders?.length > 0 ? 'Đang theo dõi' : 'Trống'}
                 </strong>
               </div>
               <div className="soft-card p-4">
                 <span className="listing-stat__label">Che do</span>
-                <strong className="listing-stat__value !text-[1.2rem]">My orders</strong>
+                <strong className="listing-stat__value !text-[1.2rem]">Don cua toi</strong>
               </div>
             </div>
           </div>
@@ -75,11 +75,11 @@ const Orders = () => {
 
           <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6">
             <div className="mb-5">
-              <span className="listing-stat__label">Purchase history</span>
-              <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">My Orders</h2>
+              <span className="listing-stat__label">Lich su mua hang</span>
+              <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">Đơn hàng của tôi</h2>
               <p className="mb-0 mt-2 text-[14px] leading-7 text-[#6b7280]">
-                There are <span className="font-[800] text-primary">{orders?.length || 0}</span>{' '}
-                orders in your history.
+                Ban co <span className="font-[800] text-primary">{orders?.length || 0}</span> don
+                hang trong lich su mua s?m.
               </p>
             </div>
 
@@ -94,7 +94,7 @@ const Orders = () => {
                       <div className="flex-1">
                         <div className="mb-3 flex flex-wrap items-center gap-3">
                           <span className="inline-flex rounded-full bg-[#fff1eb] px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                            Order
+                            Đơn hàng
                           </span>
                           <Badge status={order?.order_status} />
                           <span className="inline-flex rounded-full bg-white px-3 py-1 text-[11px] font-[700] text-[#7c553d]">
@@ -105,7 +105,7 @@ const Orders = () => {
                         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                           <div>
                             <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                              Order ID
+                              Ma don
                             </span>
                             <p className="mb-0 mt-2 break-all text-[13px] font-[700] text-[#1f2937]">
                               {order?._id}
@@ -114,16 +114,16 @@ const Orders = () => {
 
                           <div>
                             <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                              Payment
+                              Thanh toán
                             </span>
                             <p className="mb-0 mt-2 break-all text-[13px] font-[700] text-[#1f2937]">
-                              {order?.paymentId ? order?.paymentId : 'Cash on delivery'}
+                              {order?.paymentId ? order?.paymentId : 'Thanh toán khi nhan hang'}
                             </p>
                           </div>
 
                           <div>
                             <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                              Total amount
+                              T?ng ti?n
                             </span>
                             <p className="mb-0 mt-2 text-[15px] font-[800] text-primary">
                               {Number(order?.totalAmt || 0).toLocaleString('vi-VN', {
@@ -136,7 +136,7 @@ const Orders = () => {
 
                           <div>
                             <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                              Customer
+                              Khach hang
                             </span>
                             <p className="mb-0 mt-2 text-[13px] font-[700] text-[#1f2937]">
                               {order?.userId?.name}
@@ -151,7 +151,7 @@ const Orders = () => {
 
                           <div className="md:col-span-2">
                             <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                              Delivery address
+                              Địa chỉ giao hàng
                             </span>
                             <p className="mb-0 mt-2 text-[13px] leading-7 text-[#4b5563]">
                               {`${order?.delivery_address?.address_line1 || ''}, ${order?.delivery_address?.city || ''}, ${order?.delivery_address?.lamdmark || ''}, ${order?.delivery_address?.state || ''}, ${order?.delivery_address?.country || ''}, ${order?.delivery_address?.pincode || ''}`}
@@ -167,12 +167,12 @@ const Orders = () => {
                         {isOpenOrderdProduct === index ? (
                           <>
                             <FaAngleUp className="mr-2 text-[14px]" />
-                            Hide products
+                            Ẩn sản phẩm
                           </>
                         ) : (
                           <>
                             <FaAngleDown className="mr-2 text-[14px]" />
-                            View products
+                            Xem sản phẩm
                           </>
                         )}
                       </Button>
@@ -189,7 +189,7 @@ const Orders = () => {
                               <div className="h-[74px] w-[74px] overflow-hidden rounded-[16px] bg-[#fff8f5]">
                                 <img
                                   src={item?.image}
-                                  alt={item?.productTitle || 'Product image'}
+                                  alt={item?.productTitle || 'Ảnh sản phẩm'}
                                   className="h-full w-full object-cover"
                                 />
                               </div>
@@ -199,14 +199,14 @@ const Orders = () => {
                                   {item?.productTitle}
                                 </p>
                                 <p className="mb-0 mt-1 break-all text-[11px] text-[#6b7280]">
-                                  Product ID: {item?._id}
+                                  Mã sản phẩm: {item?._id}
                                 </p>
                               </div>
 
                               <div className="grid gap-3 sm:grid-cols-3 md:min-w-[320px]">
                                 <div>
                                   <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                                    Quantity
+                                    Số lượng
                                   </span>
                                   <p className="mb-0 mt-1 text-[13px] font-[700] text-[#1f2937]">
                                     {item?.quantity}
@@ -214,7 +214,7 @@ const Orders = () => {
                                 </div>
                                 <div>
                                   <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                                    Price
+                                    Gia
                                   </span>
                                   <p className="mb-0 mt-1 text-[13px] font-[700] text-[#1f2937]">
                                     {item?.price?.toLocaleString('vi-VN', {
@@ -226,7 +226,7 @@ const Orders = () => {
                                 </div>
                                 <div>
                                   <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                                    Sub total
+                                    Tạm tính
                                   </span>
                                   <p className="mb-0 mt-1 text-[13px] font-[800] text-primary">
                                     {(item?.price * item?.quantity)?.toLocaleString('vi-VN', {
@@ -246,9 +246,9 @@ const Orders = () => {
                 ))
               ) : (
                 <div className="rounded-[28px] border border-dashed border-[rgba(255,82,82,0.16)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-10 text-center">
-                  <h3 className="text-[22px] font-[800] text-[#1f2937]">Chua co don hang nao</h3>
+                  <h3 className="text-[22px] font-[800] text-[#1f2937]">Chưa có đơn hàng nào</h3>
                   <p className="mb-0 mt-3 text-[14px] leading-7 text-[#6b7280]">
-                    Khi ban mua hang, lich su don hang se hien thi tai day de theo doi de hon.
+                    Khi bạn mua hàng, lịch sử đơn hàng sẽ hiển thị tại đây để theo dõi dễ hơn.
                   </p>
                 </div>
               )}

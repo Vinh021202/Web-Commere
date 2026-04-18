@@ -31,32 +31,32 @@ const Address = () => {
 
           <div className="relative flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
             <div className="max-w-[760px]">
-              <span className="eyebrow">Address book</span>
+              <span className="eyebrow">Sổ địa chỉ</span>
               <h1 className="section-heading mt-4 max-w-[700px]">
-                Luu tru va quan ly dia chi giao hang trong mot bo cuc gon gang hon.
+                Luu tru va quan ly địa chỉ giao hàng trong mot b? c?c gon gang hon.
               </h1>
               <p className="muted-copy mt-4 max-w-[620px] text-[15px] leading-7">
-                Them, chinh sua hoac xoa dia chi de viec dat hang va giao nhan tro nen nhanh hon.
+                Thêm, chỉnh sửa hoặc xóa địa chỉ để việc đặt hàng và giao nhận trở nên nhanh hơn.
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
-                <span className="listing-chip">Dia chi giao hang</span>
+                <span className="listing-chip">Địa chỉ giao hàng</span>
                 <span className="listing-chip">Cap nhat nhanh</span>
-                <span className="listing-chip">Quan ly ngay tai mot cho</span>
+                <span className="listing-chip">Quản lý ngay tại một chỗ</span>
               </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 xl:min-w-[460px]">
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Tong dia chi</span>
+                <span className="listing-stat__label">Tổng địa chỉ</span>
                 <strong className="listing-stat__value !text-[1.2rem]">{address?.length || 0}</strong>
               </div>
               <div className="soft-card p-4">
                 <span className="listing-stat__label">Che do</span>
-                <strong className="listing-stat__value !text-[1.2rem]">Saved</strong>
+                <strong className="listing-stat__value !text-[1.2rem]">Đã lưu</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Tai khoan</span>
+                <span className="listing-stat__label">T?i kho?n</span>
                 <strong className="listing-stat__value !text-[1.2rem]">
                   {context?.userData?.name || '--'}
                 </strong>
@@ -73,8 +73,8 @@ const Address = () => {
           <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6">
             <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <span className="listing-stat__label">Saved locations</span>
-                <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">Address</h2>
+                <span className="listing-stat__label">Địa chỉ đã lưu</span>
+                <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">Địa chỉ</h2>
               </div>
 
               <button
@@ -85,7 +85,7 @@ const Address = () => {
                   context?.setAddressMode('add');
                 }}
               >
-                + Add Address
+                + Thêm địa chỉ
               </button>
             </div>
 
@@ -100,9 +100,9 @@ const Address = () => {
                 ))
               ) : (
                 <div className="soft-card rounded-[24px] border border-dashed border-[rgba(255,82,82,0.18)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-8 text-center">
-                  <h3 className="text-[18px] font-[800] text-[#1f2937]">Chua co dia chi nao</h3>
+                  <h3 className="text-[18px] font-[800] text-[#1f2937]">Chưa có địa chỉ nào</h3>
                   <p className="mb-0 mt-3 text-[14px] leading-7 text-[#6b7280]">
-                    Them dia chi moi de su dung nhanh khi dat hang.
+                    Thêm địa chỉ mới để sử dụng nhanh khi đặt hàng.
                   </p>
                 </div>
               )}

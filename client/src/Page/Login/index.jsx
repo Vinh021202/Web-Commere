@@ -49,11 +49,11 @@ const Login = () => {
 
   const forgotPassword = () => {
     if (formFields.email === '') {
-      context.alertBox('error', 'Please enter email id');
+      context.alertBox('error', 'Vui lòng nhập email');
       return false;
     }
 
-    context.alertBox('success', `OTP send to ${formFields.email}`);
+    context.alertBox('success', `Mã OTP đã được gửi tới ${formFields.email}`);
     localStorage.setItem('userEmail', formFields.email);
     localStorage.setItem('actionType', 'forgot-password');
 
@@ -64,7 +64,7 @@ const Login = () => {
         context.alertBox('success', res?.message);
         histoty('/verify');
       } else {
-        context.alertBox('error', res?.message || 'Something went wrong');
+        context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
       }
     });
   };
@@ -84,13 +84,13 @@ const Login = () => {
     setIsLoading(true);
 
     if (formFields.email === '') {
-      context.alertBox('error', 'Please enter email id');
+      context.alertBox('error', 'Vui lòng nhập email');
       setIsLoading(false);
       return false;
     }
 
     if (formFields.password === '') {
-      context.alertBox('error', 'Please enter password');
+      context.alertBox('error', 'Vui lòng nhập mật khẩu');
       setIsLoading(false);
       return false;
     }
@@ -109,7 +109,7 @@ const Login = () => {
         context.setIsLogin(true);
         histoty('/');
       } else {
-        context.alertBox('error', res?.message || 'Something went wrong');
+        context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
         setIsLoading(false);
       }
     });
@@ -132,7 +132,7 @@ const Login = () => {
           context.setIsLogin(true);
           histoty('/');
         } else {
-          context.alertBox('error', res?.message || 'Something went wrong');
+          context.alertBox('error', res?.message || 'Đã có lỗi xảy ra');
           setIsLoading(false);
         }
       })
@@ -151,35 +151,35 @@ const Login = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.14),transparent_24%)]" />
             <div className="relative z-10">
               <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-[700] uppercase tracking-[0.14em] text-white/90">
-                Welcome back
+                Chào mừng trở lại
               </span>
               <h1 className="mt-4 max-w-[380px] text-[28px] font-[800] leading-tight md:text-[36px]">
-                Dang nhap de tiep tuc mua sam nhanh hon.
+                Đăng nhập để tiếp tục mua sắm nhanh hơn.
               </h1>
               <p className="mt-3 max-w-[430px] text-[14px] leading-6 text-white/80">
-                Theo doi don hang, luu danh sach yeu thich va thanh toan nhanh chi trong vai buoc.
+                Theo dõi đơn hàng, lưu danh sách yêu thích và thanh toán nhanh chỉ trong vài bước.
               </p>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <HiOutlineShieldCheck className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">An toan</h3>
+                  <h3 className="mt-3 text-[14px] font-[700]">An toàn</h3>
                   <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Bao mat tai khoan va phien dang nhap tot hon.
+                    Bảo mật tài khoản và phiên đăng nhập tốt hơn.
                   </p>
                 </div>
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiTruck className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Theo doi don</h3>
+                  <h3 className="mt-3 text-[14px] font-[700]">Theo dõi đơn</h3>
                   <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    Xem tien trinh giao hang ngay trong tai khoan.
+                    Xem tiến trình giao hàng ngay trong tài khoản.
                   </p>
                 </div>
                 <div className="rounded-[20px] border border-white/14 bg-white/10 p-4 backdrop-blur">
                   <FiHeadphones className="text-[24px]" />
-                  <h3 className="mt-3 text-[14px] font-[700]">Ho tro nhanh</h3>
+                  <h3 className="mt-3 text-[14px] font-[700]">Hỗ trợ nhanh</h3>
                   <p className="mb-0 mt-2 text-[12px] leading-6 text-white/75">
-                    De lien he ho tro khi can doi tra hoac quen mat khau.
+                    Dễ liên hệ hỗ trợ khi cần đổi trả hoặc quên mật khẩu.
                   </p>
                 </div>
               </div>
@@ -190,13 +190,13 @@ const Login = () => {
             <div className="mx-auto max-w-[460px]">
               <div className="mb-7">
                 <p className="mb-2 text-[12px] font-[700] uppercase tracking-[0.16em] text-[#ff5252]">
-                  Account access
+                  Đăng nhập tài khoản
                 </p>
                 <h2 className="text-[28px] font-[800] leading-tight text-[#1f2937] md:text-[30px]">
-                  Login to your account
+                  Đăng nhập vào tài khoản
                 </h2>
                 <p className="mb-0 mt-3 text-[13px] leading-6 text-[#6b7280]">
-                  Nhap email va mat khau de truy cap lich su mua hang, danh sach yeu thich va thong tin giao hang.
+                  Nhập email và mật khẩu để truy cập lịch sử mua hàng, danh sách yêu thích và thông tin giao hàng.
                 </p>
               </div>
 
@@ -208,7 +208,7 @@ const Login = () => {
                     name="email"
                     value={formFields.email}
                     disabled={isLoading}
-                    label="Email Id*"
+                    label="Email*"
                     variant="outlined"
                     className="w-full"
                     onChange={onChangeInput}
@@ -220,7 +220,7 @@ const Login = () => {
                   <TextField
                     type={isShowPassWord === false ? 'password' : 'text'}
                     id="password"
-                    label="Password*"
+                    label="Mật khẩu*"
                     variant="outlined"
                     className="w-full"
                     name="password"
@@ -250,21 +250,21 @@ const Login = () => {
                     }}
                     className="cursor-pointer text-[14px] font-[700] text-[#ff5252] transition hover:text-[#1f2937]"
                   >
-                    Forgot Password?
+                    Quên mật khẩu?
                   </a>
                 </div>
 
                 <div className="mb-4 flex items-center w-full">
                   <Button type="submit" disabled={!valideValue} className="bg-org flex w-full gap-3 !text-[16px]">
-                    {isLoading === true ? <CircularProgress color="inherit" /> : 'Login'}
+                    {isLoading === true ? <CircularProgress color="inherit" /> : 'Đăng nhập'}
                   </Button>
                 </div>
 
                 <div className="mb-5 text-center">
                   <p className="mb-0 text-[13px] text-[#6b7280]">
-                    Not Registered?{' '}
+                    Chưa có tài khoản?{' '}
                     <Link className="text-primary text-[14px] font-[700]" to={'/register'}>
-                      Sign Up
+                      Đăng ký
                     </Link>
                   </p>
                 </div>
@@ -275,7 +275,7 @@ const Login = () => {
                   </div>
                   <div className="relative flex justify-center">
                     <span className="bg-[#fff8f5] px-4 text-[13px] font-[600] text-[#6b7280]">
-                      Or continue with
+                      Hoặc tiếp tục với
                     </span>
                   </div>
                 </div>
@@ -287,7 +287,7 @@ const Login = () => {
                   onClick={authWithGoogle}
                 >
                   <FcGoogle className="text-[22px]" />
-                  Login with Google
+                  Đăng nhập với Google
                 </Button>
               </form>
             </div>

@@ -8,11 +8,11 @@ import { MdOutlineShoppingCart } from 'react-icons/md';
 const ProductsItemListView = (props) => {
   const primaryImage = props.item?.images?.[0] || '/bannerBox1.jpg';
   const hoverImage = props.item?.images?.[1] || primaryImage;
-  const brandName = props.item?.brand || 'Collection';
-  const productName = props.item?.name || 'San pham noi bat';
+  const brandName = props.item?.brand || 'B? s?u t?p';
+  const productName = props.item?.name || 'Sản phẩm nổi bật';
   const isInStock = (props.item?.countInStock || 0) > 0;
   const description =
-    props.item?.description || 'Bo cuc da duoc rut gon de theo doi nhieu san pham nhanh hon trong che do danh sach.';
+    props.item?.description || 'Bố cục đã được rút gọn để theo dõi nhiều sản phẩm nhanh hơn trong chế độ danh sách.';
 
   return (
     <div className="productsItem list-product-card overflow-hidden rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[rgba(255,255,255,0.94)] shadow-[0_14px_30px_rgba(15,23,42,0.10)]">
@@ -88,7 +88,7 @@ const ProductsItemListView = (props) => {
             </div>
 
             <Button className="bg-org product-card__cta product-card__cta--primary flex gap-2 !px-5">
-              <MdOutlineShoppingCart className="text-[16px]" /> Add to Cart
+              <MdOutlineShoppingCart className="text-[16px]" /> Thêm vào giỏ hàng
             </Button>
           </div>
         </div>

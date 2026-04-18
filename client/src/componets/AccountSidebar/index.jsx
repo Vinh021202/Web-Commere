@@ -17,10 +17,10 @@ const AccountSidebar = () => {
   const context = useContext(MyContext);
   const history = useNavigate();
   const navigationItems = [
-    { to: '/my-account', label: 'My Profile', icon: <FaRegUser className="text-[15px]" />, end: true },
-    { to: '/address', label: 'Address', icon: <LuMapPin className="text-[17px]" /> },
-    { to: '/my-list', label: 'My List', icon: <FaRegHeart className="text-[17px]" /> },
-    { to: '/my-orders', label: 'My Orders', icon: <LuMapPinCheck className="text-[17px]" /> },
+    { to: '/my-account', label: 'Ho so cua toi', icon: <FaRegUser className="text-[15px]" />, end: true },
+    { to: '/address', label: 'Địa chỉ', icon: <LuMapPin className="text-[17px]" /> },
+    { to: '/my-list', label: 'Danh sách yêu thích', icon: <FaRegHeart className="text-[17px]" /> },
+    { to: '/my-orders', label: 'Đơn hàng của tôi', icon: <LuMapPinCheck className="text-[17px]" /> },
   ];
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const AccountSidebar = () => {
       const file = files[0];
       const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
       if (!validTypes.includes(file.type)) {
-        context.alertBox('error', 'Please select a valid JPG, PNG or WEBP image file');
+        context.alertBox('error', 'Vui lòng chọn ảnh JPG, PNG hoặc WEBP hợp lệ');
         return;
       }
 
@@ -61,14 +61,14 @@ const AccountSidebar = () => {
               ...prev,
               avatar: res.avatar,
             }));
-            context.alertBox('success', 'Avatar updated successfully');
+            context.alertBox('success', 'Cap nhat anh dai dien thanh cong');
           } else {
-            context.alertBox('error', 'Upload failed');
+            context.alertBox('error', 'Tai anh len that bai');
           }
         })
         .catch(() => {
           setUploading(false);
-          context.alertBox('error', 'Upload failed');
+          context.alertBox('error', 'Tai anh len that bai');
         });
     } catch (error) {
       console.log(error);
@@ -98,7 +98,7 @@ const AccountSidebar = () => {
         <div className="account-sidebar__hero relative w-full overflow-hidden border-b border-[rgba(255,82,82,0.10)] p-6">
           <div className="account-sidebar__hero-glow pointer-events-none absolute right-[-40px] top-[-30px] h-[140px] w-[140px] rounded-full" />
           <div className="relative flex flex-col items-center justify-center">
-            <span className="account-sidebar__eyebrow mb-4">Account hub</span>
+            <span className="account-sidebar__eyebrow mb-4">Trung tâm tài khoản</span>
           <div
             className="account-sidebar__avatar w-[118px] h-[118px] rounded-full overflow-hidden mb-4 relative group 
             flex items-center justify-center bg-gray-200 border border-[rgba(255,82,82,0.14)] shadow-[0_18px_35px_rgba(15,23,42,0.08)]"
@@ -137,13 +137,13 @@ const AccountSidebar = () => {
 
             <h3 className="text-center text-[19px] font-[800] text-[#1f2937]">{context?.userData?.name}</h3>
             <h6 className="text-center text-[13px] font-[500] text-gray-500">{context?.userData?.email}</h6>
-            <span className="account-sidebar__status mt-4">Profile active</span>
+            <span className="account-sidebar__status mt-4">Hồ sơ đang hoạt động</span>
           </div>
         </div>
 
         <div className="bg-white p-4">
           <div className="mb-3 px-2">
-            <span className="listing-stat__label">Navigation</span>
+            <span className="listing-stat__label">Dieu huong</span>
           </div>
           <ul className="list-none space-y-2 myAccountTabs">
             {navigationItems.map((item) => (
@@ -167,7 +167,7 @@ const AccountSidebar = () => {
                 <span className="account-sidebar__nav-icon">
                   <IoIosLogOut className="text-[18px]" />
                 </span>
-                <span>Logout</span>
+                <span>Đăng xuất</span>
               </Button>
             </li>
           </ul>

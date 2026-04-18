@@ -5,54 +5,54 @@ import { Link } from 'react-router-dom';
 const helpTopics = [
   {
     icon: <FiTruck />,
-    title: 'Shipping & Delivery',
-    description: 'Learn how long delivery takes, supported locations, and shipping costs.',
+    title: 'Vận chuyển và giao hàng',
+    description: 'Tìm hiểu thời gian giao, khu vực hỗ trợ và chi phí vận chuyển.',
   },
   {
     icon: <FiShield />,
-    title: 'Returns & Refunds',
-    description: 'Find return timelines, refund conditions, and support for exchanged items.',
+    title: 'Đổi trả và hoàn tiền',
+    description: 'Xem thời gian đổi trả, điều kiện hoàn tiền và hỗ trợ đổi sản phẩm.',
   },
   {
     icon: <FiHeadphones />,
-    title: 'Account & Orders',
-    description: 'Get help updating account details, checking order status, or login issues.',
+    title: 'Tài khoản và đơn hàng',
+    description: 'Nhận hỗ trợ cập nhật tài khoản, kiểm tra đơn hàng và xử lý sự cố đăng nhập.',
   },
 ];
 
 const supportChannels = [
   {
     icon: <FiPhoneCall />,
-    label: 'Phone support',
+    label: 'Hỗ trợ điện thoại',
     value: '(+84) 9465-65-316',
-    detail: 'Available every day from 8:00 to 20:00.',
+    detail: 'Hỗ trợ mỗi ngày từ 8:00 đến 20:00.',
   },
   {
     icon: <FiMail />,
-    label: 'Email support',
+    label: 'Hỗ trợ qua email',
     value: 'quocvinhtran.0212@gmail.com',
-    detail: 'We usually respond within 24 hours.',
+    detail: 'Thông thường phản hồi trong vòng 24 giờ.',
   },
   {
     icon: <FiMessageCircle />,
-    label: 'Live assistance',
-    value: 'Chat with our team',
-    detail: 'Use the chat box on the homepage for instant guidance.',
+    label: 'Hỗ trợ trực tuyến',
+    value: 'Chat với đội ngũ hỗ trợ',
+    detail: 'Sử dụng khung chat trên trang chủ để nhận hướng dẫn nhanh.',
   },
 ];
 
 const faqs = [
   {
-    question: 'How can I track my order?',
-    answer: 'Open the Order Tracking page, enter your order code and email or phone number, then review the latest shipment updates.',
+    question: 'Làm sao để theo dõi đơn hàng?',
+    answer: 'Mở trang theo dõi đơn hàng, nhập mã đơn và email hoặc số điện thoại để xem cập nhật mới nhất.',
   },
   {
-    question: 'Can I change my address after ordering?',
-    answer: 'If your order has not been packed yet, contact support as soon as possible and we will help update the delivery address.',
+    question: 'Tôi có thể đổi địa chỉ sau khi đặt hàng không?',
+    answer: 'Nếu đơn hàng chưa đóng gói, hãy liên hệ hỗ trợ sớm nhất để chúng tôi cập nhật địa chỉ giao hàng.',
   },
   {
-    question: 'How long does a refund take?',
-    answer: 'Refunds are usually processed within 3 to 7 business days after the returned package is approved.',
+    question: 'Hoàn tiền mất bao lâu?',
+    answer: 'Thông thường tiền được hoàn trong 3 đến 7 ngày làm việc sau khi gói hàng hoàn trả được xác nhận.',
   },
 ];
 
@@ -63,28 +63,27 @@ const HelpCenter = () => {
         <div className="section-shell listing-hero overflow-hidden px-5 py-7 md:px-8 md:py-9">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-[760px]">
-              <span className="eyebrow mb-4">Support</span>
+              <span className="eyebrow mb-4">Hỗ trợ</span>
               <h1 className="section-heading max-w-[760px]">
-                Help Center for smooth shopping, support, and after-sales care.
+                Trung tâm hỗ trợ giúp mua sắm dễ dàng hơn và chăm sóc sau bán hàng tốt hơn.
               </h1>
               <p className="muted-copy mt-4 max-w-[620px] text-[15px] leading-7">
-                Everything you need in one place, from delivery questions and refunds to direct
-                contact options when you need a real person.
+                Tất cả thông tin cần thiết đều ở một nơi, từ giao hàng, hoàn tiền đến cách liên hệ trực tiếp khi cần.
               </p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[430px]">
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Fast help</span>
+                <span className="listing-stat__label">Hỗ trợ nhanh</span>
                 <strong className="listing-stat__value">24h</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Channels</span>
+                <span className="listing-stat__label">Kênh liên hệ</span>
                 <strong className="listing-stat__value">3</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Coverage</span>
-                <strong className="listing-stat__value !text-[1.2rem]">Orders & support</strong>
+                <span className="listing-stat__label">Phạm vi</span>
+                <strong className="listing-stat__value !text-[1.2rem]">Đơn hàng và hỗ trợ</strong>
               </div>
             </div>
           </div>
@@ -93,9 +92,9 @@ const HelpCenter = () => {
         <div className="mt-6 grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
           <div className="section-shell px-5 py-6 md:px-7 md:py-7">
             <div className="mb-6">
-              <span className="eyebrow mb-4">Popular topics</span>
+              <span className="eyebrow mb-4">Chủ đề phổ biến</span>
               <h2 className="text-[28px] font-[800] leading-[1.15] text-[#201714]">
-                Start with the most common support requests.
+                Bắt đầu với những vấn đề được hỏi nhiều nhất.
               </h2>
             </div>
 
@@ -123,9 +122,9 @@ const HelpCenter = () => {
                   <FiHeadphones className="text-[22px]" />
                 </div>
                 <div>
-                  <h2 className="text-[26px] font-[800] text-[#201714]">Talk to us directly</h2>
+                  <h2 className="text-[26px] font-[800] text-[#201714]">Liên hệ trực tiếp</h2>
                   <p className="mb-0 mt-1 text-[14px] text-[rgba(31,41,55,0.66)]">
-                    Choose the contact channel that fits you best.
+                    Chọn kênh liên hệ phù hợp nhất với bạn.
                   </p>
                 </div>
               </div>
@@ -153,14 +152,14 @@ const HelpCenter = () => {
             <div className="section-shell px-5 py-6 md:px-7 md:py-7">
               <div className="mb-6 flex items-center justify-between gap-4">
                 <div>
-                  <span className="eyebrow mb-3">Quick answers</span>
-                  <h2 className="text-[26px] font-[800] text-[#201714]">FAQs</h2>
+                  <span className="eyebrow mb-3">Trả lời nhanh</span>
+                  <h2 className="text-[26px] font-[800] text-[#201714]">Câu hỏi thường gặp</h2>
                 </div>
                 <Link
                   to="/order-tracking"
                   className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,82,82,0.14)] bg-white px-4 py-3 text-[13px] font-[800] text-[#7c553d] transition-all hover:border-[rgba(255,82,82,0.28)] hover:bg-[#fff4ef]"
                 >
-                  Track order <FiArrowRight className="text-[15px]" />
+                  Theo dõi đơn <FiArrowRight className="text-[15px]" />
                 </Link>
               </div>
 

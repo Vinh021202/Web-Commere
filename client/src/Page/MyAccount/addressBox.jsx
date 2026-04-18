@@ -11,7 +11,7 @@ const AddressBox = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const context = useContext(MyContext);
-  const addressTypeLabel = props?.address?.addressType?.trim() || 'Address';
+  const addressTypeLabel = props?.address?.addressType?.trim() || 'Địa chỉ';
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,13 +41,13 @@ const AddressBox = (props) => {
             {addressTypeLabel}
           </span>
           <span className="inline-flex rounded-full bg-white px-3 py-1 text-[11px] font-[700] text-[#7c553d]">
-            Saved address
+            Địa chỉ đã lưu
           </span>
         </div>
 
         <div>
           <IconButton
-            aria-label="more"
+            aria-label="Thêm tuy chon"
             id="long-button"
             aria-controls={open ? 'long-menu' : undefined}
             aria-expanded={open ? 'true' : undefined}
@@ -75,8 +75,8 @@ const AddressBox = (props) => {
               },
             }}
           >
-            <MenuItem onClick={() => editAddress(props.address._id)}>Edit</MenuItem>
-            <MenuItem onClick={() => removeAddress(props.address._id)}>Delete</MenuItem>
+            <MenuItem onClick={() => editAddress(props.address._id)}>Chỉnh sửa</MenuItem>
+            <MenuItem onClick={() => removeAddress(props.address._id)}>Xoa</MenuItem>
           </Menu>
         </div>
       </div>

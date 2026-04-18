@@ -90,7 +90,7 @@ const CartItems = (props) => {
           context?.getCartItems();
         }
       } else {
-        context.alertBox('error', `Product not avilable with the size of ${selectedVal}`);
+        context.alertBox('error', `Sản phẩm không hỗ trợ kích thước ${selectedVal}`);
       }
     }
 
@@ -106,7 +106,7 @@ const CartItems = (props) => {
           context?.getCartItems();
         }
       } else {
-        context.alertBox('error', `Product not avilable with the ram of ${selectedVal}`);
+        context.alertBox('error', `Sản phẩm không hỗ trợ tùy chọn RAM ${selectedVal}`);
       }
     }
 
@@ -122,14 +122,14 @@ const CartItems = (props) => {
           context?.getCartItems();
         }
       } else {
-        context.alertBox('error', `Product not avilable with the weight of ${selectedVal}`);
+        context.alertBox('error', `Sản phẩm không hỗ trợ trọng lượng ${selectedVal}`);
       }
     }
   };
 
   const removeItem = (id) => {
     deleteData(`/api/cart/delete-cart-item/${id}`).then(() => {
-      context.alertBox('success', 'Product removed from cart');
+      context.alertBox('success', 'Đã xóa sản phẩm khỏi giỏ hàng');
       context?.getCartItems();
     });
   };
@@ -145,7 +145,7 @@ const CartItems = (props) => {
             <Link to={`/product/${item?.productId}`} className="group block">
               <img
                 src={item?.image}
-                alt={item?.productTitle || 'Product'}
+                alt={item?.productTitle || 'Sản phẩm'}
                 className="h-[180px] w-full object-cover transition-all duration-300 group-hover:scale-105 lg:h-[150px]"
               />
             </Link>
@@ -157,11 +157,11 @@ const CartItems = (props) => {
             <div className="max-w-[620px]">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-full bg-[#fff1eb] px-3 py-1 text-[10px] font-[800] uppercase tracking-[0.12em] text-[#a65434]">
-                  {item?.brand || 'Brand'}
+                  {item?.brand || 'Thương hiệu'}
                 </span>
                 {item?.discount ? (
                   <span className="rounded-full bg-[#eefbf3] px-3 py-1 text-[10px] font-[800] uppercase tracking-[0.12em] text-[#1f8f52]">
-                    {item?.discount}% off
+                    Giam {item?.discount}%
                   </span>
                 ) : null}
               </div>
@@ -175,7 +175,7 @@ const CartItems = (props) => {
               <div className="mt-2 flex flex-wrap items-center gap-3">
                 <Rating name="size-small" value={item?.rating} size="small" readOnly />
                 <span className="text-[12px] font-[700] text-[rgba(31,41,55,0.55)]">
-                  Ready to ship
+                  San sang giao
                 </span>
               </div>
             </div>
@@ -184,7 +184,7 @@ const CartItems = (props) => {
               type="button"
               className="flex h-[42px] w-[42px] items-center justify-center self-start rounded-full border border-[rgba(255,82,82,0.16)] bg-white text-[#7c553d] transition-all hover:border-[#ff5252] hover:bg-[#fff1eb] hover:text-[#ff5252]"
               onClick={() => removeItem(item?._id)}
-              aria-label="Remove item"
+              aria-label="Xóa sản phẩm"
             >
               <IoCloseSharp className="text-[20px]" />
             </button>
@@ -194,7 +194,7 @@ const CartItems = (props) => {
             {hasValue(item?.size) && props?.productSizeData?.length > 0 && (
               <div className="relative">
                 <span className={chipClass} onClick={handleClickSize}>
-                  Size: {selectedSize} <GoTriangleDown />
+                  Kich thuoc: {selectedSize} <GoTriangleDown />
                 </span>
                 <Menu
                   id="size-menu"
@@ -248,7 +248,7 @@ const CartItems = (props) => {
             {hasValue(item?.weight) && props?.productWeightData?.length > 0 && (
               <div className="relative">
                 <span className={chipClass} onClick={handleClickWeight}>
-                  Weight: {selectedWeight} <GoTriangleDown />
+                  Trống luong: {selectedWeight} <GoTriangleDown />
                 </span>
                 <Menu
                   id="weight-menu"
@@ -274,7 +274,7 @@ const CartItems = (props) => {
 
             <div className="relative">
               <span className={chipClass} onClick={handleClickQty}>
-                Qty: {selectedQty} <GoTriangleDown />
+                Số lượng: {selectedQty} <GoTriangleDown />
               </span>
               <Menu
                 id="qty-menu"
@@ -299,7 +299,7 @@ const CartItems = (props) => {
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             <div className="rounded-[22px] border border-[rgba(255,82,82,0.12)] bg-[#fff8f5] px-4 py-3">
               <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[rgba(31,41,55,0.55)]">
-                Original price
+                Gia goc
               </span>
               <span className="mt-2 block text-[14px] font-[700] text-gray-400 line-through">
                 {Number(item?.oldPrice || 0).toLocaleString('vi-VN', {
@@ -312,7 +312,7 @@ const CartItems = (props) => {
 
             <div className="rounded-[22px] border border-[rgba(255,82,82,0.12)] bg-white px-4 py-3">
               <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[rgba(31,41,55,0.55)]">
-                Unit price
+                Don gia
               </span>
               <span className="text-primary mt-2 block text-[18px] font-[800]">
                 {Number(item?.price || 0).toLocaleString('vi-VN', {
@@ -325,7 +325,7 @@ const CartItems = (props) => {
 
             <div className="rounded-[22px] border border-[rgba(255,82,82,0.16)] bg-[linear-gradient(135deg,#fff1eb_0%,#ffffff_100%)] px-4 py-3">
               <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[rgba(31,41,55,0.55)]">
-                Subtotal
+                Tạm tính
               </span>
               <span className="text-primary mt-2 block text-[18px] font-[800]">
                 {itemSubtotal.toLocaleString('vi-VN', {

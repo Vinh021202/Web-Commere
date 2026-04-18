@@ -58,7 +58,7 @@ const Reviews = (props) => {
         }
       });
     } else {
-      context.alertBox('error', 'Please add reviews');
+      context.alertBox('error', 'Vui lòng nhập nội dung đánh giá');
     }
   };
 
@@ -75,11 +75,11 @@ const Reviews = (props) => {
     <div className="w-full productReviewsContainer">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <span className="eyebrow">Customer review</span>
-          <h2 className="mt-3 text-[20px] font-[800] text-[#1f2937]">Customer questions & answers</h2>
+          <span className="eyebrow">Đánh giá khách hàng</span>
+          <h2 className="mt-3 text-[20px] font-[800] text-[#1f2937]">Nhan xet va trai nghiem mua hang</h2>
         </div>
         <p className="mb-0 max-w-[520px] text-[13px] leading-6 text-[#6b7280]">
-          Xem nhanh danh gia tu khach hang va them nhan xet moi de hoan thien trai nghiem mua sam.
+          Xem nhanh đánh giá từ khách hàng và thêm nhận xét mới để hoàn thiện trải nghiệm mua sắm.
         </p>
       </div>
 
@@ -123,15 +123,15 @@ const Reviews = (props) => {
       )}
 
       <div className="reviewFrom mt-6 rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-4 md:p-5">
-        <h2 className="text-[18px] font-[800] text-[#1f2937]">Add a review</h2>
+        <h2 className="text-[18px] font-[800] text-[#1f2937]">Thêm đánh giá</h2>
         <p className="mb-0 mt-2 text-[13px] leading-6 text-[#6b7280]">
-          Chia se trai nghiem cua ban de nguoi mua sau co them thong tin tham khao.
+          Chia sẻ trải nghiệm của bạn để người mua sau có thêm thông tin tham khảo.
         </p>
 
         <form className="mt-5 w-full" onSubmit={addReview}>
           <TextField
             id="outlined-multiline-flexible"
-            label="Review"
+            label="Nội dung đánh giá"
             className="w-full mb-5"
             onChange={onChangeInput}
             name="review"
@@ -151,7 +151,7 @@ const Reviews = (props) => {
           />
           <div className="mt-5 flex items-center">
             <Button type="submit" className="bg-org product-card__cta product-card__cta--primary">
-              Submit Review
+              Gửi đánh giá
             </Button>
           </div>
         </form>

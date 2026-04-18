@@ -137,12 +137,12 @@ const Checkout = () => {
       const userId = context?.userData?._id || localStorage.getItem('userId');
 
       if (!userId) {
-        context?.alertBox('error', 'User not found. Please log in again.');
+        context?.alertBox('error', 'Không tìm thấy người dùng. Vui lòng đăng nhập lại.');
         return;
       }
 
       if (!context?.cartData?.length || context.cartData.length === 0) {
-        context?.alertBox('error', 'Your cart is empty.');
+        context?.alertBox('error', 'Giỏ hàng của bạn đang trống.');
         return;
       }
 
@@ -176,12 +176,12 @@ const Checkout = () => {
       if (response.data.success) {
         await deleteData(`/api/cart/emptyCart/${userId}`);
         if (context?.getCartItems) await context.getCartItems();
-        context?.alertBox('success', 'Order completed!');
+        context?.alertBox('success', 'Đơn hàng da duoc hoan tat!');
         histoty('/orders/success');
       }
     } catch (error) {
       console.error('Payment Error:', error);
-      context?.alertBox('error', 'Something went wrong during payment.');
+      context?.alertBox('error', 'Đã có lỗi xảy ra trong quá trình thanh toán.');
     }
   };
 
@@ -202,7 +202,7 @@ const Checkout = () => {
     e.preventDefault();
 
     if (!selectedAddress) {
-      context?.alertBox('error', 'Vui lÃ²ng chá»n Ä‘á»‹a chá»‰ giao hÃ ng trÆ°á»›c khi thanh toÃ¡n.');
+      context?.alertBox('error', 'Vui lòng chọn địa chỉ giao hàng trước khi thanh toán.');
       return;
     }
 
@@ -215,7 +215,7 @@ const Checkout = () => {
         : 0;
 
     if (numericTotal === 0) {
-      context?.alertBox('error', 'Giá» hÃ ng cá»§a báº¡n Ä‘ang trá»‘ng.');
+      context?.alertBox('error', 'Giỏ hàng của bạn đang trống.');
       return;
     }
 
@@ -250,7 +250,7 @@ const Checkout = () => {
       setShowPaymentModal(true);
     } catch (err) {
       console.error('Checkout error:', err);
-      context?.alertBox('error', 'KhÃ´ng thá»ƒ khá»Ÿi táº¡o thanh toÃ¡n. Vui lÃ²ng thá»­ láº¡i.');
+      context?.alertBox('error', 'Kh?ng th? kh?i t?o thanh to?n. Vui l?ng th? l?i.');
     }
   };
 
@@ -290,7 +290,7 @@ const Checkout = () => {
       const orderRes = await postData('/api/order/create', codOrderPayload);
 
       if (orderRes.success || orderRes.order) {
-        context?.alertBox('ÄÆ¡n hÃ ng táº¡o thÃ nh cÃ´ng! Thanh toÃ¡n khi nháº­n hÃ ng.');
+        context?.alertBox('success', 'Đơn hàng tạo thành công! Thanh toán khi nhận hàng.');
         try {
           await deleteData(`/api/cart/emptyCart/${context?.userData?._id}`);
           context?.getCartItems();
@@ -300,11 +300,11 @@ const Checkout = () => {
           histoty('/orders/failed');
         }
       } else {
-        context?.alertBox('CÃ³ lá»—i táº¡o Ä‘Æ¡n hÃ ng. Vui lÃ²ng thá»­ láº¡i.');
+        context?.alertBox('error', 'Có lỗi tạo đơn hàng. Vui lòng thử lại.');
       }
     } catch (err) {
       console.error('COD checkout error:', err);
-      context?.alertBox('CÃ³ lá»—i xáº£y ra. Vui lÃ²ng thá»­ láº¡i.');
+      context?.alertBox('error', 'C? l?i x?y ra. Vui l?ng th? l?i.');
     }
   };
 
@@ -321,7 +321,7 @@ const Checkout = () => {
               <h3 className="mt-2 text-[20px] font-[800] text-[#201714] sm:text-[24px]">Complete your payment</h3>
             </div>
             <Button className="bg-org btn-border" onClick={onClose}>
-              Cancel
+              Huy
             </Button>
           </div>
           <Elements stripe={stripePromise} options={options}>
@@ -348,7 +348,7 @@ const Checkout = () => {
 
         if (error) {
           console.error('Payment confirmation error', error);
-          alert(error.message || 'Payment failed');
+          alert(error.message || 'Thanh to?n th?t b?i');
         } else {
           try {
             if (orderPayload) {
@@ -358,7 +358,7 @@ const Checkout = () => {
               });
               console.log('Order created:', orderRes);
               if (orderRes.success || orderRes.order) {
-                alert('Thanh toÃ¡n vÃ  táº¡o Ä‘Æ¡n hÃ ng thÃ nh cÃ´ng!');
+                alert('Thanh toán và tạo đơn hàng thành công!');
                 try {
                   await deleteData(`/api/cart/emptyCart/${context?.userData?._id}`);
                   context?.getCartItems();
@@ -368,20 +368,20 @@ const Checkout = () => {
                   histoty('/orders/failed');
                 }
               } else {
-                alert('Thanh toÃ¡n thÃ nh cÃ´ng nhÆ°ng cÃ³ lá»—i táº¡o Ä‘Æ¡n hÃ ng. Vui lÃ²ng liÃªn há»‡ há»— trá»£.');
-              }
+              alert('Thanh to?n th?nh c?ng');
+            }
             } else {
               alert('Thanh toÃ¡n thÃ nh cÃ´ng');
             }
           } catch (orderErr) {
             console.error('Order creation error:', orderErr);
-            alert('Thanh toÃ¡n thÃ nh cÃ´ng nhÆ°ng cÃ³ lá»—i táº¡o Ä‘Æ¡n hÃ ng');
+            alert('Thanh toán thành công nhưng có lỗi tạo đơn hàng');
           }
           onClose();
         }
       } catch (err) {
         console.error(err);
-        alert('CÃ³ lá»—i xáº£y ra');
+        alert('C? l?i x?y ra');
       }
     };
 
@@ -392,10 +392,10 @@ const Checkout = () => {
         </div>
         <div className="mt-5 flex gap-3">
           <Button type="submit" className="bg-org btn-lg w-full">
-            Pay now
+            Thanh toán ngay
           </Button>
           <Button type="button" className="bg-org btn-border" onClick={onClose}>
-            Close
+            Đóng
           </Button>
         </div>
       </form>
@@ -423,26 +423,26 @@ const Checkout = () => {
             <div className="section-shell listing-hero overflow-hidden px-5 py-6 md:px-6 md:py-7">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-[720px]">
-                  <span className="eyebrow mb-3">Checkout</span>
+                  <span className="eyebrow mb-3">Thanh toán</span>
                   <h1 className="mb-2 text-[32px] font-[800] leading-[1.15] tracking-[-0.03em] text-[#201714] md:text-[38px]">
-                    Choose your delivery details and payment method.
+                    Chọn địa chỉ giao hàng và phương thức thanh toán.
                   </h1>
                   <p className="mb-0 max-w-[580px] text-[13px] text-[rgba(31,41,55,0.72)] md:text-[14px]">
-                    Confirm where we should ship your order, then complete payment securely in one place.
+                    Xác nhận nơi nhận hàng và hoàn tất thanh toán an toàn tại một nơi.
                   </p>
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[390px]">
                   <div className="soft-card p-3">
-                    <span className="listing-stat__label">Products</span>
+                    <span className="listing-stat__label">Sản phẩm</span>
                     <strong className="listing-stat__value !mt-2 !text-[1.4rem]">{totalProducts}</strong>
                   </div>
                   <div className="soft-card p-3">
-                    <span className="listing-stat__label">Units</span>
+                    <span className="listing-stat__label">Số lượng</span>
                     <strong className="listing-stat__value !mt-2 !text-[1.4rem]">{totalUnits}</strong>
                   </div>
                   <div className="soft-card p-3">
-                    <span className="listing-stat__label">Total</span>
+                    <span className="listing-stat__label">Tổng cộng</span>
                     <strong className="listing-stat__value !mt-2 !text-[1.2rem]">
                       {totalAmount.toLocaleString('vi-VN', {
                         style: 'currency',
@@ -465,9 +465,9 @@ const Checkout = () => {
                           <FiMapPin className="text-[20px]" />
                         </div>
                         <div>
-                          <h2 className="m-0 text-[22px] font-[800] text-[#201714] md:text-[24px]">Select delivery address</h2>
+                          <h2 className="m-0 text-[22px] font-[800] text-[#201714] md:text-[24px]">Chon địa chỉ giao hàng</h2>
                           <p className="mb-0 mt-1 text-[13px] text-[rgba(31,41,55,0.68)]">
-                            Pick where you want this order delivered.
+                            Chọn nơi bạn muốn nhận đơn hàng này.
                           </p>
                         </div>
                       </div>
@@ -479,7 +479,7 @@ const Checkout = () => {
                           context?.setAddressMode('add');
                         }}
                       >
-                        <FaPlus className="mr-2" /> Add new address
+                        <FaPlus className="mr-2" /> Thêm địa chỉ mới
                       </Button>
                     </div>
                   </div>
@@ -512,7 +512,7 @@ const Checkout = () => {
                                 </span>
                                 {isChecked === index ? (
                                   <span className="rounded-full bg-[#eefbf3] px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.1em] text-[#1f8f52]">
-                                    Selected
+                                    Đã chọn
                                   </span>
                                 ) : null}
                               </div>
@@ -536,7 +536,7 @@ const Checkout = () => {
                               size="small"
                               onClick={() => editAddress(address?._id)}
                             >
-                              Edit
+                              Sửa
                             </Button>
                           </label>
                         ))
@@ -546,9 +546,9 @@ const Checkout = () => {
                             <FiMapPin className="text-[38px]" />
                           </div>
                           <div>
-                            <h2 className="text-[24px] font-[800] text-[#201714]">No address found</h2>
+                            <h2 className="text-[24px] font-[800] text-[#201714]">Không tìm thấy địa chỉ</h2>
                             <p className="mt-2 text-[14px] text-[rgba(31,41,55,0.66)]">
-                              Add a delivery address before placing your order.
+                              Hay them địa chỉ giao hàng truoc khi dat don.
                             </p>
                           </div>
                           <Button
@@ -558,7 +558,7 @@ const Checkout = () => {
                               context?.setAddressMode('add');
                             }}
                           >
-                            Add Address
+                            Thêm địa chỉ
                           </Button>
                         </div>
                       )}
@@ -575,9 +575,9 @@ const Checkout = () => {
                         <FiCreditCard className="text-[19px]" />
                       </div>
                       <div>
-                        <h2 className="m-0 text-[22px] font-[800] text-[#201714] md:text-[23px]">Your order</h2>
+                        <h2 className="m-0 text-[22px] font-[800] text-[#201714] md:text-[23px]">Đơn hàng cua ban</h2>
                         <p className="mb-0 mt-1 text-[13px] text-[rgba(31,41,55,0.68)]">
-                          Review items and choose how you want to pay.
+                          Kiểm tra sản phẩm và chọn cách thanh toán.
                         </p>
                       </div>
                     </div>
@@ -587,15 +587,15 @@ const Checkout = () => {
                     <div className="rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(180deg,#ffffff_0%,#fff8f5_100%)] p-4 shadow-[0_16px_30px_rgba(15,23,42,0.06)] md:p-5">
                       <div className="flex items-center justify-between">
                         <span className="text-[13px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                          Delivery to
+                          Giao t?i
                         </span>
                         {selectedAddressData ? (
                           <span className="rounded-full bg-[#eefbf3] px-3 py-1 text-[11px] font-[800] text-[#1f8f52]">
-                            Ready
+                            S?n s?ng
                           </span>
                         ) : (
                           <span className="rounded-full bg-[#fff1eb] px-3 py-1 text-[11px] font-[800] text-[#a65434]">
-                            Needed
+                            C?n ch?n
                           </span>
                         )}
                       </div>
@@ -614,30 +614,30 @@ const Checkout = () => {
                           </>
                         ) : (
                           <p className="mb-0 text-[13px] leading-6 text-[rgba(31,41,55,0.58)]">
-                            Select an address on the left before completing payment.
+                            Hãy chọn địa chỉ ở bên trái trước khi thanh toán.
                           </p>
                         )}
                       </div>
 
                       <div className="mt-5 flex items-center justify-between border-t border-[rgba(255,82,82,0.1)] pt-4">
-                        <span className="text-[14px] font-[700] text-[#6b7280]">Products</span>
+                        <span className="text-[14px] font-[700] text-[#6b7280]">Sản phẩm</span>
                         <span className="text-[14px] font-[800] text-[#1f2937]">{totalProducts}</span>
                       </div>
 
                       <div className="mt-3 flex items-center justify-between">
-                        <span className="text-[14px] font-[700] text-[#6b7280]">Units</span>
+                        <span className="text-[14px] font-[700] text-[#6b7280]">Số lượng</span>
                         <span className="text-[14px] font-[800] text-[#1f2937]">{totalUnits}</span>
                       </div>
 
                       <div className="mt-3 flex items-center justify-between">
-                        <span className="text-[14px] font-[700] text-[#6b7280]">Shipping</span>
+                        <span className="text-[14px] font-[700] text-[#6b7280]">Vận chuyển</span>
                         <span className="inline-flex items-center gap-2 rounded-full bg-[#eefbf3] px-3 py-1 text-[12px] font-[800] text-[#1f8f52]">
-                          <FiTruck className="text-[14px]" /> Free
+                          <FiTruck className="text-[14px]" /> Miễn phí
                         </span>
                       </div>
 
                       <div className="mt-4 flex items-center justify-between border-t border-dashed border-[rgba(255,82,82,0.16)] pt-4">
-                        <span className="text-[15px] font-[800] text-[#201714]">Total</span>
+                        <span className="text-[15px] font-[800] text-[#201714]">Tổng cộng</span>
                         <span className="text-primary text-[24px] font-[800]">
                           {totalAmount.toLocaleString('vi-VN', {
                             style: 'currency',
@@ -650,9 +650,9 @@ const Checkout = () => {
 
                     <div className="mt-4 rounded-[22px] border border-[rgba(255,82,82,0.12)] bg-white/75 p-4">
                       <div className="mb-3 flex items-center justify-between">
-                        <h3 className="text-[16px] font-[800] text-[#201714]">Order items</h3>
+                        <h3 className="text-[16px] font-[800] text-[#201714]">Sản phẩm trong đơn</h3>
                         <span className="text-[12px] font-[700] text-[rgba(31,41,55,0.55)]">
-                          {totalProducts} products
+                          {totalProducts} s?n ph?m
                         </span>
                       </div>
 
@@ -667,7 +667,7 @@ const Checkout = () => {
                                 <div className="h-[56px] w-[56px] overflow-hidden rounded-[14px] bg-[#fff4ef]">
                                   <img
                                     src={item?.image}
-                                    alt={item?.productTitle || 'Product'}
+                                    alt={item?.productTitle || 'Sản phẩm'}
                                     className="h-full w-full object-cover"
                                   />
                                 </div>
@@ -677,7 +677,7 @@ const Checkout = () => {
                                     {item?.productTitle}
                                   </h4>
                                   <span className="mt-1 inline-flex items-center gap-2 text-[12px] font-[700] text-[rgba(31,41,55,0.55)]">
-                                    <FiPackage className="text-[13px]" /> Qty: {item?.quantity}
+                                    <FiPackage className="text-[13px]" /> SL: {item?.quantity}
                                   </span>
                                 </div>
                               </div>
@@ -700,7 +700,7 @@ const Checkout = () => {
                         className="checkout-payment-btn bg-org flex w-full gap-2"
                         disabled={!selectedAddress || totalProducts === 0}
                       >
-                        <BsFillBagCheckFill className="text-[20px]" /> Pay with card
+                        <BsFillBagCheckFill className="text-[20px]" /> Thanh toán bang the
                       </Button>
 
                       <div
@@ -714,19 +714,19 @@ const Checkout = () => {
                         onClick={cashOnDeLivery}
                         disabled={!selectedAddress || totalProducts === 0}
                       >
-                        <BsFillBagCheckFill className="text-[20px]" /> Cash On Delivery
+                        <BsFillBagCheckFill className="text-[20px]" /> Thanh toán khi nhan hang
                       </Button>
                     </div>
 
                     <div className="mt-4 flex items-center justify-between gap-3 rounded-[20px] border border-[rgba(255,82,82,0.1)] bg-white/75 p-4">
                       <p className="mb-0 text-[12px] leading-6 text-[rgba(31,41,55,0.6)]">
-                        Need to update your basket before paying?
+                        Bạn muốn chỉnh sửa giỏ hàng trước khi thanh toán?
                       </p>
                       <Link
                         to="/cart"
                         className="inline-flex shrink-0 items-center gap-2 text-[13px] font-[800] text-[#7c553d]"
                       >
-                        Back to cart <FiArrowRight className="text-[15px]" />
+                        Quay lại giỏ hàng <FiArrowRight className="text-[15px]" />
                       </Link>
                     </div>
                   </div>

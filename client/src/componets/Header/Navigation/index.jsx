@@ -48,7 +48,7 @@ export const Navigation = () => {
               <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#ffeded] text-[#ff5252]">
                 <RiMenu2Fill size={16} />
               </span>
-              <span className="text-[13px] font-[600] normal-case text-[#1f2937]">Shop by Category</span>
+              <span className="text-[13px] font-[600] normal-case text-[#1f2937]">Mua theo danh mục</span>
               <LiaAngleDownSolid size={12} className="ml-auto font-bold text-[#ff5252]" />
             </Button>
           </div>
@@ -65,7 +65,7 @@ export const Navigation = () => {
                           : '!text-[rgba(0,0,0,0.8)] hover:!text-[#ff5252]'
                       }`}
                     >
-                      HOME
+                      TRANG CHU
                     </Button>
                   </Link>
                 </li>
@@ -125,7 +125,7 @@ export const Navigation = () => {
                 <HiOutlineSparkles className="text-[13px]" />
               </span>
               <span className="flex items-center gap-2 text-[12px] font-[700] text-[#1f2937]">
-                Free International Delivery
+                Miễn phí giao hàng quốc tế
               </span>
             </div>
           </div>

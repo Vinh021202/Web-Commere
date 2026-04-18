@@ -10,7 +10,7 @@ const MyListtems = (props) => {
 
   const removeItem = (id) => {
     deleteData(`/api/myList/${id}`).then(() => {
-      context.alertBox('success', 'Product removed from My List');
+      context.alertBox('success', 'Đã xóa sản phẩm khỏi danh sách yêu thích');
       context.getMyListData();
     });
   };
@@ -21,7 +21,7 @@ const MyListtems = (props) => {
         <Link to={`/product/${props?.item?.productId}`} className="group block h-full w-full">
           <img
             src={props?.item?.image}
-            alt={props?.item?.name || 'Product image'}
+            alt={props?.item?.name || 'Ảnh sản phẩm'}
             className="h-full w-full object-cover transition-all duration-300 group-hover:scale-[1.05]"
           />
         </Link>
@@ -30,10 +30,10 @@ const MyListtems = (props) => {
       <div className="info min-w-0 flex-1 pr-0 md:pr-10">
         <div className="mb-2 flex flex-wrap items-center gap-3">
           <span className="inline-flex rounded-full bg-[#fff1eb] px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-            {props?.item?.brand || 'Collection'}
+            {props?.item?.brand || 'Bo suu tap'}
           </span>
           <span className="inline-flex rounded-full bg-white px-3 py-1 text-[11px] font-[700] text-[#7c553d]">
-            Saved item
+            Da luu
           </span>
         </div>
 
@@ -56,7 +56,7 @@ const MyListtems = (props) => {
             &#8363; {props?.item?.oldPrice}
           </span>
           <span className="rounded-full border border-[rgba(255,82,82,0.16)] bg-white px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.06em] text-[#ff5252]">
-            {props?.item?.discount}% OFF
+            Giam {props?.item?.discount}%
           </span>
         </div>
       </div>
@@ -65,7 +65,7 @@ const MyListtems = (props) => {
         type="button"
         className="absolute right-[14px] top-[14px] flex h-[36px] w-[36px] items-center justify-center rounded-full border border-[rgba(255,82,82,0.14)] bg-white text-[18px] text-[#6b7280] transition hover:border-[#ff5252] hover:text-[#ff5252]"
         onClick={() => removeItem(props?.item?._id)}
-        aria-label="Remove item"
+        aria-label="Xóa sản phẩm"
       >
         <IoCloseSharp />
       </button>

@@ -22,14 +22,14 @@ const ProductListing = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(12);
-  const [selectedSortVal, setSelectedSortVal] = useState('Sales, highest to lowest');
+  const [selectedSortVal, setSelectedSortVal] = useState('Độ bán chạy giảm dần');
 
   const [searchParams] = useSearchParams();
   const catName =
     searchParams.get('cat') ||
     searchParams.get('subCat') ||
     searchParams.get('thirdsubCat') ||
-    'Products';
+    'Sản phẩm';
 
   const open = Boolean(anchorEl);
 
@@ -62,25 +62,24 @@ const ProductListing = () => {
   };
 
   const sortOptions = [
-    { label: 'Sales, highest to lowest', name: 'sale', order: 'desc' },
-    { label: 'Sales, lowest to highest', name: 'sale', order: 'asc' },
-    { label: 'Name, A to Z', name: 'name', order: 'asc' },
-    { label: 'Name, Z to A', name: 'name', order: 'desc' },
-    { label: 'Price, low to high', name: 'price', order: 'asc' },
-    { label: 'Price, high to low', name: 'price', order: 'desc' },
+    { label: 'Độ bán chạy giảm dần', name: 'sale', order: 'desc' },
+    { label: 'Độ bán chạy tăng dần', name: 'sale', order: 'asc' },
+    { label: 'Tên từ A đến Z', name: 'name', order: 'asc' },
+    { label: 'Tên từ Z đến A', name: 'name', order: 'desc' },
+    { label: 'Giá từ thấp đến cao', name: 'price', order: 'asc' },
+    { label: 'Giá từ cao đến thấp', name: 'price', order: 'desc' },
   ];
 
   const productCount = productsData?.total || productsData?.products?.length || 0;
-  const effectiveTotalPages = totalPages || Math.ceil(productCount / 12);
   const fromProduct = productCount === 0 ? 0 : (page - 1) * rowsPerPage + 1;
   const toProduct = Math.min(page * rowsPerPage, productCount);
 
   const listingSummary = useMemo(() => {
     if (productCount === 0) {
-      return 'Chua co san pham phu hop voi bo loc hien tai.';
+      return 'Chưa có sản phẩm phù hợp với bộ lọc hiện tại.';
     }
 
-    return `Dang hien thi ${productCount} san pham voi bo cuc ro rang, de so sanh va chon nhanh hon.`;
+    return `Đang hiển thị ${productCount} sản phẩm với bố cục rõ ràng, dễ so sánh và chọn nhanh hơn.`;
   }, [productCount]);
 
   const emptyState = (
@@ -88,10 +87,10 @@ const ProductListing = () => {
       <div className="mx-auto flex h-[68px] w-[68px] items-center justify-center rounded-full bg-[#fff1eb] text-[#a65434] shadow-[0_10px_24px_rgba(255,82,82,0.10)]">
         <HiOutlineAdjustmentsHorizontal className="text-[30px]" />
       </div>
-      <h3 className="mt-5 text-[22px] font-[800] text-[#1f2937]">Khong tim thay san pham</h3>
+      <h3 className="mt-5 text-[22px] font-[800] text-[#1f2937]">Không tìm thấy sản phẩm</h3>
       <p className="mx-auto mb-0 mt-3 max-w-[520px] text-[14px] leading-7">
-        Thu noi rong khoang gia, bo chon mot vai bo loc, hoac chuyen danh muc de xem them ket
-        qua phu hop.
+        Thử nới rộng khoảng giá, bỏ chọn một vài bộ lọc, hoặc chuyển danh mục để xem thêm kết
+        quả phù hợp.
       </p>
     </div>
   );
@@ -115,37 +114,37 @@ const ProductListing = () => {
             <div className="max-w-[700px] xl:max-w-[760px]">
               <Breadcrumbs aria-label="breadcrumb" className="listing-breadcrumbs">
                 <Link underline="hover" color="inherit" href="/" className="link !text-[14px]">
-                  Home
+                  Trang chủ
                 </Link>
                 <span className="text-[14px] font-[600] text-[rgba(31,41,55,0.72)]">{catName}</span>
               </Breadcrumbs>
 
-              <span className="eyebrow mt-4">Collection view</span>
+              <span className="eyebrow mt-4">Danh mục sản phẩm</span>
               <h1 className="section-heading mt-3 max-w-[680px] xl:max-w-[720px]">
-                Kham pha {catName} voi bo loc gon hon va nhip trinh bay ro hon.
+                Khám phá {catName} với bộ lọc gọn hơn và nhịp trình bày rõ hơn.
               </h1>
               <p className="muted-copy mt-3 max-w-[600px] text-[14px] leading-7 xl:max-w-[640px] xl:text-[15px]">
                 {listingSummary}
               </p>
 
               <div className="mt-5 flex flex-wrap items-center gap-2.5">
-                <span className="listing-chip">Bo loc theo danh muc</span>
-                <span className="listing-chip">Sap xep linh hoat</span>
-                <span className="listing-chip">Grid va list view</span>
+                <span className="listing-chip">Bộ lọc theo danh mục</span>
+                <span className="listing-chip">Sắp xếp linh hoạt</span>
+                <span className="listing-chip">Grid và list view</span>
               </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 xl:min-w-[390px]">
               <div className="soft-card p-3.5 xl:p-4">
-                <span className="listing-stat__label">Tong san pham</span>
+                <span className="listing-stat__label">Tổng sản phẩm</span>
                 <strong className="listing-stat__value">{productCount}</strong>
               </div>
               <div className="soft-card p-3.5 xl:p-4">
-                <span className="listing-stat__label">Che do xem</span>
+                <span className="listing-stat__label">Chế độ xem</span>
                 <strong className="listing-stat__value capitalize">{isItemView}</strong>
               </div>
               <div className="soft-card p-3.5 xl:p-4">
-                <span className="listing-stat__label">Sap xep</span>
+                <span className="listing-stat__label">Sắp xếp</span>
                 <strong className="listing-stat__value !text-[15px]">{selectedSortVal}</strong>
               </div>
             </div>
@@ -169,7 +168,7 @@ const ProductListing = () => {
             <div className="section-shell px-4 py-4 md:px-5 md:py-5 xl:px-6 xl:py-6">
               <div className="listing-toolbar mb-4 flex flex-col gap-4 rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-4 lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex flex-col gap-4 xl:flex-row xl:items-center">
-                  <div className="flex flex-wrap items-center gap-3 itemViewActions">
+                  <div className="itemViewActions flex flex-wrap items-center gap-3">
                     <span className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[#fff1eb] text-[#a65434]">
                       <HiOutlineAdjustmentsHorizontal className="text-[20px]" />
                     </span>
@@ -193,17 +192,17 @@ const ProductListing = () => {
 
                   <div className="listing-toolbar__meta pl-0 xl:pl-2">
                     <span className="block text-[13px] font-[700] uppercase tracking-[0.08em] text-[#a65434]">
-                      Trang thai danh muc
+                      Trạng thái danh mục
                     </span>
                     <span className="text-[14px] font-[600] text-[rgba(31,41,55,0.72)]">
-                      Co {productCount} san pham trong che do hien tai.
+                      Có {productCount} sản phẩm trong chế độ hiện tại.
                     </span>
                   </div>
                 </div>
 
                 <div className="listing-toolbar__actions ml-auto flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
                   <span className="text-[13px] font-[700] uppercase tracking-[0.08em] text-[#a65434]">
-                    Sort by
+                    Sắp xếp theo
                   </span>
                   <Button
                     id="basic-button"
@@ -265,7 +264,7 @@ const ProductListing = () => {
               {productCount > 0 && (
                 <div className="mt-8 border-t border-[rgba(255,82,82,0.1)] pt-4">
                   <div className="listing-pagination-shell">
-                    <span className="listing-pagination-label">Rows per page:</span>
+                    <span className="listing-pagination-label">Số dòng mỗi trang:</span>
                     <TablePagination
                       component="div"
                       count={productCount}
@@ -275,7 +274,7 @@ const ProductListing = () => {
                       onRowsPerPageChange={handleRowsPerPageChange}
                       rowsPerPageOptions={[12, 24, 36]}
                       labelRowsPerPage=""
-                      labelDisplayedRows={() => `${fromProduct}-${toProduct} of ${productCount}`}
+                      labelDisplayedRows={() => `${fromProduct}-${toProduct} trên ${productCount}`}
                     />
                   </div>
                 </div>

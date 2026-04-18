@@ -4,10 +4,10 @@ import { FiArrowRight, FiMail, FiMapPin, FiPackage, FiSearch, FiTruck } from 're
 import { Link } from 'react-router-dom';
 
 const trackingSteps = [
-  { title: 'Order confirmed', detail: 'Your order has been received and verified.' },
-  { title: 'Packed carefully', detail: 'Items are packed and prepared for handoff.' },
-  { title: 'In transit', detail: 'The carrier is moving your package to the destination city.' },
-  { title: 'Out for delivery', detail: 'Your parcel is on the final route to your address.' },
+  { title: 'Đã xác nhận đơn', detail: 'Đơn hàng của bạn đã được tiếp nhận và xác thực.' },
+  { title: 'Đã đóng gói', detail: 'Sản phẩm đã được đóng gói và sẵn sàng bàn giao.' },
+  { title: 'Đang vận chuyển', detail: 'Đơn vị vận chuyển đang đưa hàng tới thành phố đích.' },
+  { title: 'Đang giao hàng', detail: 'Bưu kiện đang trên chặng cuối cùng tới địa chỉ của bạn.' },
 ];
 
 const OrderTracking = () => {
@@ -20,28 +20,27 @@ const OrderTracking = () => {
         <div className="section-shell listing-hero overflow-hidden px-5 py-7 md:px-8 md:py-9">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-[760px]">
-              <span className="eyebrow mb-4">Tracking</span>
+              <span className="eyebrow mb-4">Theo dõi</span>
               <h1 className="section-heading max-w-[760px]">
-                Track your order and review shipping progress in one view.
+                Theo dõi đơn hàng va tien trinh giao nhan trong cung mot man hinh.
               </h1>
               <p className="muted-copy mt-4 max-w-[620px] text-[15px] leading-7">
-                Enter your order code and contact information to check the latest delivery milestone,
-                current route, and support options.
+                Nhập mã đơn hàng và thông tin liên hệ để xem mốc giao hàng mới nhất, lộ trình hiện tại và cách nhận hỗ trợ.
               </p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[430px]">
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Live status</span>
-                <strong className="listing-stat__value">4 steps</strong>
+                <span className="listing-stat__label">Tr?ng th?i</span>
+                <strong className="listing-stat__value">4 buoc</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Coverage</span>
-                <strong className="listing-stat__value">Nationwide</strong>
+                <span className="listing-stat__label">Ph?m vi</span>
+                <strong className="listing-stat__value">Toan quoc</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Support</span>
-                <strong className="listing-stat__value !text-[1.2rem]">Help anytime</strong>
+                <span className="listing-stat__label">H? tr?</span>
+                <strong className="listing-stat__value !text-[1.2rem]">S?n s?ng moi luc</strong>
               </div>
             </div>
           </div>
@@ -50,46 +49,45 @@ const OrderTracking = () => {
         <div className="mt-6 grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
           <div className="section-shell px-5 py-6 md:px-7 md:py-7">
             <div className="mb-6">
-              <span className="eyebrow mb-4">Find your parcel</span>
+              <span className="eyebrow mb-4">Tìm đơn hàng</span>
               <h2 className="text-[28px] font-[800] leading-[1.15] text-[#201714]">
-                Check order status with your order code.
+                Kiểm tra trạng thái bằng mã đơn hàng.
               </h2>
               <p className="mb-0 mt-3 text-[14px] leading-7 text-[rgba(31,41,55,0.68)]">
-                Use the same email or phone number you entered during checkout for the fastest result.
+                Sử dụng email hoặc số điện thoại bạn đã nhập khi đặt hàng để tìm nhanh hơn.
               </p>
             </div>
 
             <div className="space-y-4">
               <TextField
                 className="w-full"
-                label="Order code"
-                placeholder="Example: ORD-2026-00128"
+                label="Mã đơn hàng"
+                placeholder="Vi du: ORD-2026-00128"
                 value={orderCode}
                 onChange={(event) => setOrderCode(event.target.value)}
               />
               <TextField
                 className="w-full"
-                label="Email or phone number"
-                placeholder="your@email.com or 09xxxxxxxx"
+                label="Email hoặc số điện thoại"
+                placeholder="your@email.com hoac 09xxxxxxxx"
                 value={contactValue}
                 onChange={(event) => setContactValue(event.target.value)}
               />
               <Button className="bg-org btn-lg flex w-full gap-2">
-                <FiSearch className="text-[18px]" /> Track Order
+                <FiSearch className="text-[18px]" /> Tra cứu đơn hàng
               </Button>
             </div>
 
             <div className="mt-6 rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-5">
-              <h3 className="text-[18px] font-[800] text-[#1f2937]">Need help with an order?</h3>
+              <h3 className="text-[18px] font-[800] text-[#1f2937]">Cần hỗ trợ về đơn hàng?</h3>
               <p className="mb-0 mt-2 text-[14px] leading-7">
-                If you cannot find your order, our support team can help verify your purchase and
-                check carrier updates manually.
+                Nếu bạn không tìm thấy đơn hàng, đội ngũ hỗ trợ sẽ giúp xác minh giao dịch và kiểm tra cập nhật thủ công.
               </p>
               <Link
                 to="/help-center"
                 className="mt-4 inline-flex items-center gap-2 text-[13px] font-[800] text-[#7c553d]"
               >
-                Visit Help Center <FiArrowRight className="text-[15px]" />
+                Mo trung tam ho tro <FiArrowRight className="text-[15px]" />
               </Link>
             </div>
           </div>
@@ -101,9 +99,9 @@ const OrderTracking = () => {
                   <FiPackage className="text-[22px]" />
                 </div>
                 <div>
-                  <h2 className="text-[26px] font-[800] text-[#201714]">Sample delivery timeline</h2>
+                  <h2 className="text-[26px] font-[800] text-[#201714]">Tiến trình giao hàng mẫu</h2>
                   <p className="mb-0 mt-1 text-[14px] text-[rgba(31,41,55,0.66)]">
-                    A preview of the status flow customers usually see.
+                    Xem truoc luong trang thai ma khach hang thuong gap.
                   </p>
                 </div>
               </div>
@@ -133,9 +131,9 @@ const OrderTracking = () => {
                 <div className="flex h-[48px] w-[48px] items-center justify-center rounded-[16px] bg-[#fff1eb] text-[#ff5252]">
                   <FiTruck className="text-[22px]" />
                 </div>
-                <h3 className="mt-4 text-[22px] font-[800] text-[#201714]">Shipping updates</h3>
+                <h3 className="mt-4 text-[22px] font-[800] text-[#201714]">Cập nhật vận chuyển</h3>
                 <p className="mb-0 mt-2 text-[14px] leading-7">
-                  Estimated delivery windows, dispatch milestones, and in-transit progress.
+                  Thời gian giao dự kiến, các mốc xuất kho và tiến trình vận chuyển.
                 </p>
               </div>
 
@@ -143,9 +141,9 @@ const OrderTracking = () => {
                 <div className="flex h-[48px] w-[48px] items-center justify-center rounded-[16px] bg-[#fff1eb] text-[#ff5252]">
                   <FiMail className="text-[22px]" />
                 </div>
-                <h3 className="mt-4 text-[22px] font-[800] text-[#201714]">Notifications</h3>
+                <h3 className="mt-4 text-[22px] font-[800] text-[#201714]">Thong bao</h3>
                 <p className="mb-0 mt-2 text-[14px] leading-7">
-                  Receive shipment changes and delivery confirmations through your saved contact.
+                  Nhận thông báo thay đổi lộ trình và xác nhận giao hàng qua thông tin liên hệ đã lưu.
                 </p>
               </div>
 
@@ -155,10 +153,9 @@ const OrderTracking = () => {
                     <FiMapPin className="text-[22px]" />
                   </div>
                   <div>
-                    <h3 className="text-[22px] font-[800] text-[#201714]">Delivery destination</h3>
+                    <h3 className="text-[22px] font-[800] text-[#201714]">Địa chỉ nhận hàng</h3>
                     <p className="mb-0 mt-2 text-[14px] leading-7">
-                      Keep your address details accurate so the carrier reaches the correct location
-                      without delays.
+                      Giữ thông tin địa chỉ chính xác để đơn vị vận chuyển giao đúng nơi mà không bị chậm trễ.
                     </p>
                   </div>
                 </div>

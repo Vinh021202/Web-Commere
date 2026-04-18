@@ -56,24 +56,24 @@ const CartPage = () => {
         <div className="section-shell listing-hero overflow-hidden px-6 py-8 md:px-8">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-[720px]">
-              <span className="eyebrow mb-4">Your Basket</span>
-              <h1 className="section-heading mb-3">Review your cart before checkout.</h1>
+              <span className="eyebrow mb-4">Giỏ hàng của bạn</span>
+              <h1 className="section-heading mb-3">Kiểm tra giỏ hàng trước khi thanh toán.</h1>
               <p className="mb-0 max-w-[620px] text-[14px] text-[rgba(31,41,55,0.72)]">
-                Update quantities, switch variants, and confirm your order summary in one place.
+                Cập nhật số lượng, đổi phiên bản và xem tóm tắt đơn hàng ngay tại một nơi.
               </p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[430px]">
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Products</span>
+                <span className="listing-stat__label">Sản phẩm</span>
                 <strong className="listing-stat__value">{totalProducts}</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Units</span>
+                <span className="listing-stat__label">Số lượng</span>
                 <strong className="listing-stat__value">{totalUnits}</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Subtotal</span>
+                <span className="listing-stat__label">Tạm tính</span>
                 <strong className="listing-stat__value !text-[1.3rem]">
                   {totalAmount.toLocaleString('vi-VN', {
                     style: 'currency',
@@ -92,10 +92,9 @@ const CartPage = () => {
               <div className="flex min-h-[124px] items-center border-b border-[rgba(255,82,82,0.12)] px-6 py-5">
                 <div className="flex w-full flex-col gap-3 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <h2 className="m-0 text-[26px] font-[800] text-[#201714]">Shopping cart</h2>
+                    <h2 className="m-0 text-[26px] font-[800] text-[#201714]">Giỏ hàng</h2>
                     <p className="mb-0 mt-1 text-[14px] text-[rgba(31,41,55,0.7)]">
-                      There are <span className="font-[800] text-primary">{totalProducts}</span>{' '}
-                      products in your cart.
+                      Có <span className="font-[800] text-primary">{totalProducts}</span> sản phẩm trong giỏ hàng của bạn.
                     </p>
                   </div>
 
@@ -103,7 +102,7 @@ const CartPage = () => {
                     to="/"
                     className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,82,82,0.14)] bg-white px-4 py-3 text-[13px] font-[800] text-[#7c553d] transition-all hover:border-[rgba(255,82,82,0.3)] hover:bg-[#fff4ef]"
                   >
-                    Continue shopping <FiArrowRight className="text-[16px]" />
+                    Tiếp tục mua sắm <FiArrowRight className="text-[16px]" />
                   </Link>
                 </div>
               </div>
@@ -129,13 +128,13 @@ const CartPage = () => {
                     <FiShoppingBag className="text-[38px]" />
                   </div>
                   <div>
-                    <h4 className="text-[24px] font-[800] text-[#201714]">Your cart is empty</h4>
+                    <h4 className="text-[24px] font-[800] text-[#201714]">Giỏ hàng của bạn đang trống</h4>
                     <p className="mx-auto mt-2 max-w-[420px] text-[14px] text-[rgba(31,41,55,0.66)]">
-                      Add a few products to your basket and come back here to review everything.
+                      Thêm vài sản phẩm vào giỏ hàng và quay lại đây để xem lại tất cả.
                     </p>
                   </div>
                   <Link to="/">
-                    <Button className="bg-org btn-lg">Continue Shopping</Button>
+                    <Button className="bg-org btn-lg">Tiếp tục mua sắm</Button>
                   </Link>
                 </div>
               )}
@@ -150,9 +149,9 @@ const CartPage = () => {
                     <BsFillBagCheckFill className="text-[22px]" />
                   </div>
                   <div>
-                    <h3 className="m-0 text-[24px] font-[800] text-[#201714]">Cart totals</h3>
+                    <h3 className="m-0 text-[24px] font-[800] text-[#201714]">Tổng giỏ hàng</h3>
                     <p className="mb-0 mt-1 text-[13px] text-[rgba(31,41,55,0.62)]">
-                      Taxes and shipping are finalized at checkout.
+                      Phí vận chuyển và tổng thanh toán sẽ được chốt ở bước sau.
                     </p>
                   </div>
                 </div>
@@ -161,7 +160,7 @@ const CartPage = () => {
               <div className="px-6 py-6">
                 <div className="rounded-[28px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(180deg,#ffffff_0%,#fff8f5_100%)] p-5 shadow-[0_16px_30px_rgba(15,23,42,0.06)]">
                 <div className="flex items-center justify-between py-3">
-                  <span className="text-[14px] font-[700] text-[#6b7280]">Subtotal</span>
+                  <span className="text-[14px] font-[700] text-[#6b7280]">Tạm tính</span>
                   <span className="text-[15px] font-[800] text-[#1f2937]">
                     {totalAmount.toLocaleString('vi-VN', {
                       style: 'currency',
@@ -172,19 +171,19 @@ const CartPage = () => {
                 </div>
 
                 <div className="flex items-center justify-between border-t border-[rgba(255,82,82,0.1)] py-3">
-                  <span className="text-[14px] font-[700] text-[#6b7280]">Shipping</span>
+                  <span className="text-[14px] font-[700] text-[#6b7280]">Vận chuyển</span>
                   <span className="inline-flex items-center gap-2 rounded-full bg-[#eefbf3] px-3 py-1 text-[12px] font-[800] text-[#1f8f52]">
-                    <FiTruck className="text-[14px]" /> Free
+                    <FiTruck className="text-[14px]" /> Miễn phí
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between border-t border-[rgba(255,82,82,0.1)] py-3">
-                  <span className="text-[14px] font-[700] text-[#6b7280]">Destination</span>
-                  <span className="text-[14px] font-[800] text-[#1f2937]">Viet Nam</span>
+                  <span className="text-[14px] font-[700] text-[#6b7280]">Điểm giao</span>
+                  <span className="text-[14px] font-[800] text-[#1f2937]">Việt Nam</span>
                 </div>
 
                 <div className="mt-2 flex items-center justify-between border-t border-dashed border-[rgba(255,82,82,0.16)] pt-4">
-                  <span className="text-[15px] font-[800] text-[#201714]">Total</span>
+                  <span className="text-[15px] font-[800] text-[#201714]">Tổng cộng</span>
                   <span className="text-primary text-[24px] font-[800]">
                     {totalAmount.toLocaleString('vi-VN', {
                       style: 'currency',
@@ -201,19 +200,18 @@ const CartPage = () => {
                       className="bg-org btn-lg flex w-full gap-2"
                       disabled={totalProducts === 0}
                     >
-                      <BsFillBagCheckFill className="text-[20px]" /> Checkout
+                      <BsFillBagCheckFill className="text-[20px]" /> Thanh toán
                     </Button>
                   </Link>
 
                   <Link to="/" className="block">
-                    <Button className="bg-org btn-border btn-lg w-full">Keep browsing</Button>
+                    <Button className="bg-org btn-border btn-lg w-full">Tiếp tục xem sản phẩm</Button>
                   </Link>
                 </div>
 
                 <div className="mt-5 rounded-[22px] border border-[rgba(255,82,82,0.1)] bg-white/75 p-4">
                   <p className="mb-0 text-[12px] leading-6 text-[rgba(31,41,55,0.6)]">
-                    Need a moment? Your selected items stay here while you continue browsing the
-                    store.
+                    Bạn có thể tiếp tục xem sản phẩm, nhưng món đã chọn vẫn được giữ lại trong giỏ hàng.
                   </p>
                 </div>
               </div>
