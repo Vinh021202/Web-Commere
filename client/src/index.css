@@ -1683,6 +1683,22 @@ body[data-theme='dark'] .MuiButtonBase-root[class*='bg-white'] {
   box-shadow: 0 12px 20px rgba(255, 82, 82, 0.24);
 }
 
+.home-popular-slider {
+  overflow: hidden;
+}
+
+.home-popular-slider .productsSliderShell {
+  overflow: hidden !important;
+}
+
+.home-popular-slider .productsSliderShell .swiper-button-prev {
+  left: 10px;
+}
+
+.home-popular-slider .productsSliderShell .swiper-button-next {
+  right: 10px;
+}
+
 @media (min-width: 1024px) and (max-width: 1366px) {
   .home-hero::before {
     inset: -18% auto auto 62%;

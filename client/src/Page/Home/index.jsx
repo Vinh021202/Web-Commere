@@ -224,7 +224,11 @@ const Home = () => {
             </div>
 
             {popularproductsData?.length === 0 && <ProductLoading />}
-            {popularproductsData?.length !== 0 && <ProductsSlider items={6} data={popularproductsData} />}
+            {popularproductsData?.length !== 0 && (
+              <div className="home-popular-slider overflow-hidden">
+                <ProductsSlider items={6} data={popularproductsData} />
+              </div>
+            )}
           </div>
         </div>
       </section>

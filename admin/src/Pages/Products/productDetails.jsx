@@ -3,8 +3,6 @@ import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/styles.min.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
 import { Link, useParams } from "react-router-dom";
 import { fetchDataFromApi } from "../../utils/api";
 import {
@@ -19,6 +17,7 @@ import { BiSolidCategoryAlt } from "react-icons/bi";
 import { HiOutlineCube } from "react-icons/hi2";
 import { BsPatchCheckFill } from "react-icons/bs";
 import { IoArrowBack } from "react-icons/io5";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -33,9 +32,9 @@ const attributeChipClass =
 const ProductDetails = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
   const [bigSwiper, setBigSwiper] = useState(null);
-  const [smallSwiper, setSmallSwiper] = useState(null);
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   const { id } = useParams();
   const context = useContext(MyContext);
@@ -46,10 +45,17 @@ const ProductDetails = () => {
     if (bigSwiper) {
       bigSwiper.slideTo(index);
     }
+  };
 
-    if (smallSwiper) {
-      smallSwiper.slideTo(index);
-    }
+  const handleMove = (direction) => {
+    if (!galleryImages.length) return;
+
+    const nextIndex =
+      direction === "prev"
+        ? (sliderIndex - 1 + galleryImages.length) % galleryImages.length
+        : (sliderIndex + 1) % galleryImages.length;
+
+    goto(nextIndex);
   };
 
   useEffect(() => {
@@ -66,6 +72,16 @@ const ProductDetails = () => {
     });
   }, [id]);
 
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(media.matches);
+
+    update();
+    media.addEventListener("change", update);
+
+    return () => media.removeEventListener("change", update);
+  }, []);
+
   const galleryImages = useMemo(() => {
     if (!Array.isArray(product?.images)) {
       return [];
@@ -73,6 +89,17 @@ const ProductDetails = () => {
 
     return product.images.filter(Boolean);
   }, [product?.images]);
+
+  useEffect(() => {
+    if (sliderIndex > galleryImages.length - 1) {
+      setSliderIndex(0);
+    }
+  }, [galleryImages.length, sliderIndex]);
+
+  const activeImage = useMemo(
+    () => galleryImages?.[sliderIndex] || galleryImages?.[0] || "/placeholder.jpg",
+    [galleryImages, sliderIndex],
+  );
 
   const reviews = useMemo(() => {
     if (!Array.isArray(product?.reviews)) {
@@ -207,62 +234,83 @@ const ProductDetails = () => {
           </div>
 
           {galleryImages.length > 0 ? (
-            <div className="flex flex-col gap-4 lg:flex-row">
-              <div className="order-2 lg:order-1 lg:w-[108px]">
-                <Swiper
-                  onSwiper={setSmallSwiper}
-                  direction={window.innerWidth >= 1024 ? "vertical" : "horizontal"}
-                  slidesPerView={4}
-                  spaceBetween={12}
-                  navigation
-                  modules={[Navigation]}
-                  className="zoomProductSliderThumbs h-[96px] lg:h-[460px]"
-                >
+            <div className="productZoomBlock">
+              <div className="productZoomLayout">
+                <div className="productZoomThumbRail">
                   {galleryImages.map((image, index) => (
-                    <SwiperSlide key={index}>
-                      <button
-                        type="button"
-                        className={`h-[96px] w-full overflow-hidden rounded-[18px] border p-1.5 transition-all ${
-                          sliderIndex === index
-                            ? "border-[#3872fa] bg-[#f5f8ff] shadow-[0_12px_28px_rgba(56,114,250,0.16)]"
-                            : "border-[#e8eef7] bg-white"
-                        }`}
-                        onClick={() => goto(index)}
-                      >
+                    <button
+                      type="button"
+                      key={index}
+                      className={`zoomThumbCard ${
+                        sliderIndex === index ? "is-active" : ""
+                      }`}
+                      onClick={() => goto(index)}
+                      aria-label={`View image ${index + 1}`}
+                    >
+                      <div className="zoomThumb">
                         <img
                           src={image}
                           alt={`Thumbnail ${index + 1}`}
-                          className="h-full w-full rounded-[14px] object-cover"
-                        />
-                      </button>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-
-              <div className="order-1 min-w-0 flex-1 overflow-hidden rounded-[24px] border border-[#e8eef7] bg-[#fbfdff] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] lg:order-2">
-                <Swiper
-                  onSwiper={setBigSwiper}
-                  slidesPerView={1}
-                  spaceBetween={0}
-                  initialSlide={sliderIndex}
-                  onSlideChange={(swiper) => setSliderIndex(swiper.activeIndex)}
-                >
-                  {galleryImages.map((image, index) => (
-                    <SwiperSlide key={index}>
-                      <div className="product-media-zoom overflow-hidden rounded-[18px] bg-white">
-                        <InnerImageZoom
-                          zoomType="click"
-                          zoomScale={1}
-                          hideHint
-                          hasSpacer={false}
-                          className="product-media-zoom-inner"
-                          src={image}
+                          className="zoomThumbImage"
                         />
                       </div>
-                    </SwiperSlide>
+                    </button>
                   ))}
-                </Swiper>
+                </div>
+
+                <div className="productZoomStage">
+                  <div className="productZoomStageHeader">
+                    <span className="productZoomStagePager">
+                      {sliderIndex + 1}/{Math.max(galleryImages.length, 1)}
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="productZoomNav productZoomNav--prev"
+                    onClick={() => handleMove("prev")}
+                    aria-label="View previous image"
+                  >
+                    <FiChevronLeft />
+                  </button>
+
+                  <button
+                    type="button"
+                    className="productZoomNav productZoomNav--next"
+                    onClick={() => handleMove("next")}
+                    aria-label="View next image"
+                  >
+                    <FiChevronRight />
+                  </button>
+
+                  <div
+                    className="productZoomPreviewGlow"
+                    style={{ backgroundImage: `url(${activeImage})` }}
+                  />
+
+                  <Swiper
+                    onSwiper={setBigSwiper}
+                    slidesPerView={1}
+                    spaceBetween={0}
+                    navigation={false}
+                    initialSlide={sliderIndex}
+                    onSlideChange={(swiper) => setSliderIndex(swiper.activeIndex)}
+                    className="productZoomMainSlider"
+                  >
+                    {galleryImages.map((image, index) => (
+                      <SwiperSlide key={index}>
+                        <div className="productInnerZoom">
+                          <InnerImageZoom
+                            zoomType={isMobile ? "click" : "hover"}
+                            zoomScale={1}
+                            hideHint
+                            src={image}
+                          />
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
               </div>
             </div>
           ) : (
