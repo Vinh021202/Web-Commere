@@ -222,8 +222,8 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+      <div className="grid items-start gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+        <div className="self-start rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
           <div className="mb-5">
             <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
               Gallery
