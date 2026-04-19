@@ -241,6 +241,7 @@ button .MuiCirularProgress-root {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(248, 251, 255, 0.94));
   padding: 12px;
   box-shadow: 0 16px 28px rgba(15, 23, 42, 0.06);
+  width: 100%;
 }
 
 .productZoomStageHeader {
@@ -281,6 +282,8 @@ button .MuiCirularProgress-root {
   position: relative;
   z-index: 1;
   width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
 }
 
 .productZoomMainSlider .swiper-slide {
@@ -293,8 +296,8 @@ button .MuiCirularProgress-root {
 
 .productInnerZoom .iiz {
   width: 100% !important;
-  aspect-ratio: 1 / 1;
-  height: auto !important;
+  max-width: 860px;
+  height: min(58vh, 520px) !important;
   margin: 0;
   overflow: hidden !important;
   border-radius: 18px;
@@ -303,7 +306,7 @@ button .MuiCirularProgress-root {
 
 .productInnerZoom .iiz__img {
   width: 100%;
-  height: 100%;
+  height: min(58vh, 520px);
   object-fit: contain !important;
   object-position: center;
   padding: 10px;
@@ -372,10 +375,15 @@ button .MuiCirularProgress-root {
 
   .productZoomStage {
     flex: 1;
+    max-width: min(100%, 980px);
   }
 
   .productInnerZoom .iiz {
-    max-height: 468px;
+    height: min(54vh, 468px) !important;
+  }
+
+  .productInnerZoom .iiz__img {
+    height: min(54vh, 468px);
   }
 }
 
@@ -391,5 +399,15 @@ button .MuiCirularProgress-root {
   .productZoomNav {
     width: 36px;
     height: 36px;
+  }
+
+  .productZoomMainSlider,
+  .productInnerZoom .iiz {
+    max-width: 100%;
+  }
+
+  .productInnerZoom .iiz,
+  .productInnerZoom .iiz__img {
+    height: min(42vh, 320px) !important;
   }
 }

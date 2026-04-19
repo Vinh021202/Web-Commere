@@ -257,6 +257,22 @@ nav ul button:hover {
   overflow: inherit !important;
 }
 
+.home-hero-slider {
+  overflow: hidden;
+}
+
+.home-hero-slider .sliderHome {
+  overflow: hidden !important;
+}
+
+.home-hero-slider .sliderHome .swiper-button-prev {
+  left: 12px;
+}
+
+.home-hero-slider .sliderHome .swiper-button-next {
+  right: 12px;
+}
+
 .sliderHome__item {
   height: 240px;
 }
@@ -1687,7 +1703,15 @@ body[data-theme='dark'] .MuiButtonBase-root[class*='bg-white'] {
   overflow: hidden;
 }
 
+.home-latest-slider {
+  overflow: hidden;
+}
+
 .home-popular-slider .productsSliderShell {
+  overflow: hidden !important;
+}
+
+.home-latest-slider .productsSliderShell {
   overflow: hidden !important;
 }
 
@@ -1696,6 +1720,14 @@ body[data-theme='dark'] .MuiButtonBase-root[class*='bg-white'] {
 }
 
 .home-popular-slider .productsSliderShell .swiper-button-next {
+  right: 10px;
+}
+
+.home-latest-slider .productsSliderShell .swiper-button-prev {
+  left: 10px;
+}
+
+.home-latest-slider .productsSliderShell .swiper-button-next {
   right: 10px;
 }
 

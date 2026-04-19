@@ -302,7 +302,11 @@ const Home = () => {
             </div>
 
             {productsData?.length === 0 && <ProductLoading />}
-            {productsData?.length !== 0 && <ProductsSlider items={6} data={productsData} />}
+            {productsData?.length !== 0 && (
+              <div className="home-latest-slider overflow-hidden">
+                <ProductsSlider items={6} data={productsData} />
+              </div>
+            )}
 
             <AdsBannerSlider items={3} />
           </div>

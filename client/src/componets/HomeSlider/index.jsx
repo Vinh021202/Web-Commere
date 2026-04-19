@@ -13,6 +13,7 @@ const HomeSlider = (props) => {
     <>
       <div className="homeSlider py-3 md:py-4">
         <div className="container">
+          <div className="home-hero-slider overflow-hidden">
           <Swiper
             spaceBetween={10}
             navigation={true}
@@ -50,6 +51,7 @@ const HomeSlider = (props) => {
               })
             }
           </Swiper>
+          </div>
         </div>
       </div>
     </>
