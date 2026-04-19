@@ -269,101 +269,129 @@ const ProductDetails = () => {
       </div>
 
       <div className="grid items-start gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-        <div className="self-start rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
-          <div className="mb-5">
-            <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
-              Gallery
-            </p>
-            <h2 className="mt-2 text-[22px] font-[900] text-[#14213d]">
-              Product Media
-            </h2>
-          </div>
+        <div className="space-y-6">
+          <div className="self-start rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+            <div className="mb-5">
+              <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
+                Gallery
+              </p>
+              <h2 className="mt-2 text-[22px] font-[900] text-[#14213d]">
+                Product Media
+              </h2>
+            </div>
 
-          {galleryImages.length > 0 ? (
-            <div className="productZoomBlock">
-              <div className="productZoomLayout">
-                <div className="productZoomThumbRail">
-                  {galleryImages.map((image, index) => (
-                    <button
-                      type="button"
-                      key={index}
-                      className={`zoomThumbCard ${
-                        sliderIndex === index ? "is-active" : ""
-                      }`}
-                      onClick={() => goto(index)}
-                      aria-label={`View image ${index + 1}`}
-                    >
-                      <div className="zoomThumb">
-                        <img
-                          src={image}
-                          alt={`Thumbnail ${index + 1}`}
-                          className="zoomThumbImage"
-                        />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-
-                <div className="productZoomStage">
-                  <div className="productZoomStageHeader">
-                    <span className="productZoomStagePager">
-                      {sliderIndex + 1}/{Math.max(galleryImages.length, 1)}
-                    </span>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="productZoomNav productZoomNav--prev"
-                    onClick={() => handleMove("prev")}
-                    aria-label="View previous image"
-                  >
-                    <FiChevronLeft />
-                  </button>
-
-                  <button
-                    type="button"
-                    className="productZoomNav productZoomNav--next"
-                    onClick={() => handleMove("next")}
-                    aria-label="View next image"
-                  >
-                    <FiChevronRight />
-                  </button>
-
-                  <div
-                    className="productZoomPreviewGlow"
-                    style={{ backgroundImage: `url(${activeImage})` }}
-                  />
-
-                  <Swiper
-                    onSwiper={setBigSwiper}
-                    slidesPerView={1}
-                    spaceBetween={0}
-                    navigation={false}
-                    initialSlide={sliderIndex}
-                    onSlideChange={(swiper) => setSliderIndex(swiper.activeIndex)}
-                    className="productZoomMainSlider"
-                  >
+            {galleryImages.length > 0 ? (
+              <div className="productZoomBlock">
+                <div className="productZoomLayout">
+                  <div className="productZoomThumbRail">
                     {galleryImages.map((image, index) => (
-                      <SwiperSlide key={index}>
-                        <div className="productInnerZoom">
-                          <InnerImageZoom
-                            zoomType={isMobile ? "click" : "hover"}
-                            zoomScale={1}
-                            hideHint
+                      <button
+                        type="button"
+                        key={index}
+                        className={`zoomThumbCard ${
+                          sliderIndex === index ? "is-active" : ""
+                        }`}
+                        onClick={() => goto(index)}
+                        aria-label={`View image ${index + 1}`}
+                      >
+                        <div className="zoomThumb">
+                          <img
                             src={image}
+                            alt={`Thumbnail ${index + 1}`}
+                            className="zoomThumbImage"
                           />
                         </div>
-                      </SwiperSlide>
+                      </button>
                     ))}
-                  </Swiper>
+                  </div>
+
+                  <div className="productZoomStage">
+                    <div className="productZoomStageHeader">
+                      <span className="productZoomStagePager">
+                        {sliderIndex + 1}/{Math.max(galleryImages.length, 1)}
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="productZoomNav productZoomNav--prev"
+                      onClick={() => handleMove("prev")}
+                      aria-label="View previous image"
+                    >
+                      <FiChevronLeft />
+                    </button>
+
+                    <button
+                      type="button"
+                      className="productZoomNav productZoomNav--next"
+                      onClick={() => handleMove("next")}
+                      aria-label="View next image"
+                    >
+                      <FiChevronRight />
+                    </button>
+
+                    <div
+                      className="productZoomPreviewGlow"
+                      style={{ backgroundImage: `url(${activeImage})` }}
+                    />
+
+                    <Swiper
+                      onSwiper={setBigSwiper}
+                      slidesPerView={1}
+                      spaceBetween={0}
+                      navigation={false}
+                      initialSlide={sliderIndex}
+                      onSlideChange={(swiper) => setSliderIndex(swiper.activeIndex)}
+                      className="productZoomMainSlider"
+                    >
+                      {galleryImages.map((image, index) => (
+                        <SwiperSlide key={index}>
+                          <div className="productInnerZoom">
+                            <InnerImageZoom
+                              zoomType={isMobile ? "click" : "hover"}
+                              zoomScale={1}
+                              hideHint
+                              src={image}
+                            />
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
                 </div>
               </div>
+            ) : (
+              <div className="flex min-h-[420px] items-center justify-center rounded-[24px] border border-dashed border-[#d7e2f0] bg-[#fbfdff] text-slate-400">
+                No product image
+              </div>
+            )}
+          </div>
+
+          <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
+            <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
+              Description
+            </p>
+            <h2 className="mt-2 text-[22px] font-[900] text-[#14213d]">
+              Product Description
+            </h2>
+            <p className="mt-4 whitespace-pre-line text-[14px] leading-7 text-slate-600">
+              {product?.description || "No description available for this product."}
+            </p>
+
+            <div className="mt-6 rounded-[22px] border border-[#e8eef7] bg-[#fbfdff] p-5">
+              <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
+                Review Workflow
+              </p>
+              <h3 className="mt-2 text-[18px] font-[900] text-[#14213d]">
+                Admin Reply Notes
+              </h3>
+              <p className="mt-2 text-[13px] leading-6 text-slate-500">
+                Use the review panel to draft a response for each customer
+                comment. Replies are saved locally in this admin browser until a
+                backend reply API is added.
+              </p>
             </div>
-          ) : (
-            <div className="flex min-h-[420px] items-center justify-center rounded-[24px] border border-dashed border-[#d7e2f0] bg-[#fbfdff] text-slate-400">
-              No product image
-            </div>
-          )}
+          </div>
         </div>
 
         <div className="space-y-6">
@@ -497,33 +525,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <div className="mt-6 grid items-start gap-6 xl:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
-          <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
-            Description
-          </p>
-          <h2 className="mt-2 text-[22px] font-[900] text-[#14213d]">
-            Product Description
-          </h2>
-          <p className="mt-4 whitespace-pre-line text-[14px] leading-7 text-slate-600">
-            {product?.description || "No description available for this product."}
-          </p>
-
-          <div className="mt-6 rounded-[22px] border border-[#e8eef7] bg-[#fbfdff] p-5">
-            <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
-              Review Workflow
-            </p>
-            <h3 className="mt-2 text-[18px] font-[900] text-[#14213d]">
-              Admin Reply Notes
-            </h3>
-            <p className="mt-2 text-[13px] leading-6 text-slate-500">
-              Use the review panel to draft a response for each customer
-              comment. Replies are saved locally in this admin browser until a
-              backend reply API is added.
-            </p>
-          </div>
-        </div>
-
+      <div className="mt-6">
         <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
           <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
             Reviews
