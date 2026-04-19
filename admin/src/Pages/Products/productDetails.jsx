@@ -35,6 +35,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [reviewReplies, setReviewReplies] = useState({});
 
   const { id } = useParams();
   const context = useContext(MyContext);
@@ -108,6 +109,51 @@ const ProductDetails = () => {
 
     return product.reviews;
   }, [product?.reviews]);
+
+  const reviewReplyStorageKey = useMemo(
+    () => `admin-review-replies-${product?._id || "unknown"}`,
+    [product?._id],
+  );
+
+  useEffect(() => {
+    if (!product?._id) {
+      setReviewReplies({});
+      return;
+    }
+
+    try {
+      const savedReplies = JSON.parse(
+        localStorage.getItem(reviewReplyStorageKey) || "{}",
+      );
+      setReviewReplies(savedReplies && typeof savedReplies === "object" ? savedReplies : {});
+    } catch {
+      setReviewReplies({});
+    }
+  }, [product?._id, reviewReplyStorageKey]);
+
+  const getReviewKey = (review, index) =>
+    review?._id || review?.id || review?.createdAt || `review-${index}`;
+
+  const handleReplyChange = (reviewKey, value) => {
+    setReviewReplies((prev) => ({
+      ...prev,
+      [reviewKey]: value,
+    }));
+  };
+
+  const handleReplySave = (reviewKey) => {
+    const nextReplies = {
+      ...reviewReplies,
+      [reviewKey]: reviewReplies?.[reviewKey] || "",
+    };
+
+    setReviewReplies(nextReplies);
+    localStorage.setItem(reviewReplyStorageKey, JSON.stringify(nextReplies));
+
+    if (context?.alertBox) {
+      context.alertBox("success", "Review reply saved on this device");
+    }
+  };
 
   const detailGroups = useMemo(
     () => [
@@ -451,7 +497,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_0.9fr]">
+      <div className="mt-6 grid items-start gap-6 xl:grid-cols-[0.85fr_1.15fr]">
         <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
           <p className="text-[11px] font-[800] uppercase tracking-[0.18em] text-slate-400">
             Description
@@ -462,6 +508,20 @@ const ProductDetails = () => {
           <p className="mt-4 whitespace-pre-line text-[14px] leading-7 text-slate-600">
             {product?.description || "No description available for this product."}
           </p>
+
+          <div className="mt-6 rounded-[22px] border border-[#e8eef7] bg-[#fbfdff] p-5">
+            <p className="text-[11px] font-[800] uppercase tracking-[0.14em] text-slate-400">
+              Review Workflow
+            </p>
+            <h3 className="mt-2 text-[18px] font-[900] text-[#14213d]">
+              Admin Reply Notes
+            </h3>
+            <p className="mt-2 text-[13px] leading-6 text-slate-500">
+              Use the review panel to draft a response for each customer
+              comment. Replies are saved locally in this admin browser until a
+              backend reply API is added.
+            </p>
+          </div>
         </div>
 
         <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]">
@@ -479,6 +539,12 @@ const ProductDetails = () => {
                   key={`${review?._id || "review"}-${index}`}
                   className="rounded-[22px] border border-[#edf2f8] bg-[#fbfdff] p-4 shadow-[0_10px_25px_rgba(15,23,42,0.03)]"
                 >
+                  {(() => {
+                    const reviewKey = getReviewKey(review, index);
+                    const replyValue = reviewReplies?.[reviewKey] || "";
+
+                    return (
+                      <>
                   <div className="flex items-start gap-4">
                     <div className="h-12 w-12 overflow-hidden rounded-full border border-[#e8eef7] bg-white">
                       <img
@@ -515,8 +581,51 @@ const ProductDetails = () => {
                           review?.comment ||
                           "No review content provided."}
                       </p>
+
+                      <div className="mt-4 rounded-[18px] border border-[#e6edfb] bg-white p-4">
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                          <div>
+                            <p className="text-[11px] font-[800] uppercase tracking-[0.12em] text-slate-400">
+                              Admin Reply
+                            </p>
+                            <p className="mt-1 text-[12px] text-slate-500">
+                              Draft a response for this review.
+                            </p>
+                          </div>
+                          <Button
+                            onClick={() => handleReplySave(reviewKey)}
+                            className="!rounded-[14px] !bg-[linear-gradient(135deg,_#14213d,_#3872fa)] !px-4 !py-2.5 !text-[12px] !font-[800] !capitalize !text-white shadow-[0_14px_28px_rgba(56,114,250,0.18)]"
+                          >
+                            Save Reply
+                          </Button>
+                        </div>
+
+                        <textarea
+                          value={replyValue}
+                          onChange={(event) =>
+                            handleReplyChange(reviewKey, event.target.value)
+                          }
+                          rows={4}
+                          placeholder="Write a helpful reply for this customer review..."
+                          className="mt-3 w-full resize-none rounded-[16px] border border-[#dbe6ff] bg-[#fbfdff] px-4 py-3 text-[13px] leading-6 text-slate-700 outline-none transition-all placeholder:text-slate-400 focus:border-[#3872fa] focus:shadow-[0_0_0_4px_rgba(56,114,250,0.10)]"
+                        />
+
+                        {replyValue.trim() ? (
+                          <div className="mt-3 rounded-[16px] border border-[#dfe8ff] bg-[#f5f8ff] px-4 py-3">
+                            <p className="text-[11px] font-[800] uppercase tracking-[0.12em] text-[#3872fa]">
+                              Preview
+                            </p>
+                            <p className="mt-2 whitespace-pre-line text-[13px] leading-6 text-slate-600">
+                              {replyValue}
+                            </p>
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
+                      </>
+                    );
+                  })()}
                 </div>
               ))
             ) : (
