@@ -250,10 +250,13 @@ const ProductDetails = () => {
                 >
                   {galleryImages.map((image, index) => (
                     <SwiperSlide key={index}>
-                      <div className="overflow-hidden rounded-[18px] bg-white">
+                      <div className="product-media-zoom overflow-hidden rounded-[18px] bg-white">
                         <InnerImageZoom
-                          zoomType="hover"
-                          zoomScale={1.45}
+                          zoomType="click"
+                          zoomScale={1}
+                          hideHint
+                          hasSpacer={false}
+                          className="product-media-zoom-inner"
                           src={image}
                         />
                       </div>

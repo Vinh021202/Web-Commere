@@ -8,29 +8,34 @@ const BannerBoxV2 = (props) => {
 
   return (
     <>
-      <div className="bannerBoxV2 group relative w-full overflow-hidden rounded-[16px] md:rounded-md">
+      <div className="bannerBoxV2 group relative w-full overflow-hidden rounded-[20px]">
         <img
           src={props.image}
           className="block min-h-[180px] w-full object-cover transition-all duration-150 group-hover:scale-105 sm:min-h-[220px] md:min-h-0"
         />
 
         <div
-          className={`info absolute top-0 z-50 flex h-full w-[78%] flex-col items-start justify-end gap-2 p-4 sm:w-[70%] sm:justify-center sm:p-5 ${
+          className={`info bannerBoxV2__content absolute top-0 z-50 flex h-full w-[82%] flex-col items-start justify-end gap-2 p-4 sm:w-[72%] sm:justify-end sm:p-5 ${
               props.info === 'left' ? 'left-0' : 'right-0'
             } ${
               props.info === 'left' ? '' : 'sm:pl-15'
             } `}
         >
-          <h2 className="text-[16px] font-[700] text-[#1f2937] sm:text-[20px]">{title}</h2>
+          <span className="bannerBoxV2__eyebrow">Uu dai duoc goi y</span>
+          <h2 className="text-[16px] font-[800] text-[#1f2937] sm:text-[22px]">{title}</h2>
           {price && (
-            <span className="text-primary w-full text-[16px] font-[700] sm:text-[20px]">
-              &#8363; {price}
+            <span className="text-primary w-full text-[16px] font-[800] sm:text-[22px]">
+              {Number(price).toLocaleString('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                minimumFractionDigits: 0,
+              })}
             </span>
           )}
 
           <div className="w-full">
-            <Link to={'/'} className="link text-[14px] font-[600] sm:text-[16px]">
-              SHOP NOW
+            <Link to={'/'} className="bannerBoxV2__link link text-[14px] font-[700] sm:text-[15px]">
+              Xem ngay
             </Link>
           </div>
         </div>

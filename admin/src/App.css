@@ -161,6 +161,31 @@ button .MuiCirularProgress-root {
 }
 .swiper-slide .iiz{height: 400px !important; overflow: hidden !important;}
 
+.product-media-zoom .iiz {
+  width: 100% !important;
+  height: 520px !important;
+  background: #fff !important;
+  overflow: hidden !important;
+}
+
+.product-media-zoom .iiz__img {
+  width: 100% !important;
+  height: 520px !important;
+  object-fit: contain !important;
+  background: #fff !important;
+}
+
+.product-media-zoom .iiz__zoom-img {
+  object-fit: contain !important;
+}
+
+@media (max-width: 1024px) {
+  .product-media-zoom .iiz,
+  .product-media-zoom .iiz__img {
+    height: 380px !important;
+  }
+}
+
 .productContainer .actions button {
   min-width: 40px !important;
   height: 30px !important;

@@ -129,7 +129,7 @@ const Home = () => {
             <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start xl:grid-cols-[1.15fr_0.85fr]">
               <div className="relative">
                 <span className="eyebrow mb-5">{context?.t('springCollection')}</span>
-                <h1 className="section-heading home-hero-title max-w-[760px]">{context?.t('homeHeroTitle')}</h1>
+                <h1 className="section-heading home-section-heading home-hero-title max-w-[760px]">{context?.t('homeHeroTitle')}</h1>
                 <p className="muted-copy mt-5 max-w-[650px] text-[15px] leading-7">{context?.t('homeHeroText')}</p>
 
                 <div className="mt-5 flex flex-wrap gap-2.5">
@@ -195,7 +195,7 @@ const Home = () => {
             <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div className="leftSec">
                 <span className="eyebrow mb-4">{context?.t('popularEyebrow')}</span>
-                <h2 className="section-heading">{context?.t('popularTitle')}</h2>
+                <h2 className="section-heading home-section-heading">{context?.t('popularTitle')}</h2>
                 <p className="mb-0 mt-2 text-[14px] font-[400]">{context?.t('popularText')}</p>
               </div>
 
@@ -235,7 +235,7 @@ const Home = () => {
             <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
                 <span className="eyebrow mb-4">{context?.t('featuredEyebrow')}</span>
-                <h2 className="section-heading">{context?.t('featuredTitle')}</h2>
+                <h2 className="section-heading home-section-heading">{context?.t('featuredTitle')}</h2>
               </div>
               <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('featuredText')}</p>
             </div>
@@ -292,7 +292,7 @@ const Home = () => {
             <div className="mb-2 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
                 <span className="eyebrow mb-4">{context?.t('latestEyebrow')}</span>
-                <h2 className="section-heading">{context?.t('latestTitle')}</h2>
+                <h2 className="section-heading home-section-heading">{context?.t('latestTitle')}</h2>
               </div>
               <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('latestText')}</p>
             </div>
@@ -311,7 +311,7 @@ const Home = () => {
             <div className="mb-2 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
                 <span className="eyebrow mb-4">{context?.t('editorsChoiceEyebrow')}</span>
-                <h2 className="section-heading">{context?.t('editorsChoiceTitle')}</h2>
+                <h2 className="section-heading home-section-heading">{context?.t('editorsChoiceTitle')}</h2>
               </div>
               <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('editorsChoiceText')}</p>
             </div>
@@ -329,7 +329,7 @@ const Home = () => {
               <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
                   <span className="eyebrow mb-4">{context?.t('magazineEyebrow')}</span>
-                  <h2 className="section-heading mb-0">{context?.t('magazineTitle')}</h2>
+                  <h2 className="section-heading home-section-heading mb-0">{context?.t('magazineTitle')}</h2>
                 </div>
                 <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('magazineText')}</p>
               </div>
