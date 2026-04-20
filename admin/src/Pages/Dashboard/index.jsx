@@ -197,6 +197,7 @@ const Dashboard = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const [sortedIds, setSortedIds] = useState([]);
+  const [totalProductsCount, setTotalProductsCount] = useState(0);
   const [ordersData, setOrdersData] = useState([]);
   const [totalOrdersData, setTotalOrdersData] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -215,9 +216,98 @@ const Dashboard = () => {
   const context = useContext(MyContext);
   const c = copy[context.language] || copy.EU;
 
+  const normalizeProducts = (products = []) =>
+    products.map((product) => ({
+      ...product,
+      checked: false,
+    }));
+
+  const getProducts = async (currentPage = 1, perPage = rowsPerPage) => {
+    setIsLoading(true);
+
+    const [productsRes, countRes] = await Promise.all([
+      fetchDataFromApi(
+        `/api/product/getAllProducts?page=${currentPage}&perPage=${perPage}`,
+      ),
+      fetchDataFromApi(`/api/product/getAllProductsCount`),
+    ]);
+
+    if (productsRes?.error === false) {
+      const productArr = normalizeProducts(productsRes?.products || []);
+
+      setTimeout(() => {
+        setProductData(productArr);
+        setProductTotalData(productArr);
+        setTotalProductsCount(countRes?.productCount || 0);
+        setIsLoading(false);
+      }, 300);
+      return;
+    }
+
+    setProductData([]);
+    setProductTotalData([]);
+    setTotalProductsCount(0);
+    setIsLoading(false);
+  };
+
+  const loadAllProductsForSearch = async () => {
+    setIsLoading(true);
+
+    const [productsRes, countRes] = await Promise.all([
+      fetchDataFromApi(`/api/product/getAllProducts?page=1&perPage=1000`),
+      fetchDataFromApi(`/api/product/getAllProductsCount`),
+    ]);
+
+    if (productsRes?.error === false) {
+      const allProducts = normalizeProducts(productsRes?.products || []);
+      const filteredProducts = allProducts.filter(
+        (product) =>
+          product?._id
+            ?.toLowerCase()
+            .includes(productSearchQuery.toLowerCase()) ||
+          product?.name
+            ?.toLowerCase()
+            .includes(productSearchQuery.toLowerCase()) ||
+          product?.catName
+            ?.toLowerCase()
+            .includes(productSearchQuery.toLowerCase()) ||
+          product?.subCat
+            ?.toLowerCase()
+            .includes(productSearchQuery.toLowerCase()),
+      );
+
+      setProductData(filteredProducts);
+      setProductTotalData(allProducts);
+      setTotalProductsCount(countRes?.productCount || allProducts.length);
+      setPage(0);
+    } else {
+      setProductData([]);
+      setProductTotalData([]);
+      setTotalProductsCount(0);
+    }
+
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    getProducts();
-  }, [context?.refreshData]);
+    const isFiltering =
+      productSearchQuery !== "" ||
+      productCat ||
+      productSubCat ||
+      productThirLaveldCat;
+
+    if (!isFiltering) {
+      getProducts(page + 1, rowsPerPage);
+    }
+  }, [
+    context?.refreshData,
+    page,
+    rowsPerPage,
+    productSearchQuery,
+    productCat,
+    productSubCat,
+    productThirLaveldCat,
+  ]);
   // ✅ watch refreshData thay vì setIsOpenFullScreenPanel
 
   useEffect(() => {
@@ -271,33 +361,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (productSearchQuery !== "") {
-      const filteredProducts = productTotalData?.filter(
-        (product) =>
-          product?._id
-            ?.toLowerCase()
-            .includes(productSearchQuery.toLowerCase()) ||
-          product?.name
-            ?.toLowerCase()
-            .includes(productSearchQuery.toLowerCase()) ||
-          product?.catName
-            ?.toLowerCase()
-            .includes(productSearchQuery.toLowerCase()) ||
-          product?.subCat
-            ?.toLowerCase()
-            .includes(productSearchQuery.toLowerCase()),
-      );
-      setProductData(filteredProducts);
-    } else {
-      fetchDataFromApi(`/api/product/getAllProducts`).then((res) => {
-        if (res?.error === false) {
-          const productArr = res?.products?.map((product) => ({
-            ...product,
-            checked: false,
-          }));
-          setProductData(productArr);
-          setProductTotalData(productArr);
-        }
-      });
+      loadAllProductsForSearch();
     }
   }, [productSearchQuery]);
 
@@ -369,28 +433,13 @@ const Dashboard = () => {
     setPage(0);
   };
 
-  const paginatedProducts = productData?.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage,
+  const isClientPaginated = Boolean(
+    productSearchQuery || productCat || productSubCat || productThirLaveldCat,
   );
 
-  const getProducts = async () => {
-    setIsLoading(true);
-    fetchDataFromApi(`/api/product/getAllProducts`).then((res) => {
-      let productArr = [];
-      if (res?.error === false) {
-        for (let i = 0; i < res?.products?.length; i++) {
-          productArr[i] = res?.products[i];
-          productArr[i].checked = false;
-        }
-        setTimeout(() => {
-          setProductData(productArr);
-          setProductTotalData(productArr);
-          setIsLoading(false);
-        }, 300);
-      }
-    });
-  };
+  const displayedProducts = isClientPaginated
+    ? productData?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    : productData;
 
   const handleChangeProductCat = (event) => {
     const value = event.target.value;
@@ -402,7 +451,11 @@ const Dashboard = () => {
     fetchDataFromApi(`/api/product/getAllProductsByCatId/${value}`).then(
       (res) => {
         if (res?.error === false) {
-          setProductData(res?.products);
+          const normalizedProducts = normalizeProducts(res?.products || []);
+          setProductData(normalizedProducts);
+          setProductTotalData(normalizedProducts);
+          setTotalProductsCount(normalizedProducts.length);
+          setPage(0);
           setTimeout(() => {
             setIsLoading(false);
           }, 300);
@@ -420,7 +473,11 @@ const Dashboard = () => {
     fetchDataFromApi(`/api/product/getAllProductsBySubCatId/${value}`).then(
       (res) => {
         if (res?.error === false) {
-          setProductData(res?.products);
+          const normalizedProducts = normalizeProducts(res?.products || []);
+          setProductData(normalizedProducts);
+          setProductTotalData(normalizedProducts);
+          setTotalProductsCount(normalizedProducts.length);
+          setPage(0);
           setTimeout(() => {
             setIsLoading(false);
           }, 300);
@@ -440,7 +497,11 @@ const Dashboard = () => {
       `/api/product/getAllProductsByThirdLavelCat/${value}`,
     ).then((res) => {
       if (res?.error === false) {
-        setProductData(res?.products);
+        const normalizedProducts = normalizeProducts(res?.products || []);
+        setProductData(normalizedProducts);
+        setProductTotalData(normalizedProducts);
+        setTotalProductsCount(normalizedProducts.length);
+        setPage(0);
         setTimeout(() => {
           setIsLoading(false);
         }, 300);
@@ -450,7 +511,7 @@ const Dashboard = () => {
 
   const deleteProduct = (id) => {
     deleteData(`/api/product/${id}`).then((res) => {
-      getProducts();
+      getProducts(page + 1, rowsPerPage);
       context.alertBox("success", "Product deleted");
     });
   };
@@ -509,7 +570,7 @@ const getTotalSalesByYear = () => {
                 {c.products}
               </p>
               <p className="mt-1 text-[22px] font-[900] text-[#14213d]">
-                {productData?.length || 0}
+                {isClientPaginated ? productData?.length || 0 : totalProductsCount || 0}
               </p>
             </div>
             <div className="rounded-[18px] border border-[#e5ecff] bg-white/80 px-4 py-3 shadow-[0_10px_25px_rgba(15,23,42,0.04)]">
@@ -545,7 +606,7 @@ const getTotalSalesByYear = () => {
         allReviews?.length !== 0 && (
           <DashboardBoxes
             orders={ordersCount}
-            products={productData?.length}
+            products={totalProductsCount || productData?.length}
             users={users?.length}
             reivews={allReviews?.length}
             categorry={context?.catData?.length}
@@ -756,8 +817,8 @@ const getTotalSalesByYear = () => {
 
                 <TableBody>
                   {isLoading === false ? (
-                    paginatedProducts?.length !== 0 ? (
-                      paginatedProducts?.map((product, index) => (
+                    displayedProducts?.length !== 0 ? (
+                      displayedProducts?.map((product, index) => (
                         <TableRow
                           key={index}
                           hover
@@ -919,7 +980,7 @@ const getTotalSalesByYear = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={productData?.length}
+          count={isClientPaginated ? productData?.length : totalProductsCount}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
