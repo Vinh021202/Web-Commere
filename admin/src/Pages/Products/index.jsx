@@ -146,56 +146,98 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [productTotalData, setProductTotalData] = useState([]);
-  const [pageOrder, setPageOrder] = useState(1);
+  const [totalProductsCount, setTotalProductsCount] = useState(0);
 
   const context = useContext(MyContext);
   const c = copy[context.language] || copy.EU;
 
-  useEffect(() => {
-    getProducts();
-  }, [context?.refreshData]);
+  const normalizeProducts = (products = []) =>
+    products.map((product) => ({
+      ...product,
+      checked: false,
+    }));
 
-  useEffect(() => {
-    if (searchQuery !== "") {
-      const filteredOrders = productTotalData?.filter(
+  const getProducts = async (currentPage = 1, perPage = rowsPerPage) => {
+    setIsLoading(true);
+
+    const [productsRes, countRes] = await Promise.all([
+      fetchDataFromApi(
+        `/api/product/getAllProducts?page=${currentPage}&perPage=${perPage}`,
+      ),
+      fetchDataFromApi(`/api/product/getAllProductsCount`),
+    ]);
+
+    if (productsRes?.error === false) {
+      const productArr = normalizeProducts(productsRes?.products || []);
+
+      setTimeout(() => {
+        setProductData(productArr);
+        setProductTotalData(productArr);
+        setTotalProductsCount(countRes?.productCount || 0);
+        setIsLoading(false);
+      }, 300);
+      return;
+    }
+
+    setProductData([]);
+    setProductTotalData([]);
+    setTotalProductsCount(0);
+    setIsLoading(false);
+  };
+
+  const loadAllProductsForSearch = async () => {
+    setIsLoading(true);
+
+    const [productsRes, countRes] = await Promise.all([
+      fetchDataFromApi(`/api/product/getAllProducts?page=1&perPage=1000`),
+      fetchDataFromApi(`/api/product/getAllProductsCount`),
+    ]);
+
+    if (productsRes?.error === false) {
+      const allProducts = normalizeProducts(productsRes?.products || []);
+      const filteredProducts = allProducts.filter(
         (product) =>
           product?._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product?.catName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product?.subCat?.toLowerCase().includes(searchQuery.toLowerCase()),
       );
-      setProductData(filteredOrders);
+
+      setProductData(filteredProducts);
+      setProductTotalData(allProducts);
+      setTotalProductsCount(countRes?.productCount || allProducts.length);
+      setPage(0);
     } else {
-      fetchDataFromApi(`/api/product/getAllProducts`).then((res) => {
-        if (res?.error === false) {
-          const productArr = res?.products?.map((product) => ({
-            ...product,
-            checked: false,
-          }));
-          setProductData(productArr);
-          setProductTotalData(productArr);
-        }
-      });
+      setProductData([]);
+      setProductTotalData([]);
+      setTotalProductsCount(0);
+    }
+
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    const isFiltering =
+      searchQuery !== "" || productCat || productSubCat || productThirLaveldCat;
+
+    if (!isFiltering) {
+      getProducts(page + 1, rowsPerPage);
+    }
+  }, [
+    context?.refreshData,
+    page,
+    rowsPerPage,
+    searchQuery,
+    productCat,
+    productSubCat,
+    productThirLaveldCat,
+  ]);
+
+  useEffect(() => {
+    if (searchQuery !== "") {
+      loadAllProductsForSearch();
     }
   }, [searchQuery]);
-
-  const getProducts = async () => {
-    setIsLoading(true);
-    fetchDataFromApi(`/api/product/getAllProducts`).then((res) => {
-      let productArr = [];
-      if (res?.error === false) {
-        for (let i = 0; i < res?.products?.length; i++) {
-          productArr[i] = res?.products[i];
-          productArr[i].checked = false;
-        }
-        setTimeout(() => {
-          setProductData(productArr);
-          setProductTotalData(productArr);
-          setIsLoading(false);
-        }, 300);
-      }
-    });
-  };
 
   const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
@@ -230,7 +272,7 @@ const Products = () => {
 
   const deleteProduct = (id) => {
     deleteData(`/api/product/${id}`).then(() => {
-      getProducts();
+      getProducts(page + 1, rowsPerPage);
       context.alertBox("success", c.productDeleted);
     });
   };
@@ -243,7 +285,7 @@ const Products = () => {
 
     try {
       deleteMultipleData(`/api/product/deleteMultiple`, sortedIds).then(() => {
-        getProducts();
+        getProducts(page + 1, rowsPerPage);
         context.alertBox("success", c.productDeleted);
       });
     } catch (error) {
@@ -261,7 +303,11 @@ const Products = () => {
     fetchDataFromApi(`/api/product/getAllProductsByCatId/${value}`).then(
       (res) => {
         if (res?.error === false) {
-          setProductData(res?.products);
+          const normalizedProducts = normalizeProducts(res?.products || []);
+          setProductData(normalizedProducts);
+          setProductTotalData(normalizedProducts);
+          setTotalProductsCount(normalizedProducts.length);
+          setPage(0);
           setTimeout(() => {
             setIsLoading(false);
           }, 300);
@@ -279,7 +325,11 @@ const Products = () => {
     fetchDataFromApi(`/api/product/getAllProductsBySubCatId/${value}`).then(
       (res) => {
         if (res?.error === false) {
-          setProductData(res?.products);
+          const normalizedProducts = normalizeProducts(res?.products || []);
+          setProductData(normalizedProducts);
+          setProductTotalData(normalizedProducts);
+          setTotalProductsCount(normalizedProducts.length);
+          setPage(0);
           setTimeout(() => {
             setIsLoading(false);
           }, 300);
@@ -298,7 +348,11 @@ const Products = () => {
       `/api/product/getAllProductsByThirdLavelCat/${value}`,
     ).then((res) => {
       if (res?.error === false) {
-        setProductData(res?.products);
+        const normalizedProducts = normalizeProducts(res?.products || []);
+        setProductData(normalizedProducts);
+        setProductTotalData(normalizedProducts);
+        setTotalProductsCount(normalizedProducts.length);
+        setPage(0);
         setTimeout(() => {
           setIsLoading(false);
         }, 300);
@@ -311,14 +365,17 @@ const Products = () => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(event.target.value);
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const paginatedProducts = productData?.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage,
+  const isClientPaginated = Boolean(
+    searchQuery || productCat || productSubCat || productThirLaveldCat,
   );
+
+  const displayedProducts = isClientPaginated
+    ? productData?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    : productData;
 
   return (
     <>
@@ -346,7 +403,7 @@ const Products = () => {
               {c.totalProducts}
             </p>
             <p className="mt-1 text-[22px] font-[900] text-[#3872fa]">
-              {productData?.length || 0}
+              {isClientPaginated ? productData?.length || 0 : totalProductsCount || 0}
             </p>
           </div>
 
@@ -532,7 +589,7 @@ const Products = () => {
             <SearchBox
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
-              setPageOrder={setPageOrder}
+              setPageOrder={setPage}
             />
           </div>
         </div>
@@ -592,8 +649,8 @@ const Products = () => {
 
             <TableBody>
               {isLoading === false ? (
-                paginatedProducts?.length !== 0 ? (
-                  paginatedProducts?.map((product, index) => (
+                displayedProducts?.length !== 0 ? (
+                  displayedProducts?.map((product, index) => (
                     <TableRow
                       key={index}
                       hover
@@ -766,7 +823,7 @@ const Products = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={productData?.length}
+          count={isClientPaginated ? productData?.length : totalProductsCount}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

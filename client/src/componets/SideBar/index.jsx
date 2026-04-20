@@ -24,7 +24,7 @@ const SideBar = (props) => {
     maxPrice: '',
     rating: [],
     page: 1,
-    limit: rowsPerPage || 12,
+    limit: rowsPerPage || 10,
   });
 
   const [price, setPrice] = useState([0, 600000]);

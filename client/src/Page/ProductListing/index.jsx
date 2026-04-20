@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import { Button } from '@mui/material';
@@ -21,7 +21,7 @@ const ProductListing = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(12);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedSortVal, setSelectedSortVal] = useState('Độ bán chạy giảm dần');
 
   const [searchParams] = useSearchParams();
@@ -32,6 +32,11 @@ const ProductListing = () => {
     'Sản phẩm';
 
   const open = Boolean(anchorEl);
+
+  useEffect(() => {
+    setPage(1);
+    setRowsPerPage(10);
+  }, [searchParams]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -272,7 +277,7 @@ const ProductListing = () => {
                       onPageChange={handlePageChange}
                       rowsPerPage={rowsPerPage}
                       onRowsPerPageChange={handleRowsPerPageChange}
-                      rowsPerPageOptions={[12, 24, 36]}
+                      rowsPerPageOptions={[10, 20, 30]}
                       labelRowsPerPage=""
                       labelDisplayedRows={() => `${fromProduct}-${toProduct} trên ${productCount}`}
                     />
