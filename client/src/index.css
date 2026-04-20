@@ -1707,7 +1707,15 @@ body[data-theme='dark'] .MuiButtonBase-root[class*='bg-white'] {
   overflow: hidden;
 }
 
+.home-featured-slider {
+  overflow: hidden;
+}
+
 .home-popular-slider .productsSliderShell {
+  overflow: hidden !important;
+}
+
+.home-featured-slider .productsSliderShell {
   overflow: hidden !important;
 }
 
@@ -1720,6 +1728,14 @@ body[data-theme='dark'] .MuiButtonBase-root[class*='bg-white'] {
 }
 
 .home-popular-slider .productsSliderShell .swiper-button-next {
+  right: 10px;
+}
+
+.home-featured-slider .productsSliderShell .swiper-button-prev {
+  left: 10px;
+}
+
+.home-featured-slider .productsSliderShell .swiper-button-next {
   right: 10px;
 }
 

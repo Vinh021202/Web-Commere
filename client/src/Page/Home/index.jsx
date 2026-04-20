@@ -324,7 +324,11 @@ const Home = () => {
               <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('editorsChoiceText')}</p>
             </div>
 
-            {featuredProducts?.length !== 0 && <ProductsSlider items={6} data={featuredProducts} />}
+            {featuredProducts?.length !== 0 && (
+              <div className="home-featured-slider overflow-hidden">
+                <ProductsSlider items={6} data={featuredProducts} />
+              </div>
+            )}
             <AdsBannerSlider items={3} />
           </div>
         </div>
