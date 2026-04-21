@@ -26,9 +26,9 @@ Dự án giải quyết nhu cầu xây dựng một nền tảng e-commerce có 
 
 ## Link demo
 
-- Client: `Cập nhật link demo tại đây`
-- Admin: `Cập nhật link demo tại đây`
-- API: `Cập nhật link demo tại đây`
+- Client: https://web-commere-admin.vercel.app
+- Admin: https://web-commere-ymt9.vercel.app
+- API: https://web-commere.vercel.app/
 
 ## Tính năng
 
