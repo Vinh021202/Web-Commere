@@ -257,13 +257,6 @@ const Home = () => {
       <section className="featured-section py-4 md:py-5 lg:py-6">
         <div className="container">
           <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6 xl:px-7 xl:py-7">
-            <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-              <div></div>
-              <p className="muted-copy featured-section__copy max-w-[420px] text-[14px] leading-7">
-                {context?.t('featuredText')}
-              </p>
-            </div>
-
             <div className="flex flex-col items-stretch gap-4 lg:flex-row lg:gap-5">
               <div className="part1 w-full lg:w-[68%]">
                 {productsData?.length !== 0 && <HomeBannerV2 data={productsData} />}

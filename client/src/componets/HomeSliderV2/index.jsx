@@ -13,8 +13,9 @@ import { Link } from 'react-router-dom';
 
 const HomeBannerV2 = (props) => {
   const spotlightItems =
-    props?.data?.filter((item) => item?.isDisplayOnHomeBanner && (item?.bannerimages?.[0] || item?.images?.[0])) ||
-    [];
+    props?.data?.filter(
+      (item) => item?.isDisplayOnHomeBanner && (item?.bannerimages?.[0] || item?.images?.[0])
+    ) || [];
 
   const fallbackItems =
     props?.data?.filter((item) => item?.bannerimages?.[0] || item?.images?.[0]).slice(0, 4) || [];
@@ -57,9 +58,11 @@ const HomeBannerV2 = (props) => {
                     <h4 className="homeSpotlightBanner__eyebrow relative mb-2 w-full text-left opacity-0 sm:mb-3">
                       {item?.bannerTitleName || 'Bo suu tap noi bat'}
                     </h4>
-                    <h2 className="homeSpotlightBanner__title relative w-full opacity-0">{item?.name}</h2>
+                    <h2 className="homeSpotlightBanner__title relative w-full opacity-0">
+                      {item?.name}
+                    </h2>
                     <h3 className="homeSpotlightBanner__meta relative mt-2 mb-4 flex w-full flex-wrap items-center gap-2 opacity-0 sm:mt-3">
-                      Lua chon de thuong va tinh te tu
+                      Lựa chọn quà tặng và đặc sản
                       <span className="homeSpotlightBanner__price text-primary">
                         {Number(item?.price || 0).toLocaleString('vi-VN', {
                           style: 'currency',
@@ -70,7 +73,7 @@ const HomeBannerV2 = (props) => {
                     </h3>
                     <div className="btn_ relative w-full opacity-0">
                       <Link to={item?._id ? `/product/${item._id}` : '/ProductListing'}>
-                        <Button className="homeSpotlightBanner__cta bg-org">Xem bo suu tap</Button>
+                        <Button className="homeSpotlightBanner__cta bg-org">Xem bộ sưu tập</Button>
                       </Link>
                     </div>
                   </div>
