@@ -25,22 +25,23 @@ const OrderTracking = () => {
                 Theo dõi đơn hàng va tien trinh giao nhan trong cung mot man hinh.
               </h1>
               <p className="muted-copy mt-4 max-w-[620px] text-[15px] leading-7">
-                Nhập mã đơn hàng và thông tin liên hệ để xem mốc giao hàng mới nhất, lộ trình hiện tại và cách nhận hỗ trợ.
+                Nhập mã đơn hàng và thông tin liên hệ để xem mốc giao hàng mới nhất, lộ trình hiện
+                tại và cách nhận hỗ trợ.
               </p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[430px]">
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Tr?ng th?i</span>
-                <strong className="listing-stat__value">4 buoc</strong>
+                <span className="listing-stat__label">Trạng thái</span>
+                <strong className="listing-stat__value">4 bước</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Ph?m vi</span>
-                <strong className="listing-stat__value">Toan quoc</strong>
+                <span className="listing-stat__label">Phạm vi</span>
+                <strong className="listing-stat__value">Toàn quốc</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">H? tr?</span>
-                <strong className="listing-stat__value !text-[1.2rem]">S?n s?ng moi luc</strong>
+                <span className="listing-stat__label">Hỗ trợ</span>
+                <strong className="listing-stat__value !text-[1.2rem]">Sẵn sàng mọi lúc</strong>
               </div>
             </div>
           </div>
@@ -81,13 +82,14 @@ const OrderTracking = () => {
             <div className="mt-6 rounded-[24px] border border-[rgba(255,82,82,0.12)] bg-[linear-gradient(135deg,#fff8f5_0%,#ffffff_100%)] p-5">
               <h3 className="text-[18px] font-[800] text-[#1f2937]">Cần hỗ trợ về đơn hàng?</h3>
               <p className="mb-0 mt-2 text-[14px] leading-7">
-                Nếu bạn không tìm thấy đơn hàng, đội ngũ hỗ trợ sẽ giúp xác minh giao dịch và kiểm tra cập nhật thủ công.
+                Nếu bạn không tìm thấy đơn hàng, đội ngũ hỗ trợ sẽ giúp xác minh giao dịch và kiểm
+                tra cập nhật thủ công.
               </p>
               <Link
                 to="/help-center"
                 className="mt-4 inline-flex items-center gap-2 text-[13px] font-[800] text-[#7c553d]"
               >
-                Mo trung tam ho tro <FiArrowRight className="text-[15px]" />
+                Mở trung tâm hỗ trợ <FiArrowRight className="text-[15px]" />
               </Link>
             </div>
           </div>
@@ -99,16 +101,21 @@ const OrderTracking = () => {
                   <FiPackage className="text-[22px]" />
                 </div>
                 <div>
-                  <h2 className="text-[26px] font-[800] text-[#201714]">Tiến trình giao hàng mẫu</h2>
+                  <h2 className="text-[26px] font-[800] text-[#201714]">
+                    Tiến trình giao hàng mẫu
+                  </h2>
                   <p className="mb-0 mt-1 text-[14px] text-[rgba(31,41,55,0.66)]">
-                    Xem truoc luong trang thai ma khach hang thuong gap.
+                    Xem trước lượng trạng thái mà khách hàng thường gặp.
                   </p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 {trackingSteps.map((step, index) => (
-                  <div key={step.title} className="flex gap-4 rounded-[22px] border border-[rgba(255,82,82,0.12)] bg-white p-4">
+                  <div
+                    key={step.title}
+                    className="flex gap-4 rounded-[22px] border border-[rgba(255,82,82,0.12)] bg-white p-4"
+                  >
                     <div className="flex flex-col items-center">
                       <div className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#fff1eb] text-[14px] font-[800] text-[#ff5252]">
                         {index + 1}
@@ -141,9 +148,10 @@ const OrderTracking = () => {
                 <div className="flex h-[48px] w-[48px] items-center justify-center rounded-[16px] bg-[#fff1eb] text-[#ff5252]">
                   <FiMail className="text-[22px]" />
                 </div>
-                <h3 className="mt-4 text-[22px] font-[800] text-[#201714]">Thong bao</h3>
+                <h3 className="mt-4 text-[22px] font-[800] text-[#201714]">Thông báo</h3>
                 <p className="mb-0 mt-2 text-[14px] leading-7">
-                  Nhận thông báo thay đổi lộ trình và xác nhận giao hàng qua thông tin liên hệ đã lưu.
+                  Nhận thông báo thay đổi lộ trình và xác nhận giao hàng qua thông tin liên hệ đã
+                  lưu.
                 </p>
               </div>
 
@@ -155,7 +163,8 @@ const OrderTracking = () => {
                   <div>
                     <h3 className="text-[22px] font-[800] text-[#201714]">Địa chỉ nhận hàng</h3>
                     <p className="mb-0 mt-2 text-[14px] leading-7">
-                      Giữ thông tin địa chỉ chính xác để đơn vị vận chuyển giao đúng nơi mà không bị chậm trễ.
+                      Giữ thông tin địa chỉ chính xác để đơn vị vận chuyển giao đúng nơi mà không bị
+                      chậm trễ.
                     </p>
                   </div>
                 </div>

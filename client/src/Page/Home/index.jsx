@@ -137,7 +137,7 @@ const Home = () => {
                   {context?.t('homeHeroText')}
                 </p>
 
-                {/* <div className="mt-5 flex flex-wrap gap-2.5">
+                <div className="mt-5 flex flex-wrap gap-2.5">
                   {benefitChips.map((chip) => (
                     <span
                       key={chip}
@@ -146,7 +146,7 @@ const Home = () => {
                       {chip}
                     </span>
                   ))}
-                </div> */}
+                </div>
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   <div className="soft-card home-mini-stat p-4">
@@ -189,6 +189,15 @@ const Home = () => {
                   </div>
                 ))}
 
+                <div className="home-editorial-panel">
+                  <span className="home-editorial-panel__tag">{context?.t('layoutNote')}</span>
+                  <h3 className="mt-4 text-[24px] font-[800] leading-[1.2] text-white md:text-[26px] xl:text-[28px]">
+                    {context?.t('layoutTitle')}
+                  </h3>
+                  <p className="mb-0 mt-3 max-w-[420px] text-[14px] leading-7 text-white/78">
+                    {context?.t('layoutText')}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -249,12 +258,7 @@ const Home = () => {
         <div className="container">
           <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6 xl:px-7 xl:py-7">
             <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-              <div>
-                <span className="eyebrow mb-4">{context?.t('featuredEyebrow')}</span>
-                <h2 className="section-heading home-section-heading featured-section__heading">
-                  {context?.t('featuredTitle')}
-                </h2>
-              </div>
+              <div></div>
               <p className="muted-copy featured-section__copy max-w-[420px] text-[14px] leading-7">
                 {context?.t('featuredText')}
               </p>
@@ -307,7 +311,7 @@ const Home = () => {
               </div>
 
               <p className="home-shipping-banner__price m-0 text-[24px] font-bold text-[#1f2937]">
-                {context?.t('from200Usd')}
+                {context?.t('from 200000 VND')}
               </p>
             </div>
 
