@@ -136,16 +136,18 @@ const AddAress = () => {
 
     if (context?.addressMode === 'edit') {
       setIsLoading(true);
-      editData(`/api/address/${context?.addressId}`, formFields, { withCredentials: true }).then(() => {
-        fetchDataFromApi(`/api/address/get?userId=${context?.userData?._id}`).then((res) => {
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 500);
-          context?.getUserAddress(res.data);
-          context.setOpenAddressPanel(false);
-          resetForm();
-        });
-      });
+      editData(`/api/address/${context?.addressId}`, formFields, { withCredentials: true }).then(
+        () => {
+          fetchDataFromApi(`/api/address/get?userId=${context?.userData?._id}`).then((res) => {
+            setTimeout(() => {
+              setIsLoading(false);
+            }, 500);
+            context?.getUserAddress(res.data);
+            context.setOpenAddressPanel(false);
+            resetForm();
+          });
+        }
+      );
     }
   };
 
@@ -218,7 +220,7 @@ const AddAress = () => {
 
         <TextField
           className="w-full"
-          label="Ma buu chinh"
+          label="Mã bưu chính"
           variant="outlined"
           size="small"
           name="pincode"
@@ -228,7 +230,7 @@ const AddAress = () => {
 
         <TextField
           className="w-full"
-          label="Quoc gia"
+          label="Quốc gia"
           variant="outlined"
           size="small"
           name="country"
@@ -253,7 +255,7 @@ const AddAress = () => {
         <div className="md:col-span-2">
           <TextField
             className="w-full"
-            label="Moc ghi chu"
+            label="Mô tả ghi chú"
             variant="outlined"
             size="small"
             name="lamdmark"
@@ -286,7 +288,10 @@ const AddAress = () => {
       </div>
 
       <div className="mt-6 flex items-center gap-4">
-        <Button type="submit" className="bg-org product-card__cta product-card__cta--primary w-full flex gap-2 items-center">
+        <Button
+          type="submit"
+          className="bg-org product-card__cta product-card__cta--primary w-full flex gap-2 items-center"
+        >
           {isLoading === true ? <CircularProgress color="inherit" /> : 'Lưu địa chỉ'}
         </Button>
       </div>

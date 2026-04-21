@@ -153,7 +153,7 @@ const MyAccount = () => {
   };
 
   return (
-    <section className="pb-10 pt-6 md:pt-8">
+    <section className="pb-10 pt-[220px] md:pt-[240px] xl:pt-[260px]">
       <div className="container">
         <div className="section-shell overflow-hidden px-4 py-6 md:px-8 md:py-8">
           <div className="absolute inset-y-0 right-0 hidden w-[34%] bg-[radial-gradient(circle_at_top_right,rgba(255,82,82,0.12),transparent_58%)] lg:block" />
@@ -169,9 +169,9 @@ const MyAccount = () => {
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
-                <span className="listing-chip">Thong tin ca nhan</span>
+                <span className="listing-chip">Thông tin cá nhân</span>
                 <span className="listing-chip">Bảo mật tài khoản</span>
-                <span className="listing-chip">Avatar va lien he</span>
+                <span className="listing-chip">Avatar và liên hệ</span>
               </div>
             </div>
 

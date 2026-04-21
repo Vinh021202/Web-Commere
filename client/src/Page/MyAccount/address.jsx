@@ -24,7 +24,7 @@ const Address = () => {
   };
 
   return (
-    <section className="pb-10 pt-6 md:pt-8">
+    <section className="pb-10 pt-[220px] md:pt-[240px] xl:pt-[260px]">
       <div className="container">
         <div className="section-shell overflow-hidden px-4 py-6 md:px-8 md:py-8">
           <div className="absolute inset-y-0 right-0 hidden w-[34%] bg-[radial-gradient(circle_at_top_right,rgba(255,82,82,0.12),transparent_58%)] lg:block" />
@@ -33,7 +33,7 @@ const Address = () => {
             <div className="max-w-[760px]">
               <span className="eyebrow">Sổ địa chỉ</span>
               <h1 className="section-heading mt-4 max-w-[700px]">
-                Luu tru va quan ly địa chỉ giao hàng trong mot b? c?c gon gang hon.
+                Lưu trữ và quản lý địa chỉ giao hàng trong một bố cục gọn gàng hơn.
               </h1>
               <p className="muted-copy mt-4 max-w-[620px] text-[15px] leading-7">
                 Thêm, chỉnh sửa hoặc xóa địa chỉ để việc đặt hàng và giao nhận trở nên nhanh hơn.
@@ -41,7 +41,7 @@ const Address = () => {
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <span className="listing-chip">Địa chỉ giao hàng</span>
-                <span className="listing-chip">Cap nhat nhanh</span>
+                <span className="listing-chip">Cập nhật nhanh</span>
                 <span className="listing-chip">Quản lý ngay tại một chỗ</span>
               </div>
             </div>
@@ -49,14 +49,16 @@ const Address = () => {
             <div className="grid gap-3 sm:grid-cols-3 xl:min-w-[460px]">
               <div className="soft-card p-4">
                 <span className="listing-stat__label">Tổng địa chỉ</span>
-                <strong className="listing-stat__value !text-[1.2rem]">{address?.length || 0}</strong>
+                <strong className="listing-stat__value !text-[1.2rem]">
+                  {address?.length || 0}
+                </strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Che do</span>
+                <span className="listing-stat__label">Chế độ</span>
                 <strong className="listing-stat__value !text-[1.2rem]">Đã lưu</strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">T?i kho?n</span>
+                <span className="listing-stat__label">Tài khoản</span>
                 <strong className="listing-stat__value !text-[1.2rem]">
                   {context?.userData?.name || '--'}
                 </strong>
