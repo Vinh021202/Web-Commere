@@ -189,15 +189,6 @@ const Home = () => {
                   </div>
                 ))}
 
-                <div className="home-editorial-panel">
-                  <span className="home-editorial-panel__tag">{context?.t('layoutNote')}</span>
-                  <h3 className="mt-4 text-[24px] font-[800] leading-[1.2] text-white md:text-[26px] xl:text-[28px]">
-                    {context?.t('layoutTitle')}
-                  </h3>
-                  <p className="mb-0 mt-3 max-w-[420px] text-[14px] leading-7 text-white/78">
-                    {context?.t('layoutText')}
-                  </p>
-                </div>
               </div>
             </div>
           </div>

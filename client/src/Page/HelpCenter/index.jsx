@@ -58,7 +58,7 @@ const faqs = [
 
 const HelpCenter = () => {
   return (
-    <section className="pb-10 pt-[150px] md:pt-[168px] xl:pt-[178px]">
+    <section className="pb-10 pt-6 md:pt-8">
       <div className="container">
         <div className="section-shell listing-hero overflow-hidden px-5 py-7 md:px-8 md:py-9">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
