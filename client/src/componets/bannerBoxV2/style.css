@@ -34,18 +34,20 @@
   max-width: 14ch;
   margin: 0;
   font-family: 'Fraunces', serif;
-  font-size: clamp(1.25rem, 1.1rem + 0.9vw, 1.95rem);
+  font-size: clamp(1.05rem, 0.98rem + 0.65vw, 1.55rem);
   font-weight: 600;
-  line-height: 1.08;
+  line-height: 1.04;
   letter-spacing: -0.035em;
-  color: #1f2937;
+  color: rgba(31, 41, 55, 0.9);
   text-wrap: balance;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.16);
 }
 
 .bannerBoxV2__price {
-  font-size: clamp(1.15rem, 1rem + 0.7vw, 1.6rem);
+  font-size: clamp(1rem, 0.92rem + 0.45vw, 1.3rem);
   font-weight: 800;
   letter-spacing: -0.03em;
+  color: #ff635c !important;
 }
 
 .bannerBoxV2__link {

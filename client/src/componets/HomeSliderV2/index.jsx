@@ -52,29 +52,27 @@ const HomeBannerV2 = (props) => {
 
                 <div className="homeSpotlightBanner__overlay absolute inset-0" />
 
-                <div className="info absolute inset-0 z-50 flex h-full w-full flex-col items-start justify-end p-5 opacity-0 transition-all duration-700 sm:p-8 lg:p-10">
+                <div className="info absolute inset-0 z-50 flex h-full w-full flex-col items-start justify-end p-4 opacity-0 transition-all duration-700 sm:p-6 lg:p-8">
                   <div className="homeSpotlightBanner__card">
-                  <h4 className="relative mb-2 w-full text-left text-[12px] font-[800] uppercase tracking-[0.12em] text-[#a65434] opacity-0 sm:mb-3 sm:text-[13px]">
-                    {item?.bannerTitleName || 'Bo suu tap noi bat'}
-                  </h4>
-                  <h2 className="relative w-full text-[24px] font-[800] leading-tight text-[#1f2937] opacity-0 sm:text-[30px] md:text-[38px]">
-                    {item?.name}
-                  </h2>
-                  <h3 className="relative mt-2 mb-4 flex w-full flex-wrap items-center gap-2 text-left text-[14px] font-[500] text-[#4b5563] opacity-0 sm:mt-3 sm:text-[16px] md:text-[18px]">
-                    Lua chon de thuong va tinh te tu
-                    <span className="text-primary text-[22px] font-[800] sm:text-[26px] md:text-[30px]">
-                      {Number(item?.price || 0).toLocaleString('vi-VN', {
-                        style: 'currency',
-                        currency: 'VND',
-                        minimumFractionDigits: 0,
-                      })}
-                    </span>
-                  </h3>
-                  <div className="btn_ relative w-full opacity-0">
-                    <Link to={item?._id ? `/product/${item._id}` : '/ProductListing'}>
-                      <Button className="bg-org">Xem bo suu tap</Button>
-                    </Link>
-                  </div>
+                    <h4 className="homeSpotlightBanner__eyebrow relative mb-2 w-full text-left opacity-0 sm:mb-3">
+                      {item?.bannerTitleName || 'Bo suu tap noi bat'}
+                    </h4>
+                    <h2 className="homeSpotlightBanner__title relative w-full opacity-0">{item?.name}</h2>
+                    <h3 className="homeSpotlightBanner__meta relative mt-2 mb-4 flex w-full flex-wrap items-center gap-2 opacity-0 sm:mt-3">
+                      Lua chon de thuong va tinh te tu
+                      <span className="homeSpotlightBanner__price text-primary">
+                        {Number(item?.price || 0).toLocaleString('vi-VN', {
+                          style: 'currency',
+                          currency: 'VND',
+                          minimumFractionDigits: 0,
+                        })}
+                      </span>
+                    </h3>
+                    <div className="btn_ relative w-full opacity-0">
+                      <Link to={item?._id ? `/product/${item._id}` : '/ProductListing'}>
+                        <Button className="homeSpotlightBanner__cta bg-org">Xem bo suu tap</Button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
