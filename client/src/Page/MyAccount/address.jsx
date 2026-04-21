@@ -24,7 +24,7 @@ const Address = () => {
   };
 
   return (
-    <section className="pb-10 pt-[220px] md:pt-[240px] xl:pt-[260px]">
+    <section className="pb-10 pt-6 md:pt-8">
       <div className="container">
         <div className="section-shell overflow-hidden px-4 py-6 md:px-8 md:py-8">
           <div className="absolute inset-y-0 right-0 hidden w-[34%] bg-[radial-gradient(circle_at_top_right,rgba(255,82,82,0.12),transparent_58%)] lg:block" />

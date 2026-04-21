@@ -33,19 +33,31 @@ const MyListtems = (props) => {
             {props?.item?.brand || 'Bo suu tap'}
           </span>
           <span className="inline-flex rounded-full bg-white px-3 py-1 text-[11px] font-[700] text-[#7c553d]">
-            Da luu
+            Đã lưu
           </span>
         </div>
 
         <h3 className="text-[17px] font-[800] leading-7 text-[#1f2937]">
-          <Link to={`/product/${props?.item?.productId}`} className="link transition-all hover:text-primary">
-            {props?.item?.name?.length > 70 ? `${props?.item?.name.slice(0, 70)}...` : props?.item?.name}
+          <Link
+            to={`/product/${props?.item?.productId}`}
+            className="link transition-all hover:text-primary"
+          >
+            {props?.item?.name?.length > 70
+              ? `${props?.item?.name.slice(0, 70)}...`
+              : props?.item?.name}
           </Link>
         </h3>
 
         <div className="mt-3 flex items-center gap-2">
-          <Rating name={`wishlist-rating-${props?.item?._id}`} value={props?.item?.rating || 0} size="small" readOnly />
-          <span className="text-[12px] font-[700] text-[#6b7280]">({props?.item?.rating || 0})</span>
+          <Rating
+            name={`wishlist-rating-${props?.item?._id}`}
+            value={props?.item?.rating || 0}
+            size="small"
+            readOnly
+          />
+          <span className="text-[12px] font-[700] text-[#6b7280]">
+            ({props?.item?.rating || 0})
+          </span>
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-4">

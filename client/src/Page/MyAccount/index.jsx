@@ -153,7 +153,7 @@ const MyAccount = () => {
   };
 
   return (
-    <section className="pb-10 pt-[220px] md:pt-[240px] xl:pt-[260px]">
+    <section className="pb-10 pt-6 md:pt-8">
       <div className="container">
         <div className="section-shell overflow-hidden px-4 py-6 md:px-8 md:py-8">
           <div className="absolute inset-y-0 right-0 hidden w-[34%] bg-[radial-gradient(circle_at_top_right,rgba(255,82,82,0.12),transparent_58%)] lg:block" />
@@ -164,7 +164,9 @@ const MyAccount = () => {
               <h1 className="section-heading mt-4 max-w-[700px]">
                 Không gian quản lý tài khoản được sắp xếp gọn, rõ và dễ cập nhật hơn.
               </h1>
-              <p className="muted-copy mt-4 max-w-[620px] text-[15px] leading-7">{accountSummary}</p>
+              <p className="muted-copy mt-4 max-w-[620px] text-[15px] leading-7">
+                {accountSummary}
+              </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <span className="listing-chip">Thong tin ca nhan</span>
@@ -187,7 +189,7 @@ const MyAccount = () => {
                 </strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">B?o m?t</span>
+                <span className="listing-stat__label">Bảo mật</span>
                 <strong className="listing-stat__value !text-[1.1rem]">
                   {isChangePasswordFromShow ? 'Đang sửa' : 'Ổn định'}
                 </strong>
@@ -205,8 +207,8 @@ const MyAccount = () => {
             <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6">
               <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <span className="listing-stat__label">Cai dat ho so</span>
-                  <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">Ho so cua toi</h2>
+                  <span className="listing-stat__label">Cài đặt hồ sơ</span>
+                  <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">Hồ sơ của tôi</h2>
                 </div>
                 <Button
                   className={`!rounded-full !px-5 !py-2 !text-[13px] !font-[800] !capitalize ${
@@ -265,7 +267,7 @@ const MyAccount = () => {
                     className="bg-org product-card__cta product-card__cta--primary !px-6"
                     sx={{ width: '190px', height: '46px', fontSize: '14px', whiteSpace: 'nowrap' }}
                   >
-                    {isLoading ? <CircularProgress color="inherit" /> : 'Cap nhat ho so'}
+                    {isLoading ? <CircularProgress color="inherit" /> : 'Cập nhật hồ sơ'}
                   </Button>
                 </div>
               </form>
@@ -274,7 +276,7 @@ const MyAccount = () => {
             <Collapse isOpened={isChangePasswordFromShow}>
               <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6">
                 <div className="mb-5">
-                  <span className="listing-stat__label">B?o m?t</span>
+                  <span className="listing-stat__label">Bảo mật</span>
                   <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">Đổi mật khẩu</h2>
                   <p className="mb-0 mt-2 text-[14px] leading-7 text-[#6b7280]">
                     Cập nhật mật khẩu mới để tăng bảo mật cho tài khoản của bạn.
@@ -326,7 +328,12 @@ const MyAccount = () => {
                     <Button
                       type="submit"
                       className="bg-org product-card__cta product-card__cta--primary !px-6"
-                      sx={{ width: '200px', height: '46px', fontSize: '14px', whiteSpace: 'nowrap' }}
+                      sx={{
+                        width: '200px',
+                        height: '46px',
+                        fontSize: '14px',
+                        whiteSpace: 'nowrap',
+                      }}
                     >
                       {isLoading2 ? <CircularProgress color="inherit" /> : 'Cập nhật mật khẩu'}
                     </Button>

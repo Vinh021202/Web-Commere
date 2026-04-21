@@ -34,17 +34,14 @@ const Orders = () => {
           <div className="relative flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
             <div className="max-w-[760px]">
               <span className="eyebrow">Lịch sử đơn hàng</span>
-              <h1 className="section-heading mt-4 max-w-[700px]">
-                Theo dõi đơn hàng trong mot b? c?c r? r?ng, de xem nhanh va de doi chieu hon.
-              </h1>
+              <h1 className="section-heading mt-4 max-w-[700px]">Theo dõi đơn hàng</h1>
               <p className="muted-copy mt-4 max-w-[620px] text-[15px] leading-7">
-                Xem trạng thái, tổng tiền, thông tin giao nhận và chi tiết sản phẩm của từng đơn
-                ngay tai mot noi.
+                Xem trạng thái, tổng tiền, thông tin giao nhận và chi tiết sản phẩm của từng đơn .
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <span className="listing-chip">Tóm tắt đơn hàng</span>
-                <span className="listing-chip">Thong tin giao nhan</span>
+                <span className="listing-chip">Thông tin giao nhận</span>
                 <span className="listing-chip">Chi tiết sản phẩm</span>
               </div>
             </div>
@@ -52,17 +49,19 @@ const Orders = () => {
             <div className="grid gap-3 sm:grid-cols-3 xl:min-w-[460px]">
               <div className="soft-card p-4">
                 <span className="listing-stat__label">Tổng đơn hàng</span>
-                <strong className="listing-stat__value !text-[1.2rem]">{orders?.length || 0}</strong>
+                <strong className="listing-stat__value !text-[1.2rem]">
+                  {orders?.length || 0}
+                </strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Tr?ng th?i</span>
+                <span className="listing-stat__label">Trạng thái</span>
                 <strong className="listing-stat__value !text-[1.2rem]">
                   {orders?.length > 0 ? 'Đang theo dõi' : 'Trống'}
                 </strong>
               </div>
               <div className="soft-card p-4">
-                <span className="listing-stat__label">Che do</span>
-                <strong className="listing-stat__value !text-[1.2rem]">Don cua toi</strong>
+                <span className="listing-stat__label">Chế độ</span>
+                <strong className="listing-stat__value !text-[1.2rem]">Đơn của tôi</strong>
               </div>
             </div>
           </div>
@@ -75,11 +74,11 @@ const Orders = () => {
 
           <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6">
             <div className="mb-5">
-              <span className="listing-stat__label">Lich su mua hang</span>
+              <span className="listing-stat__label">Lịch sử mua hàng</span>
               <h2 className="mt-2 text-[24px] font-[800] text-[#1f2937]">Đơn hàng của tôi</h2>
               <p className="mb-0 mt-2 text-[14px] leading-7 text-[#6b7280]">
-                Ban co <span className="font-[800] text-primary">{orders?.length || 0}</span> don
-                hang trong lich su mua s?m.
+                Ban co <span className="font-[800] text-primary">{orders?.length || 0}</span> đơn
+                hàng trong lịch sử mua hàng.
               </p>
             </div>
 
@@ -105,7 +104,7 @@ const Orders = () => {
                         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                           <div>
                             <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                              Ma don
+                              Mã đơn
                             </span>
                             <p className="mb-0 mt-2 break-all text-[13px] font-[700] text-[#1f2937]">
                               {order?._id}
@@ -123,7 +122,7 @@ const Orders = () => {
 
                           <div>
                             <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                              T?ng ti?n
+                              Tổng tiền
                             </span>
                             <p className="mb-0 mt-2 text-[15px] font-[800] text-primary">
                               {Number(order?.totalAmt || 0).toLocaleString('vi-VN', {
@@ -136,7 +135,7 @@ const Orders = () => {
 
                           <div>
                             <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                              Khach hang
+                              Khách hàng
                             </span>
                             <p className="mb-0 mt-2 text-[13px] font-[700] text-[#1f2937]">
                               {order?.userId?.name}
@@ -214,7 +213,7 @@ const Orders = () => {
                                 </div>
                                 <div>
                                   <span className="block text-[11px] font-[800] uppercase tracking-[0.08em] text-[#a65434]">
-                                    Gia
+                                    Giá
                                   </span>
                                   <p className="mb-0 mt-1 text-[13px] font-[700] text-[#1f2937]">
                                     {item?.price?.toLocaleString('vi-VN', {
