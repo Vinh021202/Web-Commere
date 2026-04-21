@@ -15,7 +15,7 @@ const OrderTracking = () => {
   const [contactValue, setContactValue] = useState('');
 
   return (
-    <section className="pb-10 pt-[220px] md:pt-[245px] xl:pt-[265px]">
+    <section className="pb-10 pt-[150px] md:pt-[168px] xl:pt-[178px]">
       <div className="container">
         <div className="section-shell listing-hero overflow-hidden px-5 py-7 md:px-8 md:py-9">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
