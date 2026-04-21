@@ -20,14 +20,32 @@
 .bannerBoxV2__eyebrow {
   display: inline-flex;
   align-items: center;
-  padding: 7px 12px;
+  padding: 7px 14px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.88);
   color: #a65434;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+.bannerBoxV2__title {
+  max-width: 14ch;
+  margin: 0;
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.25rem, 1.1rem + 0.9vw, 1.95rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: #1f2937;
+  text-wrap: balance;
+}
+
+.bannerBoxV2__price {
+  font-size: clamp(1.15rem, 1rem + 0.7vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
 .bannerBoxV2__link {
@@ -38,6 +56,9 @@
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   color: #1f2937 !important;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   text-decoration: none !important;
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
 }

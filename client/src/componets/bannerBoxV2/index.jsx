@@ -22,9 +22,9 @@ const BannerBoxV2 = (props) => {
             } `}
         >
           <span className="bannerBoxV2__eyebrow">Uu dai duoc goi y</span>
-          <h2 className="text-[16px] font-[800] text-[#1f2937] sm:text-[22px]">{title}</h2>
+          <h2 className="bannerBoxV2__title">{title}</h2>
           {price && (
-            <span className="text-primary w-full text-[16px] font-[800] sm:text-[22px]">
+            <span className="bannerBoxV2__price text-primary w-full">
               {Number(price).toLocaleString('vi-VN', {
                 style: 'currency',
                 currency: 'VND',
@@ -34,7 +34,7 @@ const BannerBoxV2 = (props) => {
           )}
 
           <div className="w-full">
-            <Link to={'/'} className="bannerBoxV2__link link text-[14px] font-[700] sm:text-[15px]">
+            <Link to={'/'} className="bannerBoxV2__link link">
               Xem ngay
             </Link>
           </div>

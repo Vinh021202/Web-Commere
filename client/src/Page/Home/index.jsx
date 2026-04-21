@@ -59,7 +59,8 @@ const Home = () => {
   ];
 
   const spotlightSideCards =
-    featuredProducts?.filter((item) => item?.images?.[0] || item?.bannerimages?.[0]).slice(0, 2) || [];
+    featuredProducts?.filter((item) => item?.images?.[0] || item?.bannerimages?.[0]).slice(0, 2) ||
+    [];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -121,7 +122,7 @@ const Home = () => {
   return (
     <>
       {homeSlidesData?.length !== 0 && <HomeSlider data={homeSlidesData} />}
-      {context?.catData?.length !== 0 && <HomeCatSlider data={context?.catData} />}
+      {/* {context?.catData?.length !== 0 && <HomeCatSlider data={context?.catData} />} */}
 
       <section className="py-4 md:py-6 lg:py-7">
         <div className="container">
@@ -129,8 +130,12 @@ const Home = () => {
             <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start xl:grid-cols-[1.15fr_0.85fr]">
               <div className="relative">
                 <span className="eyebrow mb-5">{context?.t('springCollection')}</span>
-                <h1 className="section-heading home-section-heading home-hero-title max-w-[760px]">{context?.t('homeHeroTitle')}</h1>
-                <p className="muted-copy mt-5 max-w-[650px] text-[15px] leading-7">{context?.t('homeHeroText')}</p>
+                <h1 className="section-heading home-section-heading home-hero-title max-w-[760px]">
+                  {context?.t('homeHeroTitle')}
+                </h1>
+                <p className="muted-copy mt-5 max-w-[650px] text-[15px] leading-7">
+                  {context?.t('homeHeroText')}
+                </p>
 
                 <div className="mt-5 flex flex-wrap gap-2.5">
                   {benefitChips.map((chip) => (
@@ -147,17 +152,23 @@ const Home = () => {
                   <div className="soft-card home-mini-stat p-4">
                     <span className="home-mini-stat__label">{context?.t('statCategories')}</span>
                     <strong>{context?.catData?.length || 0}</strong>
-                    <p className="mb-0 mt-2 text-[13px] leading-6">{context?.t('statCategoriesHint')}</p>
+                    <p className="mb-0 mt-2 text-[13px] leading-6">
+                      {context?.t('statCategoriesHint')}
+                    </p>
                   </div>
                   <div className="soft-card home-mini-stat p-4">
                     <span className="home-mini-stat__label">{context?.t('statPriority')}</span>
                     <strong>{context?.t('statPriorityValue')}</strong>
-                    <p className="mb-0 mt-2 text-[13px] leading-6">{context?.t('statPriorityHint')}</p>
+                    <p className="mb-0 mt-2 text-[13px] leading-6">
+                      {context?.t('statPriorityHint')}
+                    </p>
                   </div>
                   <div className="soft-card home-mini-stat p-4">
                     <span className="home-mini-stat__label">{context?.t('statFeeling')}</span>
                     <strong>{context?.t('statFeelingValue')}</strong>
-                    <p className="mb-0 mt-2 text-[13px] leading-6">{context?.t('statFeelingHint')}</p>
+                    <p className="mb-0 mt-2 text-[13px] leading-6">
+                      {context?.t('statFeelingHint')}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -170,7 +181,9 @@ const Home = () => {
                       <p className="mb-2 mt-0 text-[12px] font-[700] uppercase tracking-[0.12em] text-[#a65434]">
                         {card.title}
                       </p>
-                      <h3 className="text-[24px] font-[800] text-[#1f2937] md:text-[26px] xl:text-[28px]">{card.value}</h3>
+                      <h3 className="text-[24px] font-[800] text-[#1f2937] md:text-[26px] xl:text-[28px]">
+                        {card.value}
+                      </h3>
                       <p className="mb-0 text-[14px]">{card.description}</p>
                     </div>
                   </div>
@@ -181,7 +194,9 @@ const Home = () => {
                   <h3 className="mt-4 text-[24px] font-[800] leading-[1.2] text-white md:text-[26px] xl:text-[28px]">
                     {context?.t('layoutTitle')}
                   </h3>
-                  <p className="mb-0 mt-3 max-w-[420px] text-[14px] leading-7 text-white/78">{context?.t('layoutText')}</p>
+                  <p className="mb-0 mt-3 max-w-[420px] text-[14px] leading-7 text-white/78">
+                    {context?.t('layoutText')}
+                  </p>
                 </div>
               </div>
             </div>
@@ -195,7 +210,9 @@ const Home = () => {
             <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div className="leftSec">
                 <span className="eyebrow mb-4">{context?.t('popularEyebrow')}</span>
-                <h2 className="section-heading home-section-heading">{context?.t('popularTitle')}</h2>
+                <h2 className="section-heading home-section-heading">
+                  {context?.t('popularTitle')}
+                </h2>
                 <p className="mb-0 mt-2 text-[14px] font-[400]">{context?.t('popularText')}</p>
               </div>
 
@@ -210,7 +227,11 @@ const Home = () => {
                 >
                   {context?.catData?.length !== 0 &&
                     context?.catData?.map((cat, index) => (
-                      <Tab key={cat?._id || index} label={cat?.name} onClick={() => filterByCatId(cat?._id)} />
+                      <Tab
+                        key={cat?._id || index}
+                        label={cat?.name}
+                        onClick={() => filterByCatId(cat?._id)}
+                      />
                     ))}
                 </Tabs>
               </div>
@@ -233,19 +254,25 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-4 md:py-5 lg:py-6">
+      <section className="featured-section py-4 md:py-5 lg:py-6">
         <div className="container">
           <div className="section-shell overflow-hidden px-4 py-4 md:px-6 md:py-6 xl:px-7 xl:py-7">
             <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
                 <span className="eyebrow mb-4">{context?.t('featuredEyebrow')}</span>
-                <h2 className="section-heading home-section-heading">{context?.t('featuredTitle')}</h2>
+                <h2 className="section-heading home-section-heading featured-section__heading">
+                  {context?.t('featuredTitle')}
+                </h2>
               </div>
-              <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('featuredText')}</p>
+              <p className="muted-copy featured-section__copy max-w-[420px] text-[14px] leading-7">
+                {context?.t('featuredText')}
+              </p>
             </div>
 
             <div className="flex flex-col items-stretch gap-4 lg:flex-row lg:gap-5">
-              <div className="part1 w-full lg:w-[68%]">{productsData?.length !== 0 && <HomeBannerV2 data={productsData} />}</div>
+              <div className="part1 w-full lg:w-[68%]">
+                {productsData?.length !== 0 && <HomeBannerV2 data={productsData} />}
+              </div>
 
               <div className="part2 flex w-full flex-col gap-4 sm:grid sm:grid-cols-2 lg:w-[32%] lg:flex lg:grid-cols-none lg:flex-col lg:justify-between">
                 <BannerBoxV2
@@ -267,22 +294,30 @@ const Home = () => {
       <section className="py-3 lg:py-4">
         <div className="container">
           <div className="section-shell px-4 py-5 md:px-8 md:py-7 xl:px-10 xl:py-8">
-            <div className="freeShipping mb-6 flex flex-col gap-4 rounded-[28px] border border-[rgba(255,82,82,0.2)] bg-[linear-gradient(135deg,#fff5f5_0%,#fff_55%,#fff4ef_100%)] p-4 md:p-5 lg:flex-row lg:items-center lg:justify-between xl:p-6">
+            <div className="freeShipping home-shipping-banner mb-6 flex flex-col gap-4 rounded-[28px] border border-[rgba(255,82,82,0.2)] bg-[linear-gradient(135deg,#fff5f5_0%,#fff_55%,#fff4ef_100%)] p-4 md:p-5 lg:flex-row lg:items-center lg:justify-between xl:p-6">
               <div className="col1 flex items-center gap-4">
                 <div className="flex h-[68px] w-[68px] items-center justify-center rounded-full bg-[#ffe7e7] text-[#ff5252]">
                   <LiaShippingFastSolid className="text-[34px]" />
                 </div>
                 <div>
-                  <span className="text-[13px] font-[700] uppercase tracking-[0.12em] text-[#ff5252]">{context?.t('memberOffer')}</span>
-                  <span className="block text-[22px] font-[800] uppercase text-[#1f2937]">{context?.t('freeShippingLarge')}</span>
+                  <span className="home-shipping-banner__eyebrow text-[13px] font-[700] uppercase tracking-[0.12em] text-[#ff5252]">
+                    {context?.t('memberOffer')}
+                  </span>
+                  <span className="home-shipping-banner__title block text-[22px] font-[800] uppercase text-[#1f2937]">
+                    {context?.t('freeShippingLarge')}
+                  </span>
                 </div>
               </div>
 
               <div className="col2">
-                <p className="m-0 text-[15px] font-[500]">{context?.t('freeShippingText')}</p>
+                <p className="home-shipping-banner__copy m-0 text-[15px] font-[500]">
+                  {context?.t('freeShippingText')}
+                </p>
               </div>
 
-              <p className="m-0 text-[24px] font-bold text-[#1f2937]">{context?.t('from200Usd')}</p>
+              <p className="home-shipping-banner__price m-0 text-[24px] font-bold text-[#1f2937]">
+                {context?.t('from200Usd')}
+              </p>
             </div>
 
             {bannerV1Data?.length !== 0 && <AdsBannerSliderV2 items={4} data={bannerV1Data} />}
@@ -296,9 +331,13 @@ const Home = () => {
             <div className="mb-2 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
                 <span className="eyebrow mb-4">{context?.t('latestEyebrow')}</span>
-                <h2 className="section-heading home-section-heading">{context?.t('latestTitle')}</h2>
+                <h2 className="section-heading home-section-heading">
+                  {context?.t('latestTitle')}
+                </h2>
               </div>
-              <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('latestText')}</p>
+              <p className="muted-copy max-w-[420px] text-[14px] leading-7">
+                {context?.t('latestText')}
+              </p>
             </div>
 
             {productsData?.length === 0 && <ProductLoading />}
@@ -308,7 +347,7 @@ const Home = () => {
               </div>
             )}
 
-            <AdsBannerSlider items={3} />
+            {/* <AdsBannerSlider items={3} /> */}
           </div>
         </div>
       </section>
@@ -319,9 +358,13 @@ const Home = () => {
             <div className="mb-2 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
                 <span className="eyebrow mb-4">{context?.t('editorsChoiceEyebrow')}</span>
-                <h2 className="section-heading home-section-heading">{context?.t('editorsChoiceTitle')}</h2>
+                <h2 className="section-heading home-section-heading">
+                  {context?.t('editorsChoiceTitle')}
+                </h2>
               </div>
-              <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('editorsChoiceText')}</p>
+              <p className="muted-copy max-w-[420px] text-[14px] leading-7">
+                {context?.t('editorsChoiceText')}
+              </p>
             </div>
 
             {featuredProducts?.length !== 0 && (
@@ -329,7 +372,7 @@ const Home = () => {
                 <ProductsSlider items={6} data={featuredProducts} />
               </div>
             )}
-            <AdsBannerSlider items={3} />
+            {/* <AdsBannerSlider items={3} /> */}
           </div>
         </div>
       </section>
@@ -341,9 +384,13 @@ const Home = () => {
               <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
                   <span className="eyebrow mb-4">{context?.t('magazineEyebrow')}</span>
-                  <h2 className="section-heading home-section-heading mb-0">{context?.t('magazineTitle')}</h2>
+                  <h2 className="section-heading home-section-heading mb-0">
+                    {context?.t('magazineTitle')}
+                  </h2>
                 </div>
-                <p className="muted-copy max-w-[420px] text-[14px] leading-7">{context?.t('magazineText')}</p>
+                <p className="muted-copy max-w-[420px] text-[14px] leading-7">
+                  {context?.t('magazineText')}
+                </p>
               </div>
               <Swiper
                 slidesPerView={1.1}

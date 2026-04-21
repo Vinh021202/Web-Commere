@@ -19,23 +19,23 @@ const AdsBannerSlider = (props) => {
           className="smlBtn"
         >
           <SwiperSlide>
-            <BannerBox img={'/banner1.webp'} link={'/'} />
+            <BannerBox img={'/hsmg.jpg'} link={'/'} />
           </SwiperSlide>
 
           <SwiperSlide>
-            <BannerBox img={'/banner2.webp'} link={'/'} />
+            <BannerBox img={'/rcsmt.jpg'} link={'/'} />
           </SwiperSlide>
 
           <SwiperSlide>
-            <BannerBox img={'/banner3.webp'} link={'/'} />
+            <BannerBox img={'/rem.jpg'} link={'/'} />
           </SwiperSlide>
 
           <SwiperSlide>
-            <BannerBox img={'/banner4.webp'} link={'/'} />
+            <BannerBox img={'/rtlm.jpg'} link={'/'} />
           </SwiperSlide>
 
           <SwiperSlide>
-            <BannerBox img={'/banner1.webp'} link={'/'} />
+            <BannerBox img={'/thckc.jpg'} link={'/'} />
           </SwiperSlide>
         </Swiper>
       </div>
