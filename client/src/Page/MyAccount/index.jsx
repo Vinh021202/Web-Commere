@@ -185,7 +185,7 @@ const MyAccount = () => {
               <div className="soft-card p-4">
                 <span className="listing-stat__label">Email</span>
                 <strong className="listing-stat__value !text-[1.1rem]">
-                  {context?.userData?.email ? 'Da lien ket' : '--'}
+                  {context?.userData?.email ? 'Đã Liên kết' : '--'}
                 </strong>
               </div>
               <div className="soft-card p-4">
