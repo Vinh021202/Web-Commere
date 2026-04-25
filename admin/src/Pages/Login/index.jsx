@@ -104,18 +104,31 @@ const Login = () => {
   const navigate = useNavigate();
   const c = copy[context.language] || copy.VN;
 
+  const denyNonAdminAccess = () => {
+    localStorage.removeItem("accesstoken");
+    localStorage.removeItem("refreshToken");
+    context.setUserData(null);
+    context.setIsLogin(false);
+    context.alertBox("error", "Tai khoan nay khong co quyen truy cap admin");
+  };
+
   const syncUserSession = async () => {
     const userRes = await fetchDataFromApi("/api/user/user-details");
 
     if (userRes?.error === false && userRes?.data) {
+      if (userRes?.data?.role !== "ADMIN") {
+        denyNonAdminAccess();
+        return;
+      }
+
       context.setUserData(userRes.data);
       context.setIsLogin(true);
       navigate("/");
       return;
     }
 
-    context.setIsLogin(true);
-    navigate("/");
+    context.setUserData(null);
+    context.setIsLogin(false);
   };
 
   const authWithGoogle = () => {

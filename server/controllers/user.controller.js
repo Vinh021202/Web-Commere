@@ -888,9 +888,72 @@ export async function getAllUsers(request, response) {
   }
 }
 
+export async function updateUserRole(request, response) {
+  try {
+    const { id } = request.params;
+    const { role } = request.body;
+    const currentAdminId = request.userId;
+
+    if (!["ADMIN", "USER"].includes(role)) {
+      return response.status(400).json({
+        error: true,
+        success: false,
+        message: "Invalid role value",
+      });
+    }
+
+    const user = await UserModel.findById(id);
+
+    if (!user) {
+      return response.status(404).json({
+        error: true,
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    if (String(user._id) === String(currentAdminId) && role !== "ADMIN") {
+      return response.status(400).json({
+        error: true,
+        success: false,
+        message: "You cannot remove your own admin role",
+      });
+    }
+
+    if (user.role === "ADMIN" && role === "USER") {
+      const adminCount = await UserModel.countDocuments({ role: "ADMIN" });
+
+      if (adminCount <= 1) {
+        return response.status(400).json({
+          error: true,
+          success: false,
+          message: "At least one admin account must remain",
+        });
+      }
+    }
+
+    user.role = role;
+    await user.save();
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      message: "User role updated successfully",
+      user,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
 //delete multiple user
 export async function deleteMultiple(request, response) {
   const { ids } = request.body;
+  const currentAdminId = request.userId;
 
   if (!ids || !Array.isArray(ids)) {
     return response.status(400).json({
@@ -901,6 +964,31 @@ export async function deleteMultiple(request, response) {
   }
 
   try {
+    const users = await UserModel.find({ _id: { $in: ids } }).select("_id role");
+    const adminIds = users
+      .filter((user) => user.role === "ADMIN")
+      .map((user) => String(user._id));
+
+    if (adminIds.includes(String(currentAdminId))) {
+      return response.status(400).json({
+        error: true,
+        success: false,
+        message: "You cannot delete your own admin account",
+      });
+    }
+
+    if (adminIds.length > 0) {
+      const adminCount = await UserModel.countDocuments({ role: "ADMIN" });
+
+      if (adminCount - adminIds.length < 1) {
+        return response.status(400).json({
+          error: true,
+          success: false,
+          message: "At least one admin account must remain",
+        });
+      }
+    }
+
     for (let i = 0; i < ids.length; i++) {
       const user = await UserModel.findById(ids[i]);
       if (!user) continue;
@@ -928,6 +1016,7 @@ export async function deleteMultiple(request, response) {
 export async function deleteUser(request, response) {
   try {
     const { id } = request.params;
+    const currentAdminId = request.userId;
 
     const user = await UserModel.findById(id);
 
@@ -937,6 +1026,26 @@ export async function deleteUser(request, response) {
         success: false,
         message: "User not found",
       });
+    }
+
+    if (String(user._id) === String(currentAdminId)) {
+      return response.status(400).json({
+        error: true,
+        success: false,
+        message: "You cannot delete your own admin account",
+      });
+    }
+
+    if (user.role === "ADMIN") {
+      const adminCount = await UserModel.countDocuments({ role: "ADMIN" });
+
+      if (adminCount <= 1) {
+        return response.status(400).json({
+          error: true,
+          success: false,
+          message: "At least one admin account must remain",
+        });
+      }
     }
 
     // ✅ Xóa avatar trên Cloudinary nếu có

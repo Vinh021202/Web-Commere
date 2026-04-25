@@ -108,6 +108,14 @@ function App() {
             res?.message || "Your session is closed please login again",
           );
           setIsLogin(false);
+          localStorage.removeItem("accesstoken");
+          localStorage.removeItem("refreshToken");
+        } else if (res?.data?.role !== "ADMIN") {
+          setUserData(null);
+          setIsLogin(false);
+          localStorage.removeItem("accesstoken");
+          localStorage.removeItem("refreshToken");
+          alertBox("error", "This account does not have admin access");
         } else {
           setUserData(res?.data);
           setIsLogin(true);

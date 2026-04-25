@@ -7,6 +7,7 @@ const ProtectedRoute = ({ children }) => {
   const context = useContext(MyContext);
   const location = useLocation();
   const token = localStorage.getItem("accesstoken");
+  const isAdmin = context?.userData?.role === "ADMIN";
 
   // ✅ Đang check auth → chưa redirect, hiện loading
   if (context.isCheckingAuth) {
@@ -18,6 +19,10 @@ const ProtectedRoute = ({ children }) => {
   }
 
   if (!token || !context.islogin) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  if (!isAdmin) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

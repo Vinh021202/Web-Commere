@@ -17,11 +17,13 @@ import {
   removeImageFromCloudinary,
   resetPassword,
   updateUserDetails,
+  updateUserRole,
   userAvatarController,
   userDetails,
   verifyEmailController,
 } from "../controllers/user.controller.js";
 import auth from "../middleware/auth.js";
+import requireRole from "../middleware/requireRole.js";
 import upload from "../middleware/multer.js";
 
 const userRouter = Router();
@@ -47,8 +49,9 @@ userRouter.post('/forgot-password-reset', forgotPasswordReset);
 userRouter.post("/addReview",auth ,addReviews);
 userRouter.get("/getReviews",getReviews);
 userRouter.get("/getAllReviews", getAllReviews);
-userRouter.get("/getAllUsers",getAllUsers); 
-userRouter.delete("/deleteMultiple", deleteMultiple);
-userRouter.delete("/delete/:id", auth, deleteUser);
+userRouter.get("/getAllUsers", auth, requireRole("ADMIN"), getAllUsers);
+userRouter.put("/role/:id", auth, requireRole("ADMIN"), updateUserRole);
+userRouter.delete("/deleteMultiple", auth, requireRole("ADMIN"), deleteMultiple);
+userRouter.delete("/delete/:id", auth, requireRole("ADMIN"), deleteUser);
 
 export default userRouter;

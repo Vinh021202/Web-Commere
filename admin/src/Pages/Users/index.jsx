@@ -9,6 +9,8 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from "@mui/material/CircularProgress";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import { GoTrash } from "react-icons/go";
 import { MdLocalPhone, MdOutlineMarkEmailRead } from "react-icons/md";
 import { SlCalender } from "react-icons/sl";
@@ -18,6 +20,7 @@ import { MyContext } from "../../App";
 import {
   deleteData,
   deleteMultipleData,
+  editData,
   fetchDataFromApi,
 } from "../../utils/api";
 
@@ -28,6 +31,7 @@ const columns = [
   { id: "userName", label: "USER NAME", minWidth: 150 },
   { id: "userEmail", label: "USER EMAIL", minWidth: 150 },
   { id: "userPh", label: "USER PHONE", minWidth: 150 },
+  { id: "role", label: "ROLE", minWidth: 140 },
   { id: "veriyemail", label: "EMAIL VERIFY", minWidth: 150 },
   { id: "createdDate", label: "CREATED", minWidth: 150 },
   { id: "action", label: "ACTION", minWidth: 150 },
@@ -94,7 +98,15 @@ const Users = () => {
   };
 
   const deleteUser = (id) => {
-    deleteData(`/api/user/delete/${id}`).then(() => {
+    deleteData(`/api/user/delete/${id}`).then((res) => {
+      if (res?.data?.error || res?.error) {
+        context.alertBox(
+          "error",
+          res?.data?.message || res?.message || "Unable to delete user",
+        );
+        return;
+      }
+
       getUser();
       context.alertBox("success", "User deleted");
     });
@@ -132,7 +144,15 @@ const Users = () => {
       return;
     }
     try {
-      deleteMultipleData(`/api/user/deleteMultiple`, sortedIds).then(() => {
+      deleteMultipleData(`/api/user/deleteMultiple`, sortedIds).then((res) => {
+        if (res?.data?.error || res?.error) {
+          context.alertBox(
+            "error",
+            res?.data?.message || res?.message || "Error deleting items",
+          );
+          return;
+        }
+
         getUser();
         setSortedIds([]);
         context.alertBox("success", "Users deleted");
@@ -140,6 +160,27 @@ const Users = () => {
     } catch (error) {
       context.alertBox("error", "Error deleting items");
     }
+  };
+
+  const updateRole = (id, role) => {
+    editData(`/api/user/role/${id}`, { role }).then((res) => {
+      if (res?.data?.error || res?.error) {
+        context.alertBox(
+          "error",
+          res?.data?.message || res?.message || "Unable to update role",
+        );
+        getUser();
+        return;
+      }
+
+      setUserData((prev) =>
+        prev.map((user) => (user._id === id ? { ...user, role } : user)),
+      );
+      setUserTotalData((prev) =>
+        prev.map((user) => (user._id === id ? { ...user, role } : user)),
+      );
+      context.alertBox("success", "User role updated");
+    });
   };
 
   const verifiedUsers = userData?.filter(
@@ -328,6 +369,29 @@ const Users = () => {
                       </TableCell>
 
                       <TableCell>
+                        <Select
+                          size="small"
+                          value={user?.role || "USER"}
+                          onChange={(e) => updateRole(user?._id, e.target.value)}
+                          sx={{
+                            minWidth: 120,
+                            borderRadius: "999px",
+                            backgroundColor:
+                              user?.role === "ADMIN" ? "#eef4ff" : "#f8fafc",
+                            fontSize: "12px",
+                            fontWeight: 800,
+                            ".MuiSelect-select": {
+                              py: 1,
+                              px: 1.5,
+                            },
+                          }}
+                        >
+                          <MenuItem value="USER">USER</MenuItem>
+                          <MenuItem value="ADMIN">ADMIN</MenuItem>
+                        </Select>
+                      </TableCell>
+
+                      <TableCell>
                         {user?.verify_email === false ? (
                           <span className="inline-flex rounded-full border border-[#ffd9d9] bg-[#fff5f5] px-3 py-1 text-[11px] font-[800] uppercase tracking-[0.08em] text-[#ef4444]">
                             Not Verified
@@ -360,7 +424,7 @@ const Users = () => {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={8}>
+                    <TableCell colSpan={9}>
                       <div className="flex min-h-[320px] flex-col items-center justify-center text-center">
                         <div className="flex h-16 w-16 items-center justify-center rounded-[20px] bg-[#f4f7ff] text-[#3872fa] shadow-[0_12px_30px_rgba(56,114,250,0.08)]">
                           <HiOutlineUsers className="text-[30px]" />
@@ -378,7 +442,7 @@ const Users = () => {
                 )
               ) : (
                 <TableRow>
-                  <TableCell colSpan={8}>
+                  <TableCell colSpan={9}>
                     <div className="flex min-h-[320px] w-full items-center justify-center">
                       <div className="flex items-center gap-3 rounded-full bg-white px-5 py-3 shadow-[0_10px_25px_rgba(15,23,42,0.06)]">
                         <CircularProgress color="inherit" size={22} />
