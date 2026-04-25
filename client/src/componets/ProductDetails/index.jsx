@@ -95,10 +95,10 @@ const ProductDetailsComponent = (props) => {
         </div>
         <div className="mt-4 flex items-center gap-4">
           <span className="oldPrice text-[18px] font-[500] text-gray-500 line-through">
-            &#8363; {props?.item?.price}
+            &#8363; {props?.item?.oldPrice}
           </span>
           <span className="price text-[18px] font-[600] text-primary">
-            &#8363; {props?.item?.oldPrice}
+            &#8363; {props?.item?.price}
           </span>
           <span className="text-[14px]">
             Số lượng ton kho:
